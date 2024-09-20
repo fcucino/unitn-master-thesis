@@ -13,6 +13,7 @@ RUN apt-get update
 RUN apt-get install python3-pip -y
 RUN apt-get install python3-pygments -y
 RUN apt-get install ghostscript -y
+RUN apt-get install openssh-client -y
 RUN apt-get autoclean -y && apt-get autoremove -y
 
 USER $UNAME
