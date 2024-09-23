@@ -14,13 +14,90 @@ This chapter contains an explanation of many fundamentals terms used in the thes
 
 \section{Software vs. Security}
 
+A software is a set of programs and data which provides functionalities. Security is understanding and identifying software-induced security risks and how to manage them. Software and functionalities come with certain risks and the software security is about managing these ones.
 
+Therefore, software plays a crucial role in providing security, but it is also one of the relevant source of security issues and problems. Many times the developers have a limited training on this concept or many times the goal is the speed of the development rather than the attention to the \textit{hidden} details; as result, security is always considered a secondary factor, because it is a complex and expansive task, hard to evaluate when nothing bad happens but usually too late to evaluate when something bad happens.~\cite{st-slides}
 
-\section{Risk vs. vulnerability vs. CVEs}
+A software system is secure if it satisfies specified security objectives, starting from the CIA triad:
+\begin{itemize}
+  \item Confidenziality: unauthorized actors cannot have access or read the information
+  \item Integrity: unauthorized actors cannot change or alter the information
+  \item Availability: authorized actors can always have access to the information
+\end{itemize}
+The CIA triad is a common model that forms the basis for the development of security systems. They are used for finding vulnerabilities and methods for creating solutions. This differentiation is helpful because it helps guide security teams as they pinpoint the different ways in which they can address each concern.\\
+Ideally, when all three standards have been met, the security profile of the organization is stronger and better equipped to handle threat incidents.~\cite{cia-triad}
 
+A secure software is not only composed of the CIA triad; there are also other objectives like~\cite{st-slides}
+\begin{itemize}
+  \item Authentication: who is performing a task
+  \item Authorization: what is that actor allowed to do
+  \item Privacy: controlling personal information from being shared
+  \item Anonymity: remaining unidentified to others
+  \item Non-repudiation: actor cannot deny having taken an action
+  \item Reliability: the extent to which a software yields consistent and results as expected
+  \item Audit: having traces of performed actions in separate systems or places
+  \item Monitoring: observing the system for any unusual activity
+  \item Intrusion detection: detecting unauthorized access
+  \item Intrusion prevention: stopping unauthorized access
+  \item ...and so on
+\end{itemize}
 
+Total security is unachievable, but the goal is to minimize the risks and the vulnerabilities. The security is a process, not a product, and it is a continuous process.~\cite{st-slides}
+
+\section{Risk vs. vulnerability vs. CVE}
+
+We talked about risks in the previous section, but what is a risk? A risk is the potential that a dangerous situation becomes reality. It is the probability of a threat exploiting a vulnerability and the impact of that event. A risk is a combination of a threat, a vulnerability, and an impact.
+
+Safety is about protecting from accidental risks, while security is about mitigating the risk of dangers caused by intentional and malicious actors.
+
+A system is secure as its weakest element. A vulnerability is a weakness in a system that can be exploited by a threat. A threat is a potential danger that can exploit a vulnerability. A threat agent is the actor that can exploit a vulnerability. An attack is the exploitation of a vulnerability by a threat agent. An exploit is the code that takes advantage of a vulnerability.
+
+CVE, which stands for \textit{Common Vulnerabilities and Exposures}, is a list of publicly known cybersecurity vulnerabilities. The CVE system provides a reference-method for publicly known information-security vulnerabilities and exposures. Each CVE entry represents a unique identifier for a specific vulnerability, named \textit{CVE-ID}, making it easier to reference it accross different tools. 
+
+An entry is rated via the CVSS score, namely the Common Vulnerability Scoring System, which is a method used to supply a qualitative measure of severity. CVSS is not a measure of risk. CVSS v2.0 and CVSS v3.x consist of three metric groups: Base, Temporal, and Environmental. CVSS v4.0, released in 2023, is a bit different and consists of Base, Threat, Environmental and Supplemental metric groups. Metrics result in a numerical score ranging from 0 to 10. A CVSS assessment is also represented as a vector string, a compressed textual representation of the values used to derive the score.~\cite{cvss-metrics}
+
+% TODO: Add CVEs for year or some statistics in general
+
+NVD is the \textit{National Vulnerability Database}, A U.S. government database that contains information about known vulnerabilities, including their CVE identifiers and CVSS scores. It is maintained by NIST and serves as a comprehensive resource for organizations to evaluate security risks.
+
+NIST (\textit{National Institute of Standards and Technology}) is a U.S. federal agency that develops cybersecurity standards, guidelines, and best practices. Even if it is an american agency, its standards are widely used around the world.
+
+\subsection{Bugs}
+
+A bug is a flaw in a system that is not behaving as it's designed to do.\\
+A vulnerability is a way of abusing the system, in a security-related way, whether that's due to a design fault or an implementation fault, so a bug.
+
+Many security issues are related to vulnerabilities due to bugs, but not all bugs are vulnerabilities. The exploitation is the activity composed by many steps in which an attacker uses a bug to gain its goal.
 
 \section{IT and OT Security}
+ 
+IT (\textit{Information Technology}) and OT (\textit{Operational Technology}) focus on protecting different types of systems and they have distinct priorities. 
+
+IT focuses on managing electronic data, while OT is centered on controlling physical processes and equipment. To better explain, IT is essential for business operations and decision-making and involves the use of computers and software to gather, store, process, share data securely. OT employs hardware and software to monitor and control industrial operations, ensuring efficiency and safety in sectors like manufacturing and energy. It is distinct from Information Technology (IT) as it directly interfaces with industrial equipment and processes, focusing on the physical environment and operational needs.~\cite{paloalto-it-ot-diff}
+
+We can devise some comparison points between the two types:
+
+\subsection{Primary priorities}
+
+IT security prioritizes Confidentiality, Integrity and Availability (CIA), with the main focus set to protect data from breaches and authorized actions, while OT security prioritizes Availability, Integrity and Confidentiality (AIC), ensuring the continuous operation of critical systems with safety and reliability being more important than data confidentiality.
+
+\subsection{Impact of Security Breaches}
+
+IT breaches tipically affect data confidentiality and may result in privacy violations, financial losses or business disruptions. OT breaches can have severe direct consequences, including physical damage and environmental harm.
+
+\subsection{Security Measures}
+
+IT security can use cybersecurity tools such as firewalls, antivirus, encryption and user authentication. Instead, OT security should require specialized tools like network segmentation, strict access control and real-time monitoring.
+
+\subsection{Regulatory Requirements}
+
+The former uses regulations like GDPR, the \textit{General Data Protection Regulation} to protect personal data for an European citizen and standards like ISO-27001, while the latter follows regulations and standards like the IEC 62443, which is a series of standards for industrial automation and control systems management and security. More on these regulations in the next chapters.
+
+\subsection{Vulnerability management}
+
+IT systems can usually be patched with a software update in a short time without severe impact on operations, while OT systems may require a longer time to be patched, as they are often critical to the operation of industrial processes or incompatible with the running legacy systems.
 
 
+Despite their distinct differences, IT vs. OT cybersecurity share similarities and are increasingly overlapping and one approach have not to exclude the other.\\
+As a general rule, OT devices are traditionally kept separate from the public internet and often internal networks, which meant they could only be accessed by authorized employees. However, it is increasingly possible for OT systems to be controlled and monitored by IT systems or remotely via the internet.~\cite{it-vs-ot-cybersecurity}
 
