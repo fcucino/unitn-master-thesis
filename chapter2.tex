@@ -6,9 +6,8 @@
 % Industrial Control Systems (ICS) and Operational Technology (OT)
 % Industrial Internet of Things (IIoT)
 % Difference Between IT and OT Security
+% Devices and Constraints
 % What Is a Security Scan
-% Risk Assessment Methodologies
-% Device Constraints
 
 This chapter contains an explanation of many fundamentals terms used in the thesis, without which it would not be possible to fully understand all the covered topics. 
 
@@ -58,7 +57,7 @@ An entry is rated via the CVSS score, namely the Common Vulnerability Scoring Sy
 
 % TODO: Add CVEs for year or some statistics in general
 
-NVD is the \textit{National Vulnerability Database}, A U.S. government database that contains information about known vulnerabilities, including their CVE identifiers and CVSS scores. It is maintained by NIST and serves as a comprehensive resource for organizations to evaluate security risks.
+NVD is the \textit{National Vulnerability Database}, a U.S. government database that contains information about known vulnerabilities, including their CVE identifiers and CVSS scores. It is maintained by NIST and serves as a comprehensive resource for organizations to evaluate security risks.
 
 NIST (\textit{National Institute of Standards and Technology}) is a U.S. federal agency that develops cybersecurity standards, guidelines, and best practices. Even if it is an american agency, its standards are widely used around the world.
 
@@ -100,4 +99,38 @@ IT systems can usually be patched with a software update in a short time without
 
 Despite their distinct differences, IT vs. OT cybersecurity share similarities and are increasingly overlapping and one approach have not to exclude the other.\\
 As a general rule, OT devices are traditionally kept separate from the public internet and often internal networks, which meant they could only be accessed by authorized employees. However, it is increasingly possible for OT systems to be controlled and monitored by IT systems or remotely via the internet.~\cite{it-vs-ot-cybersecurity}
+
+\section{Industry 4.0}
+
+Industry 4.0, synonymous of \textit{smart manufacturing}, is the realization of the digital transformation of the field, delivering real-time decision making, enhanced productivity, flexibility and agility to revolutionize the way companies manufacture, improve and distribute their products.  
+
+This is the Fourh Industrial Revolution, characterized by increasing automation and the employment of smart machines and smart factories. By collecting more data from the factory floor and combining that with other enterprise operational data, a smart factory can achieve information transparency and better decisions.
+
+Some specific technologies are pushing this revolution:~\cite{what-is-industry-4-0}
+\begin{itemize}
+  \item Internet of Things (IoT): machines on the factory floor are equipped with boars that allows the machines to connect with remote services, making possible to large amounts of valuable data to be collected, analyzed and exchanged.
+  \item Cloud computing: the typically large amount of data being stored and analyzed can be processed efficiently and cost-effectively with cloud. Cloud computing can also reduce startup costs for small- and medium-sized manufacturers who can right-size their needs and scale as their business grows.
+  \item AI and machine learning: Artifical Intelligence (AI) and machine learning can create insights providing visibility, predictability and automation of operations and business processes. The data collected from these assets can help businesses perform predictive maintenance based on machine learning algorithms, resulting in more uptime and higher efficiency.
+  \item Edge computing: to reduce latency and improve security, edge computing can be used to process the needed data closer to the source, rather than sending it all the raw statistics to the cloud, wasting bandwidth and time.
+  \item Cybersecurity: last but not least, When undergoing a digital transformation to Industry 4.0, it is essential to consider a cybersecurity approach that encompasses IT and OT equipment.
+\end{itemize}
+
+\section{Devices: PLC and HMI}
+
+Industrial devices are used in many different sectors like manufacturing, energy, transportation, and so on. We can trace back these devices to a common tablet placed on a wall or on a production line, with the difference that these devices support a wide range of industrial protocols. These devices are usually not connected to the internet and they take input from a physical human interaction directly on the place. 
+
+This type of devices is called HMI, which stands for \textit{Human Machine Interface}, and they are defined as a feature or component of a certain device or software application that enables humans to engage and interact with machines.\\
+Traditionally, in order to integrate a manufacturing line with an HMI, the HMI had to be connected to a Programming Logic Controller (PLC) and the HMI displayed the data received from the PLC and gave the PLC input from users.~\cite{what-is-hmi}
+
+In terms of the demands of Industry 4.0, industrial HMIs will also see further incorporation of new and emerging technologies that are impacting HMIs as a whole. First of all, there is the need to start integrating the Internet of Things (IoT) into industrial HMIs. This will allow for the collection of data from the factory floor and the ability to analyze that data in real-time. This will also allow for the ability to control the factory floor from a remote location. Of course, making these devices connected to the internet makes the risks of cyberattacks higher.
+
+\section{Security Scan}
+
+A security scan is a process that looks for vulnerabilities in a system or network. It is a way to identify potential security risks and weaknesses that could be exploited by attackers. Security scans can be performed manually or automatically using specialized tools. The goal of a security scan is to identify vulnerabilities and provide recommendations for improving the security of the system.
+
+There are different types of security scans, including network scans, vulnerability scans, and penetration tests. Network scans are used to identify devices on a network and detect open ports and services. Vulnerability scans are used to identify security vulnerabilities in software and systems. Penetration tests are used to simulate cyberattacks and test the security of a system.
+
+Security scans are an important part of a comprehensive security program. They can help organizations identify and address security vulnerabilities before they are exploited by attackers. By regularly performing security scans, organizations can improve their security attitude and reduce the risk of a security breach.
+
+
 
