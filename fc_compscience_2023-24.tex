@@ -14,6 +14,8 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\pdfminorversion=7
+
 % 2 side format
 \documentclass[epsfig,a4paper,11pt,titlepage,twoside,openany]{book}
 \usepackage{epsfig}
@@ -22,14 +24,11 @@
 \usepackage[paperheight=29.7cm,paperwidth=21cm,outer=1.5cm,inner=2.5cm,top=2cm,bottom=2cm]{geometry} % layout setting
 \usepackage{titlesec} % custom setup title of chapter
 \usepackage{url}
-\usepackage{hyperref}
-\hypersetup{
-    colorlinks,
-    citecolor=black,
-    filecolor=black,
-    linkcolor=black,
-    urlcolor=black
-}
+\usepackage[]{mdframed} % https://tex.stackexchange.com/a/673010
+
+% Note that you must put this before the \usepackage{hyperref}
+% \usepackage[a-1b,mathxmp]{pdfx}[2018/12/22] % PDF/A
+
 % \usepackage{newtxtext,newtxmath} % times new roman
 
 %%%%%%%%%%%%%%
@@ -38,6 +37,16 @@
 %\usepackage[latin1]{inputenc} % Windows;
 \usepackage[utf8x]{inputenc} % Linux (unicode package is required);
 %\usepackage[applemac]{inputenc} % Mac.
+
+\usepackage[pdfa]{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+\usepackage[capitalise,noabbrev]{cleveref} % https://ctan.mirror.garr.it/mirrors/ctan/macros/latex/contrib/cleveref/cleveref.pdf
 
 \singlespacing
 
