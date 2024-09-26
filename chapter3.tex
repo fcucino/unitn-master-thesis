@@ -14,17 +14,17 @@ Certifications provide a guarantee of product and company security. The main cer
 
 There are then several laws and regulations that address under various profiles the issue of cybersecurity among them it is worth noting:~\cite{cybersecurity-standards-regulations-compliance}
 \begin{itemize}
-  \item \textbf{Cyber Resilient Act (CRA)}\footnote{\url{https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=celex:52022PC0454}}: While still pending final approval by the European Institutions, the Cyber Resilient Act seeks to enhance the resilience of the European digital market by ensuring that connected devices and digital services are equipped to withstand cyberattacks effectively. It will become effective in 2027;
-  \item  \textbf{NIS Directive 2}\footnote{\url{https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32022L2555}}: This directive outlines essential criteria that companies must adhere to in order to maintain a robust level of cybersecurity. These criteria encompass the implementation of risk analysis strategies, fortification of information system security, and effective incident management protocols. It is imperative for EU Member States to transpose this directive by October 2024, with enforcement timelines specified in the respective national transposition acts;
-  \item \textbf{Italian Cybersecurity Law (June 28th, 2024 No. 90)}\footnote{\url{https://www.gazzettaufficiale.it/eli/id/2024/07/02/24G00108/sg}}: This Italian law pertains to national cybersecurity and applies to both public and private entities whose services are deemed critical. It mandates the implementation of security measures to protect critical digital infrastructures and sensitive information, including specific obligations to notify the Cybersecurity Agency of any cyber incidents;
-  \item \textbf{New Machinery Regulation No. 1230/2023}\footnote{\url{https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1230}}: This regulation will replace the Machinery Directive No. 2006/42/EC, focusing on the overall safety of machinery and semi-machinery and it will become effective in 2027. It emphasizes the essential integration of cybersecurity into the design and manufacturing processes of machinery, recognizing the potential risks that cyber vulnerabilities pose to physical safety;
+  \item \textbf{Cyber Resilient Act (CRA)}~\footnote{\url{https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=celex:52022PC0454}}: While still pending final approval by the European Institutions, the Cyber Resilient Act seeks to enhance the resilience of the European digital market by ensuring that connected devices and digital services are equipped to withstand cyberattacks effectively. It will become effective in 2027;
+  \item  \textbf{NIS Directive 2}~\footnote{\url{https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32022L2555}}: This directive outlines essential criteria that companies must adhere to in order to maintain a robust level of cybersecurity. These criteria cover the implementation of risk analysis strategies, fortification of information system security, and effective incident management protocols. It is imperative for EU Member States to transpose this directive, with enforcement specified in the respective national acts;
+  \item \textbf{Italian Cybersecurity Law (June 28th, 2024 No. 90)}~\footnote{\url{https://www.gazzettaufficiale.it/eli/id/2024/07/02/24G00108/sg}}: This Italian law pertains to national cybersecurity and applies to both public and private entities whose services are deemed critical. It mandates the implementation of security measures to protect critical digital infrastructures and sensitive information, including specific obligations to notify the Cybersecurity Agency of any cyber incidents;
+  \item \textbf{New Machinery Regulation No. 1230/2023}~\footnote{\url{https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1230}}: This regulation will replace the Machinery Directive No. 2006/42/EC, focusing on the overall safety of machinery and semi-machinery and it will become effective in 2027. It emphasizes the essential integration of cybersecurity into the design and manufacturing processes of machinery, recognizing the potential risks that cyber vulnerabilities pose to physical safety;
 \end{itemize}
 
-This chapter will provide an overview of the most relevant standards and regulations for the context of the internship's researches, focusing on the industrial sector and the required goals; in particular, we will detail more about \textit{IEC 62443}, \textit{ISO 27001} and \textit{CRA}.
+This chapter will provide an overview of the most relevant standards and regulations for the context of the internship's researches, focusing on the industrial sector and the required goals; in particular, we will detail more about \textit{IEC 62443}, \textit{ISO 27001}, \textit{NIS 2} and \textit{CRA}.
 
 \section{IEC 62443}
 
-The IEC 62443 provides guidelines, rules and definitions specifically crafter for any Industrial Control System (ICS) and Industrial Automation and Control Systems (IACS). Compared to ISO 27001, it is more focused on the specific sector instead of being more universal and open for the interpretation depending on the company it applies on.
+The IEC 62443 provides guidelines, rules and definitions specifically crafted for any Industrial Automation and Control Systems (IACS). Compared to ISO 27001, it is more focused on the specific sector instead of being more universal and open for the interpretation depending on the company it applies on.
 
 The market requires the IEC 62443 certification for the companies that are involved in the production of industrial devices, as it is a guarantee of the security of the product and the company itself. 
 
@@ -67,7 +67,7 @@ It is possible to increase the score of the security level by applying more non-
   SR 3.9 RE 1 - Audit records on write-once media: The control system shall provide the capability to produce audit records on hardware-enforced write-once media.
 \end{mdframed}\label{sr:3-3_3-9_re1}
 
-We would like to note that not every SR has exactly four RE; instead, it could be that there are less solutions in order to increase its score. For instance, this is the case for the SR 3.9, which has only one RE and the minimum applicable security level is the level 2, as shown in~\cref{fig:iec-62443_3-3_3_9}.
+We would like to note that not every SR has exactly four RE; instead, it could be that there are less solutions in order to increase its score. For instance, this is the case for the SR 3.9, which has only one RE and the minimum applicable security level is the level 2, as shown in~\cref{fig:iec62443_3-3_3_9}.
 
 \begin{figure}[t]
   \centering
@@ -96,9 +96,10 @@ Conformity with this standard means that an organization or business has put in 
 
 It has been jointly published by the \textit{International Organization for Standardization} (ISO)~\cite{iso} and the \textit{International Electrotechnical Commission} (IEC)~\cite{iec}. The number indicates that it was published under the responsibility of Subcommittee 27 (on Information Security, Cybersecurity and Privacy Protection) of ISO's and IEC's Joint Technical Committee on Information Technology (ISO/IEC JTC 1).
 
-It is widely used around the world; as per the ISO Survey 2022, over 70 000 certificates were reported in 150 countries and from all economic sectors, ranging from agriculture through manufacturing to social services.~\cite{iso-27001}
+It is widely used around the world; as per the ISO Survey 2022, over 70000 certificates were reported in 150 countries and from all economic sectors, ranging from agriculture through manufacturing to social services.~\cite{iso-27001}
 
 \section{NIS Directive 2}
+\label{sec:nis-directive-2}
 
 The Network and Information Security (NIS) Directive is the first piece of EU-wide legislation on cybersecurity, drawn in 2016, and its specific aim was to achieve a high common level of cybersecurity across the Member States. To respond to the growing threats posed with digitalisation and the surge in cyber-attacks, the Commission has submitted a proposal to replace the NIS Directive and thereby strengthen the security requirements, address the security of supply chains, streamline reporting obligations, and introduce more stringent supervisory measures and stricter enforcement requirements, including harmonised sanctions across the EU. NIS 2 entered into force on January 2023, and Member States have until October 2024 to transpose its measures into national law.
 
@@ -112,4 +113,17 @@ The major key features of the updated directive are:~\cite{nis2-directive-faqs}
 
 NIS 2 aims to enhance the resilience of the European digital market, ensuring the continuity of essential services even in the face of sophisticated cyberattacks.
 
+\section{Cyber Resilient Act}
 
+While the cybersecurity of providers of digital services is regulated at EU level by the NIS Directive 2, as analyzed in~\cref{sec:nis-directive-2}, the security of products with digital elements and software products is so far not subject to any comprehensive piece of EU regulation.~\cite{cra-eu}
+
+Therefore, the European Commission proposed the Cyber Resilience Act in 2022; it has been approved in early 2024~\cite{cra-timelinel} and manufacturers have to place compliant products on the Union market by 2027, aiming to enhance the security of ICT products, services and processes.
+
+It applies to products connected directly or indirectly to another device or network except for specified exclusions such as open-source software or services that are already covered by existing rules, which is the case for medical devices, aviation and cars. A non exhaustive list of products that are in scope of the CRA includes:~\cite{cra-overview}
+\begin{itemize}
+  \item \textbf{end devices}: laptops, smartphones, cameras, smart equipments, network equipments, Industrial Automation Control Systems (IACS);
+  \item \textbf{software}: firmware, operating systems, applications;
+  \item \textbf{components}: components like CPUs, video cards and libraries;
+\end{itemize}
+
+With all being said, we now move to the next chapter, where we eiscuss how the directives and the standards we have just analyzed are applied in the context of the company we are working with and the internship project we are involved in.

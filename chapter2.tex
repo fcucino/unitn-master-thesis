@@ -19,25 +19,25 @@ Therefore, software plays a crucial role in providing security, but it is also o
 
 A software system is secure if it satisfies specified security objectives, starting from the CIA triad:
 \begin{itemize}
-  \item Confidenziality: unauthorized actors cannot have access or read the information
-  \item Integrity: unauthorized actors cannot change or alter the information
-  \item Availability: authorized actors can always have access to the information
+  \item \textbf{Confidenziality}: unauthorized actors cannot have access or read the information;
+  \item \textbf{Integrity}: unauthorized actors cannot change or alter the information;
+  \item \textbf{Availability}: authorized actors can always have access to the information;
 \end{itemize}
-The CIA triad is a common model that forms the basis for the development of security systems. They are used for finding vulnerabilities and methods for creating solutions. This differentiation is helpful because it helps guide security teams as they pinpoint the different ways in which they can address each concern.\\
+The CIA triad is a common model that forms the basis for the development of security systems. It is used for finding vulnerabilities and methods for creating solutions. This differentiation is helpful because it helps guide security teams as they pinpoint the different ways in which they can address each concern.\\
 Ideally, when all three standards have been met, the security profile of the organization is stronger and better equipped to handle threat incidents.~\cite{cia-triad}
 
 A secure software is not only composed of the CIA triad; there are also other objectives like~\cite{st-slides}
 \begin{itemize}
-  \item Authentication: who is performing a task
-  \item Authorization: what is that actor allowed to do
-  \item Privacy: controlling personal information from being shared
-  \item Anonymity: remaining unidentified to others
-  \item Non-repudiation: actor cannot deny having taken an action
-  \item Reliability: the extent to which a software yields consistent and results as expected
-  \item Audit: having traces of performed actions in separate systems or places
-  \item Monitoring: observing the system for any unusual activity
-  \item Intrusion detection: detecting unauthorized access
-  \item Intrusion prevention: stopping unauthorized access
+  \item \textbf{Authentication}: who is performing a task;
+  \item \textbf{Authorization}: what is that actor allowed to do;
+  \item \textbf{Privacy}: controlling personal information from being shared;
+  \item \textbf{Anonymity}: remaining unidentified to others;
+  \item \textbf{Non-repudiation}: actor cannot deny having taken an action;
+  \item \textbf{Reliability}: the extent to which a software yields consistent and results as expected;
+  \item \textbf{Audit}: having traces of performed actions in separate systems or places;
+  \item \textbf{Monitoring}: observing the system for any unusual activity;
+  \item \textbf{Intrusion detection}: detecting unauthorized access;
+  \item \textbf{Intrusion prevention}: stopping unauthorized access;
   \item ...and so on
 \end{itemize}
 
@@ -63,7 +63,7 @@ NIST (\textit{National Institute of Standards and Technology}) is a U.S. federal
 
 \subsection{Bugs}
 
-A bug is a flaw in a system that is not behaving as it's designed to do.\\
+A bug is a flaw in a system that is not behaving as it is designed to do.\\
 A vulnerability is a way of abusing the system, in a security-related way, whether that's due to a design fault or an implementation fault, so a bug.
 
 Many security issues are related to vulnerabilities due to bugs, but not all bugs are vulnerabilities. The exploitation is the activity composed by many steps in which an attacker uses a bug to gain its goal.
@@ -97,7 +97,18 @@ The former uses regulations like GDPR, the \textit{General Data Protection Regul
 IT systems can usually be patched with a software update in a short time without severe impact on operations, while OT systems may require a longer time to be patched, as they are often critical to the operation of industrial processes or incompatible with the running legacy systems.
 
 
-Despite their distinct differences, IT vs. OT cybersecurity share similarities and are increasingly overlapping and one approach have not to exclude the other.\\
+Despite their distinct differences, IT vs. OT cybersecurity share similarities and are increasingly overlapping and one approach have not to exclude the other.
+
+According to the \textit{2023 State of Operational Technology and Cybersecurity Report} by Fortinet\footnote{\url{https://www.fortinet.com/}}, as shown in~\cref{fig:fortinet-intrusions-env-impacted}, nearly one-third of of respondents indicated both IT and OT systems were impacted, up from the 21\% in 2022.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[scale=0.8]{chapters/02/assets/fortinet-intrusions-env-impacted.png}
+  \caption[Environments impacted]{Environments impacted}
+  \label{fig:fortinet-intrusions-env-impacted}
+\end{figure}
+
+
 As a general rule, OT devices are traditionally kept separate from the public internet and often internal networks, which meant they could only be accessed by authorized employees. However, it is increasingly possible for OT systems to be controlled and monitored by IT systems or remotely via the internet.~\cite{it-vs-ot-cybersecurity}
 
 \section{Industry 4.0}
@@ -108,11 +119,11 @@ This is the Fourh Industrial Revolution, characterized by increasing automation 
 
 Some specific technologies are pushing this revolution:~\cite{what-is-industry-4-0}
 \begin{itemize}
-  \item Internet of Things (IoT): machines on the factory floor are equipped with boars that allows the machines to connect with remote services, making possible to large amounts of valuable data to be collected, analyzed and exchanged.
-  \item Cloud computing: the typically large amount of data being stored and analyzed can be processed efficiently and cost-effectively with cloud. Cloud computing can also reduce startup costs for small- and medium-sized manufacturers who can right-size their needs and scale as their business grows.
-  \item AI and machine learning: Artifical Intelligence (AI) and machine learning can create insights providing visibility, predictability and automation of operations and business processes. The data collected from these assets can help businesses perform predictive maintenance based on machine learning algorithms, resulting in more uptime and higher efficiency.
-  \item Edge computing: to reduce latency and improve security, edge computing can be used to process the needed data closer to the source, rather than sending it all the raw statistics to the cloud, wasting bandwidth and time.
-  \item Cybersecurity: last but not least, When undergoing a digital transformation to Industry 4.0, it is essential to consider a cybersecurity approach that encompasses IT and OT equipment.
+  \item \textbf{Internet of Things (IoT)}: machines on the factory floor are equipped with boars that allows the machines to connect with remote services, making possible to large amounts of valuable data to be collected, analyzed and exchanged.
+  \item \textbf{Cloud computing}: the typically large amount of data being stored and analyzed can be processed efficiently and cost-effectively with cloud. Cloud computing can also reduce startup costs for small- and medium-sized manufacturers who can right-size their needs and scale as their business grows.
+  \item \textbf{AI and machine learning}: Artifical Intelligence (AI) and machine learning can create insights providing visibility, predictability and automation of operations and business processes. The data collected from these assets can help businesses perform predictive maintenance based on machine learning algorithms, resulting in more uptime and higher efficiency.
+  \item \textbf{Edge computing}: to reduce latency and improve security, edge computing can be used to process the needed data closer to the source, rather than sending it all the raw statistics to the cloud, wasting bandwidth and time.
+  \item \textbf{Cybersecurity}: last but not least, when undergoing a digital transformation to Industry 4.0, it is essential to consider a cybersecurity approach that encompasses IT and OT equipment.
 \end{itemize}
 
 \section{Devices: PLC and HMI}
@@ -132,5 +143,6 @@ There are different types of security scans, including network scans, vulnerabil
 
 Security scans are an important part of a comprehensive security program. They can help organizations identify and address security vulnerabilities before they are exploited by attackers. By regularly performing security scans, organizations can improve their security attitude and reduce the risk of a security breach.
 
+\section{ICS and IACS}
 
-
+ICS and IACS refer respectively to \textit{Industrial Control System} and \textit{Industrial Automation and Control Systems}. In our context, they can be used interchangeably to define the collection of hardware, software and policies that controls and manages the industrial process. Basically, it means that anything interacting with the system influencing its safety, security and operations belong to IACS.~\cite{ics-or-iacs}
