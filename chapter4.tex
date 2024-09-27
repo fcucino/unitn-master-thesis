@@ -10,3 +10,17 @@
 % Go language
 % IEC62443 findings and table
 % Libraries comparison
+
+As a reminder, the internship's company designs and builds industrial devices, as PLC or HMI. Under the hood, every PLC is powered by a custom Linux distribution, provided by ???, that is developed by the internal Research \& Development (R\&D) team.
+
+In order to be able to make the device interacting with the industrial machines, the company provides a proprietary IDE software, needed to scratch projects and deploy them on the device. This software let the user define the inputs and outputs of the device, and the logic that will be executed on the device. In example, the user can define a trigger, an alarm that will be raised when a certain condition is met, a personalized handling of the data received by the many supported protocols, and so on.
+
+Furthermore, the same IDE is used to draw the graphical interface that will be displayed on the HMI, and to define the behavior of the interface itself.\\
+The graphical interface is composed by widgets, that are the building blocks of the interface. The user can define the position of the widgets, their size, their color, and their behavior. The widgets can be buttons, labels, images, graphs or custom-defined ones.
+
+The PLC itself provides a web interface, that can be used to view and change the system settings of the device. In example, the user can change the network settings, the date and time, the management user password, the startup of the services like the SSH server, and much more. The HMI touchscreen, through dedicated gestures, let the user directly interact with the interface on-board. The web interface is powered by REST APIs, which are endpoints that can be called in a RESTful way, meaning with specific HTTP methods like GET, POST, PUT, DELETE that return a JSON response.
+
+For the internship project we will take advantage of the REST APIs to retrieve the status of the device, and to potentially change its settings. The APIs are documented in a Swagger file, that is a JSON file that describes the endpoints, the parameters, the responses, and the authentication needed to call them. The Swagger file is used by the Swagger UI, a web interface that can be used to call the APIs and see the responses.
+
+We can devise two different scenarios: API calls made by a remote host over a network and API calls made by the local host. In the first case, the TLS protocol secures the communication using the public-key authentication first, and then the APIs are protected by a basic authentication, that is the client must provide a management username and its related password. In the second case, the webserver listens over a "plaintext" port only accessible by the same host, and no further authentication is needed.
+
