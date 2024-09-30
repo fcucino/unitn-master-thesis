@@ -31,6 +31,28 @@
 
 % \usepackage{newtxtext,newtxmath} % times new roman
 
+%%MACRO TO REMOVE BEFORE SENDING (smanfredi)
+\usepackage{xcolor}
+\newcommand{\grayst}[1]{{\color{gray}\st{#1}}}
+%%%%%%%%%%%% commenti a piè di pagina
+\newif\ifFIXESON
+\FIXESONtrue %<------COMMENT OUT TO REMOVE FIXES !!!
+\ifFIXESON
+\newcommand{\fixn}[2]{\fixfootnote{\textbf{#1:} #2}}
+\usepackage[draft,inline,nomargin,index]{fixme}
+\else 
+\newcommand{\fixn}[2]{}
+\usepackage[final]{fixme}
+\fi
+\fxsetup{theme=color,mode=multiuser}
+\FXRegisterAuthor{az}{envaz}{\color{blue}AZ}    % Arrigo
+\FXRegisterAuthor{am}{envam}{\color{orange}AM}  % Prof. Alessandro Marchetto
+\FXRegisterAuthor{fc}{envfc}{\color{brown}FC}   % Federico
+% write a footnote using \<author>note{...} -> \fcnote{...} or \aznote{...} or \amnote{...}
+\fxsetup{layout={footnote}}
+\fxusetheme{colorsig}
+%%%%%%%%%%%%
+
 %%%%%%%%%%%%%%
 % support for accented letters
 %
