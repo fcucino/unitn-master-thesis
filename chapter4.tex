@@ -12,17 +12,39 @@ This chapter contains the state-of-the-art of the system, the design of the appl
 % •	Design of the scanning methodology.
   % o	Aspects covered: Outdated OS, outdated libraries (e.g., OpenSSL), outdated software, default or weak credentials, insecure network communication, …
 
+\section{Companies}
+
+The company where we did our internship is located in the province of Verona in Italy. It's owned by a holding group which controls some other companies and startups, all located in the same place. It includes the main company, that is the one that design and produces the industrial devices, and another company. 
+
+The latter is the business where we are legally enrolled in for the internship; it is in charge of the development of a management software that allows these devices to become domotic, that is industrial automation, in order to send and receive data from the cloud, to be able to interact with the device remotely, and to be able to monitor the status of the device. The software is a built-in service running on the hardware, and all the data are collected and sent to the cloud through the company's servers.
+
+Since the businesses are under the same holding group, they share administrative resources and also technical resources. From now on, we refer to the main company talking about standards, regulations and devices, and to the second one talking about the software and the cloud.
+
+\subsection{Cloud software company}
+
+The cloud management software is composed of five main layers, managed by five different teams:
+\begin{itemize}
+  \item \textbf{Device}: it should make easy the adoption of the platform, and it handles all the cloud lifecycle of a device, by managing the device registration and configuration of the service on the hardware and the server-side handling of the collected data to being able to create flexible dashboards and reports;
+  \item \textbf{VPN}: it handles the connection to a device through a VPN, and it is in charge of the security of the connection.;
+  \item \textbf{Apps}: the work of apps team is to increase the value of the platform, by allowing third-parties to integrate their services with the platform, and by creating apps that can be installed on the devices. Customers can craft their own apps by using the provided \textit{Software Development Kit} (SDK), that is a set of tools and documentation;
+  \item \textbf{Core}: it is the core of the platform, and it in responsible for the provided backend REST APIs mainly used for the frontend web site. It also handles the management of the user via a custom \textit{IDentity Provider} (IDP);
+  \item \textbf{Platform}: last but not least, the platform team orchestrate all the infrastructure needed to run the services, and it is in charge of the deployment of the services on the cloud. It is also responsible for the monitoring of the services, and for the security of the development lifecycle and deploy process.
+\end{itemize}
+
+The cloud software is developed using the microservices architecture, that is a design pattern that structures an application as a collection of loosely coupled services. Services can be developed, deployed, and scaled independently.
+
+We were virtually part of the apps team, and we were in charge of developing a scanning tool that can be used to check the security of the devices, and to report the issues to the user.
+
 \section{Initial design}
 
-As a reminder, the internship's company designs and builds industrial devices, as PLC or HMI. Under the hood, every PLC is powered by a custom Linux distribution, provided by \textit{Yocto Project}, an open source collaboration project that helps developers create custom Linux-based systems regardless of the hardware architecture~\cite{yocto-project}, that is developed by the internal \textit{Research \& Development} (R\&D) team.
+Under the hood, every PLC is powered by a custom Linux distribution, provided by \textit{Yocto Project}, an open source collaboration project that helps developers create custom Linux-based systems regardless of the hardware architecture~\cite{yocto-project}, that is developed by the internal \textit{Research \& Development} (R\&D) team.
 
 In order to be able to make the device interacting with the industrial machines, the company provides a proprietary IDE software, needed to scratch projects and deploy them on the device. This software let the user define the inputs and outputs of the device, and the logic that will be executed on the device. In example, the user can define a trigger, an alarm that will be raised when a certain condition is met, a personalized handling of the data received by the many supported protocols, and so on.
 
 Furthermore, the same IDE is used to draw the graphical interface that will be displayed on the HMI, and to define the behavior of the interface itself.\\
 The graphical interface is composed by widgets, that are the building blocks of the interface. The user can define the position of the widgets, their size, their color, and their behavior. The widgets can be buttons, labels, images, graphs or custom-defined ones.
 
-The setup with their IDE software is strictly related to the device interacting with the industrial machines, and it is not the focus of the internship project. The focus is on the device itself, and on the software that runs on it. \\
-Another company of the group is in charge of the development of a management software that allows these devices to become domotic, that is industrial automation, in order to send and receive data from the cloud, to be able to interact with the device remotely, and to be able to monitor the status of the device. The software is a built-in service running on the hardware, and all the data are collected and sent to the cloud through the company's servers.
+The setup with their IDE software is strictly related to the device interacting with the industrial machines, and it is not the focus of the internship project. The focus is on the device itself, and on the software that runs on it.
 
 Given that, at the beginning, our scanning tool cannot be installed and released as a firmware update for the devices, because that would require a modification of the R\&D team's workflow, we decided to develop the scanning tool as an executable binary that can be run on the device itself. It is a \textit{command-line interface} (CLI) tool able to perform the scan and to report an output to the user. Than, the user will be able to fix the issues by itself, by interacting with the device settings.
 
@@ -80,4 +102,35 @@ To better explain our choices and motivations, we now take into account the \tex
 Instead, we now consider the \textit{SR 1.7 - Strength of password-based authentication}. The requirement states that the password must have a minimum length and variety of characters types. We put this assertion in a limbo, because if the user can set a password not respecting the requirement, the tool, which is an intermediate between the user and the backend, cannot enforce the requirement. Than, the issue should be solved by the R\&D team, that should implement a password policy on the backend, and the user should be forced to change the password at the next login.
 
 With this approach, we have identified the checks that the scanning tool should cover for sure from the standard, and we have included them in the backlog of the project.
+
+\section{Agile method}
+
+The \textit{Agile methodology} is a project management philosophy that involves breaking the project into phases and emphasizes continuous collaboration and improvement. Teams follow a cycle of planning, executing, and evaluating. Teams choose agile so they can respond to changes in the marketplace or feedback from customers quickly without derailing a year's worth of plans. The publication of the Agile Manifesto\footnote{\url{https://agilemanifesto.org/}} in 2001 marks the birth of agile as a methodology. Since then, many agile frameworks have emerged such as scrum, kanban, lean, and Extreme Programming (XP). Each embodies the core principles of frequent iteration, continuous learning, and high quality in its own way.~\cite{agile-methodology} \\
+We are now going to explain the Scrum framework.
+
+\subsection{Scrum}
+
+Scrum is an agile project management framework, which is different from Agile, a philosophy.\\
+The definition of scrum is based on empiricism and lean thinking. Empiricism says that knowledge comes from experience and that decisions are made based on what is observed. Lean thinking reduces waste and focuses on essentials. The scrum framework is heuristic; it is based on continuous learning and adjustment to fluctuating factors by acknowledging that the team does not know everything at the start of a project and will evolve through experience. Scrum is structured to help teams naturally adapt to changing conditions and user requirements, with re-prioritization built into the process and short release cycles so your team can constantly learn and improve.~\cite{scrum}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.8\textwidth]{chapters/04/assets/scrum}
+  \caption{Scrum sprint cycle. Taken from \texttt{atlassian.com}}
+  \label{fig:scrum-sprint-cycle}
+\end{figure}
+
+As visible in~\cref{fig:scrum-sprint-cycle}, Scrum is split in four principal phases: the sprint planning, the daily scrum, the sprint review and the sprint retro. \\
+The sprint planning is the initial phase of a sprint, the actual time period when the scrum team works; the team meets and decides what to do in the sprint by placing the tasks from the product backlog to the sprint backlog. The product backlog is a list of all the tasks that need to be done in the project: they could be features, bug fixes, or improvements. Instead, the sprint backlog is a list of tasks that the team has committed to complete in the sprint. \\
+The daily scrum is a daily meeting where the team members synchronize each other. It is usually taken stand-up, as a way to not waste time and to keep the meeting short.\\
+The sprint review and retrospective are the meeting at the end of the sprint where the team shows what they have done and they demonstrates the work to the stakeholders and receives feedback.
+
+% product backlog
+% sprint backlog
+% stories
+
+
+
+
+
 
