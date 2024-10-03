@@ -6,8 +6,8 @@ This chapter contains the state-of-the-art of the system, the design of the appl
   % o	System Settings UI and API to control every aspect of the device
 % •	Agile method, stories, backlog
 
-% Go language
 % IEC62443 findings and table
+% Go language
 % Explanation of the libraries used (Cobra for CLI, Zerolog for logging) and their benefits
 % •	Design of the scanning methodology.
   % o	Aspects covered: Outdated OS, outdated libraries (e.g., OpenSSL), outdated software, default or weak credentials, insecure network communication, …
@@ -58,19 +58,6 @@ For the internship project we will take advantage of the REST APIs to retrieve t
 We can devise two different scenarios: API calls made by a remote host over a network and API calls made by the local host. In the first case, the TLS protocol secures the communication using the public-key authentication first, and then the APIs are protected by a basic authentication, that is the client must provide a management username and its related password. In the second case, the webserver listens over a port only accessible by the same host with no further authentication needed. 
 % TODO: Note about use-cases and security of this approach
 
-\section{\textit{Go} programming language}
-
-\textit{Go} is an open-source programming language supported by Google, designed for building simple, reliable, and efficient software. It is statically typed, compiled, and syntactically similar to C, with the added benefits of built-in concurrency management, garbage collection, memory safety, and a robust standard library plus packages. Go is widely used in cloud computing, web development, and systems programming due to its simplicity, performance, and scalability.~\cite{go-lang-site}~\cite{go-lang-wikipedia}\\
-Go has been released in 2007 by Google, and at the time of writing it is at version \texttt{1.22}.
-
-One of the main reasons for choosing Go for the internship project is its versatility in building executable binaries for multiple platforms, including Windows, macOS, and Linux. Go's cross-compilation capabilities allow the developers to build binaries for different operating systems and architectures from a single codebase, simplifying the deployment process and ensuring compatibility across various platforms. Given that the industrial devices run on different architectures and operating systems, the ability to build cross-platform binaries is essential. The language natively supports the binaries compilation for over 50 combinations of operating systems and architectures~\cite{go-lang-compilation-combo}; given that the majority of the company's devices run either on \texttt{Arm 32bit} or \texttt{Arm 64bit} or \texttt{x86 64bit} architectures, the Go compiler can generate the executables for these architectures with no further configuration needed.
-
-Go's standard library provides comprehensive support for networking, encryption, and concurrency. The built-in packages for HTTP, TLS, and JSON processing simplify the implementation of RESTful APIs, secure communication channels, and data serialization/deserialization, respectively. If additional functionalities are required, the language supports third-party packages through the Go module system; in order to download a custom package, the developer simply reference it in the code via the link to the repository, and the Go compiler will automatically download and install it.
-
-Go also offers a robust testing framework to write unit tests and benchmarks to ensure the reliability and performance of their code. The testing framework is integrated into the language and provides a simple and efficient way to write tests for functions and methods. The testing framework also supports the generation of code coverage reports to identify untested code paths and improve the overall test coverage. Furthermore, Go's testing framework supports the use of table-driven tests, which allow the developer to define test cases in a structured format and iterate over them to execute the tests and also it supports fuzzing, a technique used to discover vulnerabilities in software by providing random or invalid inputs to the program.
-
-Another point in favor is the efficiency of the language. Go is compiled to machine code, which makes it faster than interpreted languages like Python. The language's garbage collection mechanism automatically manages memory allocation and deallocation, reducing the risk of memory leaks and improving the overall performance of the application. The language is more than a full order of magnitude faster than Python, with a smaller memory footprint and faster execution times.~\cite{go-lang-performance}
-
 \section{How IEC 62443 driven the design}
 
 Recalling~\cref{sec:iec-62443}, the IEC 62443 standard provides a comprehensive framework for securing industrial control systems and operational technology networks. In order to perform a step towards the certification of the devices with the standard, the scanning tool must cover at least the aspects of the standard.
@@ -105,32 +92,58 @@ With this approach, we have identified the checks that the scanning tool should 
 
 \section{Agile method}
 
-The \textit{Agile methodology} is a project management philosophy that involves breaking the project into phases and emphasizes continuous collaboration and improvement. Teams follow a cycle of planning, executing, and evaluating. Teams choose agile so they can respond to changes in the marketplace or feedback from customers quickly without derailing a year's worth of plans. The publication of the Agile Manifesto\footnote{\url{https://agilemanifesto.org/}} in 2001 marks the birth of agile as a methodology. Since then, many agile frameworks have emerged such as scrum, kanban, lean, and Extreme Programming (XP). Each embodies the core principles of frequent iteration, continuous learning, and high quality in its own way.~\cite{agile-methodology} \\
-We are now going to explain the Scrum framework.
+The \textit{Agile methodology} is a project management philosophy that involves breaking the project into phases and emphasizes continuous collaboration and improvement. Teams follow a cycle of planning, executing, and evaluating. Teams choose agile so they can respond to changes in the marketplace or feedback from customers quickly without derailing a year's worth of plans. The publication of the Agile Manifesto\footnote{\url{https://agilemanifesto.org}} in 2001 marks the birth of agile as a methodology. Since then, many agile frameworks have emerged such as scrum, kanban or lean. Each embodies the core principles of frequent iteration, continuous learning, and high quality in its own way.~\cite{agile-methodology} \\
+We are now going to explain the Scrum framework, used by the company.
 
 \subsection{Scrum}
 
 Scrum is an agile project management framework, which is different from Agile, a philosophy.\\
 The definition of scrum is based on empiricism and lean thinking. Empiricism says that knowledge comes from experience and that decisions are made based on what is observed. Lean thinking reduces waste and focuses on essentials. The scrum framework is heuristic; it is based on continuous learning and adjustment to fluctuating factors by acknowledging that the team does not know everything at the start of a project and will evolve through experience. Scrum is structured to help teams naturally adapt to changing conditions and user requirements, with re-prioritization built into the process and short release cycles so your team can constantly learn and improve.~\cite{scrum}
 
-\begin{figure}[h]
+Scrum artifacts helps to define the product, what work has to be done to create it and who has to do it. An \textit{epic} is a large body of work that can be broken down into smaller tasks. Each of these tasks is called \textit{story}, and it is a short requirements written from the perspective of an end user. The story is linked to a person of the team that has to carry it out.
+
+The two main artifacts boards are the \textit{product backlog} and the \textit{sprint backlog}. \\
+The former is a list of all the tasks that needs to be done; it is a dynamic list of features, requirements, improvements, fixes and epics, ordered by their priority. Essentially, it is a "\textit{To Do}" list.\\
+The latter is a list of items selected for the current sprint cycle; the sprint cycle is a fixed period of time, usually up to four weeks. Before each sprint, the team selects items from the product backlog to work on. Epics are broken down into stories, and stories are moved from the product backlog to the sprint backlog.~\cite{scrum-epic-stories}
+
+\begin{figure}[t]
   \centering
   \includegraphics[width=0.8\textwidth]{chapters/04/assets/scrum}
   \caption{Scrum sprint cycle. Taken from \texttt{atlassian.com}}
   \label{fig:scrum-sprint-cycle}
 \end{figure}
 
-As visible in~\cref{fig:scrum-sprint-cycle}, Scrum is split in four principal phases: the sprint planning, the daily scrum, the sprint review and the sprint retro. \\
-The sprint planning is the initial phase of a sprint, the actual time period when the scrum team works; the team meets and decides what to do in the sprint by placing the tasks from the product backlog to the sprint backlog. The product backlog is a list of all the tasks that need to be done in the project: they could be features, bug fixes, or improvements. Instead, the sprint backlog is a list of tasks that the team has committed to complete in the sprint. \\
-The daily scrum is a daily meeting where the team members synchronize each other. It is usually taken stand-up, as a way to not waste time and to keep the meeting short.\\
-The sprint review and retrospective are the meeting at the end of the sprint where the team shows what they have done and they demonstrates the work to the stakeholders and receives feedback.
+As visible in~\cref{fig:scrum-sprint-cycle}, Scrum is split in four principal phases:
+\begin{itemize}
+  \item The \textbf{sprint planning} is the initial phase of a sprint, the actual time period when the scrum team works; the team meets and decides what to do in the sprint by placing the tasks from the product backlog to the sprint backlog.
+  \item The \textbf{daily scrum} is a quotidian meeting where the team members synchronize each other. It is usually taken stand-up, as a way to not waste time and to keep the meeting short;
+  \item The \textbf{sprint review} and \textbf{sprint retrospective} are the meetings at the end of the sprint where the team shows what they have done and they demonstrates the work to the stakeholders and receives feedback;
+\end{itemize}
 
-% product backlog
-% sprint backlog
-% stories
+The company takes advantage of the Scrum framework to manage the development of the cloud software, via the \textit{Jira} suite\footnote{\url{https://www.atlassian.com/software/jira}}, a proprietary project management tool developed by Atlassian. The tool is used to manage the product and the sprint backlog, the epics and the stories, and to track the progress of the team. 
+
+Given that we were part of the apps team, together with the business tutor we created a new Epic for the scanning tool and we filled it with the stories that we thought were needed to develop the tool. In this specific case, the sprint period was of two months and the sprint backlog coincides with the product backlog, because of the limited time of the internship. The daily scrum was achieved by a daily quick meeting with the business tutor, where we keep him updated on the progress of the stories. Of course, during the internship, new stories were added to the backlog, and some of them were de-prioritized.
+
+\section{\textit{Go} programming language}
+
+\textit{Go} is an open-source programming language supported by Google, designed for building simple, reliable, and efficient software. It is statically typed, compiled, and syntactically similar to C, with the added benefits of built-in concurrency management, garbage collection, memory safety, and a robust standard library plus packages. Go is widely used in cloud computing, web development, and systems programming due to its simplicity, performance, and scalability.~\cite{go-lang-site}~\cite{go-lang-wikipedia}\\
+Go has been released in 2007 by Google, and at the time of writing it is at version \texttt{1.22}.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.9\textwidth]{chapters/04/assets/golang}
+  \caption{Go logo and mascot. Taken from \texttt{nixsolutions.com}}
+  \label{fig:go-logo-mascot}
+\end{figure}
+
+One of the main reasons for choosing Go for the internship project is its versatility in building executable binaries for multiple platforms, including Windows, macOS, and Linux. Go's cross-compilation capabilities allow the developers to build binaries for different operating systems and architectures from a single codebase, simplifying the deployment process and ensuring compatibility across various platforms. Given that the industrial devices run on different architectures and operating systems, the ability to build cross-platform binaries is essential. The language natively supports the binaries compilation for over 50 combinations of operating systems and architectures~\cite{go-lang-compilation-combo}; given that the majority of the company's devices run either on \texttt{Arm 32bit} or \texttt{Arm 64bit} or \texttt{x86 64bit} architectures, the Go compiler can generate the executables for these architectures with no further configuration needed.
+
+Go's standard library provides comprehensive support for networking, encryption, and concurrency. The built-in packages for HTTP, TLS, and JSON processing simplify the implementation of RESTful APIs, secure communication channels, and data serialization/deserialization, respectively. If additional functionalities are required, the language supports third-party packages through the Go module system; in order to download a custom package, the developer simply reference it in the code via the link to the repository, and the Go compiler will automatically download and install it.
+
+Go also offers a robust testing framework to write unit tests and benchmarks to ensure the reliability and performance of their code. The testing framework is integrated into the language and provides a simple and efficient way to write tests for functions and methods. The testing framework also supports the generation of code coverage reports to identify untested code paths and improve the overall test coverage. Furthermore, Go's testing framework supports the use of table-driven tests, which allow the developer to define test cases in a structured format and iterate over them to execute the tests and also it supports fuzzing, a technique used to discover vulnerabilities in software by providing random or invalid inputs to the program.
+
+Another point in favor is the efficiency of the language. Go is compiled to machine code, which makes it faster than interpreted languages like Python. The language's garbage collection mechanism automatically manages memory allocation and deallocation, reducing the risk of memory leaks and improving the overall performance of the application. The language is more than a full order of magnitude faster than Python, with a smaller memory footprint and faster execution times.~\cite{go-lang-performance}
 
 
-
-
-
+% libraries
 
