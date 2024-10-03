@@ -9,7 +9,7 @@
 % Devices and Constraints
 % What Is a Security Scan
 
-This chapter contains an explanation of many fundamentals terms used in the thesis, without which it would not be possible to fully understand all the covered topics. 
+This chapter contains an explanation of many fundamentals terms used in the thesis, without which it would not be possible to fully understand all the covered topics.
 
 \section{Software vs. Security}
 
@@ -51,7 +51,7 @@ Safety is about protecting from accidental risks, while security is about mitiga
 
 A system is secure as its weakest element. A vulnerability is a weakness in a system that can be exploited by a threat. A threat is a potential danger that can exploit a vulnerability. A threat agent is the actor that can exploit a vulnerability. An attack is the exploitation of a vulnerability by a threat agent. An exploit is the code that takes advantage of a vulnerability.
 
-CVE, which stands for \textit{Common Vulnerabilities and Exposures}, is a list of publicly known cybersecurity vulnerabilities. The CVE system provides a reference-method for publicly known information-security vulnerabilities and exposures. Each CVE entry represents a unique identifier for a specific vulnerability, named \textit{CVE-ID}, making it easier to reference it accross different tools. 
+CVE, which stands for \textit{Common Vulnerabilities and Exposures}, is a list of publicly known cybersecurity vulnerabilities. The CVE system provides a reference-method for publicly known information-security vulnerabilities and exposures. Each CVE entry represents a unique identifier for a specific vulnerability, named \textit{CVE-ID}, making it easier to reference it accross different tools.
 
 An entry is rated via the CVSS score, namely the Common Vulnerability Scoring System, which is a method used to supply a qualitative measure of severity. CVSS is not a measure of risk. CVSS v2.0 and CVSS v3.x consist of three metric groups: Base, Temporal, and Environmental. CVSS v4.0, released in 2023, is a bit different and consists of Base, Threat, Environmental and Supplemental metric groups. Metrics result in a numerical score ranging from 0 to 10. A CVSS assessment is also represented as a vector string, a compressed textual representation of the values used to derive the score.~\cite{cvss-metrics}
 
@@ -69,8 +69,8 @@ A vulnerability is a way of abusing the system, in a security-related way, wheth
 Many security issues are related to vulnerabilities due to bugs, but not all bugs are vulnerabilities. The exploitation is the activity composed by many steps in which an attacker uses a bug to gain its goal.
 
 \section{IT and OT Security}
- 
-IT (\textit{Information Technology}) and OT (\textit{Operational Technology}) focus on protecting different types of systems and they have distinct priorities. 
+
+IT (\textit{Information Technology}) and OT (\textit{Operational Technology}) focus on protecting different types of systems and they have distinct priorities.
 
 IT focuses on managing electronic data, while OT is centered on controlling physical processes and equipment. To better explain, IT is essential for business operations and decision-making and involves the use of computers and software to gather, store, process, share data securely. OT employs hardware and software to monitor and control industrial operations, ensuring efficiency and safety in sectors like manufacturing and energy. It is distinct from Information Technology (IT) as it directly interfaces with industrial equipment and processes, focusing on the physical environment and operational needs.~\cite{paloalto-it-ot-diff}
 
@@ -113,7 +113,7 @@ As a general rule, OT devices are traditionally kept separate from the public in
 
 \section{Industry 4.0}
 
-Industry 4.0, synonymous of \textit{smart manufacturing}, is the realization of the digital transformation of the field, delivering real-time decision making, enhanced productivity, flexibility and agility to revolutionize the way companies manufacture, improve and distribute their products.  
+Industry 4.0, synonymous of \textit{smart manufacturing}, is the realization of the digital transformation of the field, delivering real-time decision making, enhanced productivity, flexibility and agility to revolutionize the way companies manufacture, improve and distribute their products.
 
 This is the Fourh Industrial Revolution, characterized by increasing automation and the employment of smart machines and smart factories. By collecting more data from the factory floor and combining that with other enterprise operational data, a smart factory can achieve information transparency and better decisions.
 
@@ -128,7 +128,7 @@ Some specific technologies are pushing this revolution:~\cite{what-is-industry-4
 
 \section{Devices: PLC and HMI}
 
-Industrial devices are used in many different sectors like manufacturing, energy, transportation, and so on. We can trace back these devices to a common tablet placed on a wall or on a production line, with the difference that these devices support a wide range of industrial protocols. These devices are usually not connected to the internet and they take input from a physical human interaction directly on the place. 
+Industrial devices are used in many different sectors like manufacturing, energy, transportation, and so on. We can trace back these devices to a common tablet placed on a wall or on a production line, with the difference that these devices support a wide range of industrial protocols. These devices are usually not connected to the internet and they take input from a physical human interaction directly on the place.
 
 This type of devices is called HMI, which stands for \textit{Human Machine Interface}, and they are defined as a feature or component of a certain device or software application that enables humans to engage and interact with machines.\\
 Traditionally, in order to integrate a manufacturing line with an HMI, the HMI had to be connected to a Programming Logic Controller (PLC) and the HMI displayed the data received from the PLC and gave the PLC input from users.~\cite{what-is-hmi}

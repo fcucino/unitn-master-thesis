@@ -77,12 +77,12 @@
 
 \begin{document}
 
-  % no page number
-  \pagenumbering{gobble} 
-  \input{front}
+% no page number
+\pagenumbering{gobble}
+\input{front}
 
-  \clearpage
- 
+\clearpage
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Note
@@ -90,13 +90,13 @@
 %% Thanks/Acknowledgements section is optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  \input{acknowledgements}
-  \clearpage
-  \pagestyle{plain} % no heading, footer with centered page number
+\input{acknowledgements}
+\clearpage
+\pagestyle{plain} % no heading, footer with centered page number
 
-  
-  % page number with Arabic format
-  \mainmatter
+
+% page number with Arabic format
+\mainmatter
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -114,34 +114,34 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-    % index
-    \tableofcontents
-    \clearpage
-    
-    
-    
-    % group to define space between chapters
-    \begingroup
-      % no page break between chapters
-      % override clear page commands
-      \renewcommand{\cleardoublepage}{} 
-      \renewcommand{\clearpage}{} 
-      % override format of title chapter
-      % from
-      %   Chapter X
-      %   Title
-      % to
-      %   X   Title
-      
-      \titleformat{\chapter}
-        {\normalfont\Huge\bfseries}{\thechapter}{1em}{}
-        
-      \titlespacing*{\chapter}{0pt}{0.59in}{0.02in}
-      \titlespacing*{\section}{0pt}{0.20in}{0.02in}
-      \titlespacing*{\subsection}{0pt}{0.10in}{0.02in}
-      
-      % summary / abstract
-      \input{abstract}
+% index
+\tableofcontents
+\clearpage
+
+
+
+% group to define space between chapters
+\begingroup
+% no page break between chapters
+% override clear page commands
+\renewcommand{\cleardoublepage}{}
+\renewcommand{\clearpage}{}
+% override format of title chapter
+% from
+%   Chapter X
+%   Title
+% to
+%   X   Title
+
+\titleformat{\chapter}
+{\normalfont\Huge\bfseries}{\thechapter}{1em}{}
+
+\titlespacing*{\chapter}{0pt}{0.59in}{0.02in}
+\titlespacing*{\section}{0pt}{0.20in}{0.02in}
+\titlespacing*{\subsection}{0pt}{0.10in}{0.02in}
+
+% summary / abstract
+\input{abstract}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Note
@@ -154,38 +154,38 @@
 %% the personal contribution of the student has to be underlined.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%      
-      
-      %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-      % chapters
-      %
-      % \input or \include
-      %
-      \input{chapter1}
 
-      \input{chapter2}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% chapters
+%
+% \input or \include
+%
+\input{chapter1}
 
-      \input{chapter3}
+\input{chapter2}
 
-      \input{chapter4}
+\input{chapter3}
 
-      \input{chapter5}
+\input{chapter4}
 
-      \input{chapter6}
+\input{chapter5}
 
-      \input{chapter7}
+\input{chapter6}
 
-      \input{chapter8}
-      
-    \endgroup
+\input{chapter7}
+
+\input{chapter8}
+
+\endgroup
 
 
-    % bibliography - bibtex format
-    %
-    % add chapter to index
-    \addcontentsline{toc}{chapter}{Bibliography}
-    % alphabetical order of authors
-    \bibliographystyle{plain}
-    \bibliography{biblio}
+% bibliography - bibtex format
+%
+% add chapter to index
+\addcontentsline{toc}{chapter}{Bibliography}
+% alphabetical order of authors
+\bibliographystyle{plain}
+\bibliography{biblio}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Nota
@@ -220,12 +220,12 @@
 %%     (day/month/year).   
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    
 
-    % \titleformat{\chapter}
-        % {\normalfont\Huge\bfseries}{Appendix \thechapter}{1em}{}
-    % Appendix / attachment section - optional
-    % \appendix
-    % \input{attachments}
+
+% \titleformat{\chapter}
+% {\normalfont\Huge\bfseries}{Appendix \thechapter}{1em}{}
+% Appendix / attachment section - optional
+% \appendix
+% \input{attachments}
 
 \end{document}

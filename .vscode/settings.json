@@ -31,12 +31,18 @@
   "latex-workshop.latex.recipes": [
     {
       "name": "Full build (latexmk 🔃)",
-      "tools": ["latexmk"]
+      "tools": [
+        "latexmk"
+      ]
     },
     {
       "name": "Quick compile (pdflatex)",
-      "tools": ["pdflatex"]
+      "tools": [
+        "pdflatex"
+      ]
     }
   ],
-  "editor.wordWrap": "on"
+  "editor.wordWrap": "on",
+  "latex-workshop.formatting.latex": "latexindent",
+  "editor.formatOnSave": true
 }
