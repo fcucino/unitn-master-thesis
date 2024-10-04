@@ -37,11 +37,56 @@ We were virtually part of the apps team, and we were in charge of developing a s
 
 \section{Deployment of the microservices}
 
+This section explain how a software can be deployed in a cloud environment, with a focus on the microservices architecture.
+
 % microservices are docker container
 % kubernetes
 % helm
 % CI/CD by testing
+% terraform?
 
+\subsection{Microservice}
+
+The microservice architecture is an architectural style that structures an application as a collection of services that are indipendently deployable and loosely coupled. Independently deployable means that a service is packaged as a executable unit and is production-ready. Loosely coupled means that the different services are not directly dependent on each other, and they can be developed, deployed, and scaled independently.~\cite{microservices-what-are}
+
+\subsection{Virtualization}
+
+Virtualization is a technology that allows the creation of virtual representations of physical resources such as processors, storage devices or network devices. Virtual software mimics the functions of physical hardware, allowing multiple operating systems to run on a single physical machine. Virtualization can increase IT agility, flexibility, and scalability while creating significant cost savings due to the abstracting of the physical hardware.~\cite{virtualization-aws}
+
+Each virtualized environment runs within its allocated resources. There are two main types of virtualization approach: the container-based virtualization and the hypervisor-based virtualization, also known as virtual machines' virtualization.
+
+\subsection{Container vs. Virtual Machine}
+
+A modern and efficient way to execute microservices is to use \textit{containers}. \\
+Containers are lightweight software packages that contain all the dependencies required to execute the contained software application in a virtualized environment. They share the same kernel of the host system, but they are usually isolated from the host and from other containers and they can run different operating system. Another advantage of containers is that they are immutable, meaning that they could be altered after their creation, but the state is restored at each execution, without considering possible further different configuration.\\
+Instead, compared to the containers, \textit{virtual machines}'s goal is to virtualize the entire system hardware, therefore they are slower and heavier - resources side and disk usage side - than containers.
+
+The company uses \textit{Docker}\footnote{\url{https://www.docker.com}} to create, deploy, and run containers. Docker is an application that allows developers to build, package, and run applications as containers.
+
+Docker itself enables the user to instantiate a single container at time from an image, that is a series of instruction that defines the environment of the container, starting from the base operating system up to all the steps needed to install the final software. Since we are talking of a microservices architecture, there is the need to run multiple containers at the same time, and to manage them, from the creation to the destruction up to the recovery in case of failure or the scaling in case of high load. This is where we need an orchestration tool.
+
+\subsection{Orchestration}
+
+The containers are managed by \textit{Kubernetes}\footnote{\url{https://kubernetes.io}}, also known as \textit{K8s}, an open-source container orchestration platform that automates the deployment, scaling, and management of containerized applications. Kubernetes provides a platform for automating the deployment, scaling, and operations of application containers across clusters of hosts. It works with a range of container tools, including Docker. Kubernetes was originally developed by Google, and in 2014 it has been open-sourced.~\cite{kubernetes-overview}
+
+Kubernetes is a powerful tool that allows the user to manage the containers in a declarative way, that is the user declares the desired state of the system, and Kubernetes takes care of the rest. The user can define the number of replicas of a container, the resources needed by the container, the network configuration, the storage configuration, and much more. Kubernetes will take care of the deployment of the containers, the scaling of the containers, the recovery of the containers in case of failure, and the load balancing of the containers.
+
+An instance of Kubernetes is called a \textit{cluster}, and it is composed by a \textit{master node} and one or more \textit{worker nodes}. The master node is in charge of the orchestration of the containers, while the worker nodes are in charge of running the containers. The master node is composed by the API server, the scheduler, the controller manager, and the etcd, that is a distributed key-value store used to store the state of the cluster. The worker nodes are composed by the kubelet, that is the agent that runs on each node and is responsible for the communication between the master node and the worker node, and the kube-proxy, that is a network proxy that runs on each node and maintains network rules.
+
+% \subsection{Helm}
+
+% \textit{Helm}\footnote{\url{https://helm.sh}} is a package manager for Kubernetes that allows the user to define, install, and upgrade Kubernetes applications. Helm uses a packaging format called \textit{charts}, that are a collection of files that describe a set of Kubernetes resources. Helm charts can be used to define the resources needed by the application, the dependencies, the configuration and the hooks that should be executed during the installation.
+
+% Helm is used by the company to deploy the microservices on the Kubernetes cluster.
+
+\subsection{CI/CD}
+
+We said that, to be instantiated, a Docker container needs an image. The image is effectively the software to be executed, and the container is its running instance. The images must be built on the source code of the software and the building process can be automated by a \textit{Continuous Integration} (CI) tool. Later, the images must be pushed to a registry, that is a repository where the images are stored, and the deployment of the images can be automated by a \textit{Continuous Deployment} (CD) tool.
+
+CI and CD are practices that allow the developers to automate the building, testing, and deployment of the software. CI is the practice of integrating the code changes of the developers into a shared repository multiple times a day, and CD is the practice of automatically deploying the code changes to the production environment. CI/CD allows the developers to detect and fix the bugs early, to reduce the risk of integration issues, and to deliver the software faster and more frequently.
+
+The company uses a series of flows to automate the building, testing, and deployment of the software.
+Once the code is pushed to the main or to the developer branch of the repository, the CI tool, hosted on the Github Actions\footnote{\url{https://github.com/features/actions}}, automatically runs the tests and, if successful, build the image for \texttt{amd64} and \texttt{arm64} and it pushes the image to a private container registry, hosted on Google Artifact Registry\footnote{\url{https://cloud.google.com/artifact-registry/docs}}.
 
 
 
