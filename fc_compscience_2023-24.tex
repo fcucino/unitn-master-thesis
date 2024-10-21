@@ -25,13 +25,42 @@
 \usepackage{titlesec} % custom setup title of chapter
 \usepackage{url}
 \usepackage[]{mdframed} % https://tex.stackexchange.com/a/673010
+\surroundwithmdframed[linewidth=0.5pt]{verbatim} % https://texdoc.org/serve/mdframed/0
+
+\usepackage{listings,lipsum}
+\lstset{
+    basicstyle=\ttfamily,
+    frame=tb,
+    columns=flexible,
+    breaklines=true,
+    postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}
+    % #1
+}
+
+\lstdefinestyle{json}{ % https://tex.stackexchange.com/a/336992
+    string=[s]{"}{"},
+    stringstyle=\color{blue},
+    comment=[l]{:},
+    commentstyle=\color{black},
+}
+
+\lstdefinestyle{yaml}{ % https://tex.stackexchange.com/a/654987
+    basicstyle=\color{blue}\ttfamily,
+    rulecolor=\color{black},
+    string=[s]{'}{'},
+    stringstyle=\color{blue},
+    comment=[l]{:},
+    commentstyle=\color{black},
+    morecomment=[l]{-}
+}
+
 
 % Note that you must put this before the \usepackage{hyperref}
 % \usepackage[a-1b,mathxmp]{pdfx}[2018/12/22] % PDF/A
 
 % \usepackage{newtxtext,newtxmath} % times new roman
 
-%%MACRO TO REMOVE BEFORE SENDING (smanfredi)
+%%MACRO TO REMOVE BEFORE SENDING (fcucino)
 \usepackage{xcolor}
 \newcommand{\grayst}[1]{{\color{gray}\st{#1}}}
 %%%%%%%%%%%% commenti a piè di pagina

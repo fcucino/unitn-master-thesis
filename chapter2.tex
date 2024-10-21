@@ -19,7 +19,7 @@ Therefore, software plays a crucial role in providing security, but it is also o
 
 A software system is secure if it satisfies specified security objectives, starting from the CIA triad:
 \begin{itemize}
-  \item \textbf{Confidenziality}: unauthorized actors cannot have access or read the information;
+  \item \textbf{Confidentiality}: unauthorized actors cannot have access or read the information;
   \item \textbf{Integrity}: unauthorized actors cannot change or alter the information;
   \item \textbf{Availability}: authorized actors can always have access to the information;
 \end{itemize}
@@ -138,6 +138,8 @@ In terms of the demands of Industry 4.0, industrial HMIs will also see further i
 
 ICS and IACS refer respectively to \textit{Industrial Control System} and \textit{Industrial Automation and Control Systems}. In our context, they can be used interchangeably to define the collection of hardware, software and policies that control and manage the industrial process. Basically, it means that anything interacting with the system influencing its safety, security and operations belongs to IACS.~\cite{ics-or-iacs}
 
+We use this terminology in the next chapters, especially related to the security regulations of the systems.
+
 \section{Security Scan}
 
 A security scan is a process that looks for vulnerabilities in a system or network. It is a way to identify potential security risks and weaknesses that could be exploited by attackers. Security scans can be performed manually or automatically using specialized tools. The goal of a security scan is to identify vulnerabilities and provide recommendations for improving the security of the system.
@@ -145,6 +147,47 @@ A security scan is a process that looks for vulnerabilities in a system or netwo
 There are different types of security scans, including network scans, vulnerability scans and penetration tests. Network scans are used to identify devices on a network and detect open ports and services. Vulnerability scans are used to identify security vulnerabilities in software and systems. Penetration tests are used to simulate cyberattacks and test the security of a system.
 
 Security scans are an important part of a comprehensive security program. They can help organizations identify and address security vulnerabilities before they are exploited by attackers. By regularly performing security scans, organizations can improve their security attitude and reduce the risk of a security breach.
+
+\subsection{Snyk}
+
+Snyk\footnote{\url{https://snyk.io}} is a security company that provides a platform that enables developers to find and fix vulnerabilities in their code and dependencies. Snyk integrates with popular development tools and workflows, making it easy for developers to identify and address security issues early in the development process.
+
+Snyk offers a range of security tools, including vulnerability scanning, dependency monitoring and container security. The platform provides real-time alerts and recommendations for fixing security issues, helping developers to secure their applications and prevent security breaches.
+
+\section{JSON and YAML}
+
+JSON, acronym of \textit{JavaScript Object Notation}, is a lightweight data-interchange format that is easy for humans to read and write and easy for machines to parse and generate. It is based on a subset of the JavaScript programming language. JSON is often used to exchange data between a server and a web application. It is a text format that is language-independent and can be used with any programming language. JSON is commonly used for configuration files, API responses and data storage.
+
+YAML, a recursive acronym of \textit{YAML Ain't Markup Language}, is a human-readable data serialization format that is usually used for configuration files. It is a superset of JSON and is designed to be more human-readable and easier to write than JSON. It is commonly used in the cloud computing industry for configuration files and infrastructure as code.
+
+\begin{minipage}{\linewidth}
+  \begin{lstlisting}[style=json, caption={JSON example}, label={lst:json-example}]
+{
+  "name": "John",
+  "employed": true,
+  "address": {
+    "city": "Verona",
+    "country": "Italy"
+  },
+  "hobby": ["reading", "running"]
+}
+  \end{lstlisting}
+\end{minipage}
+
+\begin{minipage}{\linewidth}
+  \begin{lstlisting}[style=yaml, caption={YAML example}, label={lst:yaml-example}]
+name: John
+employed: true
+address:
+  city: Verona
+  country: Italy
+hobby:
+  - reading
+  - running
+  \end{lstlisting}
+\end{minipage}
+
+The example in~\cref{lst:json-example} show the data represented in JSON, while~\cref{lst:yaml-example} shows the same data as YAML.
 
 \section{REST API}
 
