@@ -2,4 +2,72 @@
 
 This chapter describes how the system is actually being implemented.
 
+\section{Go language interfaces}
+
+The Go programming language provides a powerful feature called interfaces. An interface is a collection of method signatures that a type, like a struct, can implement. Interfaces allow to define a set of methods that a type must implement to be considered an instance of that interface. This allows to write code that is more flexible, especially for testing purposes.
+
+We setup each one of the checks as a separate interface, so that we can easily test them in isolation and also to make it easier to manage the codebase and add new checks in the future, like if they are modules that can be added or removed from the system.
+
+Therefore, we created different packages for the different categories of modules, like \textit{check} and \textit{version} plus some utility packages like \textit{parsing}, \textit{output} and \textit{mapping}.
+
+The scopes for the different packages are the following:
+
+\begin{itemize}
+  \item \textit{check}: it aggregates the different controls on a property of the device, like the \textit{Check correct time} or the \textit{Check VNC credentials};
+  \item \textit{version}: contains the modules to determine whether the software running on the device is up-to-date or not;
+  \item \textit{parsing}: it handles the parsing of the input parameters, for example the verbose flag or the list of checks to run;
+  \item \textit{output}: it manages the output of the checks, like the output format and the output file;
+  \item \textit{mapping}: contains the effective available mapping for the tool.
+\end{itemize}
+
+The structure of a module is composed by the actual interface, named as \textit{<module>Interface}, where \textit{<module>} is the name of the module, a struct that implements the interface, named as \textit{<module>Struct} and a function that returns an instance of the struct, named as \textit{new<module>}.
+All the fields of the struct are private, and the public method is the one that returns the method of the interface.
+
+A practical example is the \textit{CheckTime} module, that checks if the time of the device is correct. The interface is defined as follows:
+
+\begin{lstlisting}[style=golang]
+type checkTimeInterface interface {
+	checkTime(context.Context) variab.Result
+	getNtpHmiConfig(context.Context) (*hmiDateTimeDto, error)
+	getRealTimeWrapper() (*time.Time, error)
+}
+\end{lstlisting}
+
+The struct is defined as follows:
+
+\begin{lstlisting}[style=golang]
+type checkTimeStruct struct {
+	delta              time.Duration
+	getCliTime         func() (*string, error)
+	getRealTime        func(string, string, string, time.Duration) (*time.Time, error)
+	parameters...
+	timeout            time.Duration
+}
+\end{lstlisting}
+
+There is an instance of the struct that is returned by the function \textit{newCheckTime}:
+
+\begin{lstlisting}[style=golang]
+func newCheckTime() checkTimeInterface {
+	return &checkTimeStruct{
+		delta:              DELTA_DURATION,
+		getCliTime:         getCliTime,
+		getRealTime:        getRealTime,
+		parameters...
+		timeout:            utils.TIMEOUT,
+	}
+}
+\end{lstlisting}
+
+and the public method is the one that returns the method of the interface:
+
+\begin{lstlisting}[style=golang]
+var checkTime checkTimeInterface = newCheckTime()
+
+func CheckTime(ctx context.Context) variab.Result {
+	return checkTime.checkTime(ctx)
+}
+\end{lstlisting}
+
+
 
