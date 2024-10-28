@@ -1,6 +1,6 @@
 \chapter{State of the Art}
 
-This chapter contains the state-of-the-art of the system.
+This chapter describes how the company handles the required processes and takes advantages of the technologies in order to develop the software that runs on the industrial devices and the cloud platform. It also describes the standards and regulations that the company must comply with.
 
 \section{Company}
 
@@ -8,13 +8,13 @@ The company where we did our internship is located in the province of Verona in 
 
 The latter is the business where we are enrolled for the internship; it is in charge of the development of cloud platform that allows these devices to become domotic, that is industrial automation, in order to send and receive data from the cloud, to be able to interact with the device remotely and to be able to monitor the status of the device. The software is a built-in service running on the hardware, and all the data are collected and sent to the cloud through the company's servers.
 
-Since the businesses are under the same holding group, they share administrative resources and also technical resources. From now on, we refer to the main (or first) company talking about standards, regulations and devices, and to the second one talking about the software and the cloud.
+Since the businesses are under the same holding group, they share administrative resources and also technical resources. From now on, we refer to the main (or first) company talking about standards, regulations and devices, and to the (our) second one talking about the software and the cloud.
 
 \subsection{Software company organization}
 
 The cloud management software, developed by the second company, is composed of five main layers and it is managed by five different teams:
 \begin{itemize}
-  \item \textbf{Device}: it should make the adoption of the platform and it handles the cloud lifecycle of a device, by managing the device registration and configuration of the service on the hardware and the server-side handling of the collected data to being able to create flexible dashboards and reports;
+  \item \textbf{Device data}: it should make friendly the adoption of the platform and it handles the cloud lifecycle of a device, by managing the device registration and the handling of the collected data to being able to create flexible dashboards and reports;
   \item \textbf{VPN}: it handles the connection to a device through a VPN and it is in charge of the security of the connection;
   \item \textbf{Apps}: the work of the apps team is to increase the value of the platform, by allowing third parties to integrate their services with the platform and by creating apps that can be installed on the devices. Customers can craft their own apps by using the provided \textit{Software Development Kit} (SDK), that is a set of tools and documentation;
   \item \textbf{Core}: it is the core of the platform and it in responsible for the provided backend REST APIs mainly used for the frontend website. It also handles the management of the user via a custom \textit{IDentity Provider} (IDP);
@@ -23,7 +23,7 @@ The cloud management software, developed by the second company, is composed of f
 
 The cloud software is developed using the microservices architecture, that is a design pattern that structures an application as a collection of loosely coupled services. Services can be developed, deployed and scaled independently.
 
-We were virtually part of the apps team, and we were in charge of developing a scanning tool that can be used to check the security of the devices and to report the issues to the user.
+We were virtually part of the apps team, and we were in charge of developing a scanning tool that can be used to check the security of the devices powered by the cloud management software and to report the potential issues to the customer.
 
 \section{Initial design}
 
@@ -182,12 +182,12 @@ It applies to products connected directly or indirectly to another device or net
 \textit{Go} is an open-source programming language supported by Google, designed for building simple, reliable and efficient software. It is statically typed, compiled and syntactically similar to C, with the added benefits of built-in concurrency management, garbage collection, memory safety and a robust standard library plus packages. Go is widely used in cloud computing and web development due to its simplicity, performance and scalability.~\cite{go-lang-site}~\cite{go-lang-wikipedia}\\
 Go was released in 2007 by Google, and at the time of writing it is at version \texttt{1.22}.
 
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=0.9\textwidth]{chapters/03/assets/golang}
-  \caption{Go logo and mascot. Taken from \texttt{nixsolutions.com}}
-  \label{fig:go-logo-mascot}
-\end{figure}
+% \begin{figure}[h]
+%   \centering
+%   \includegraphics[width=0.9\textwidth]{chapters/03/assets/golang}
+%   \caption{Go logo and mascot. Taken from \texttt{nixsolutions.com}}
+%   \label{fig:go-logo-mascot}
+% \end{figure}
 
 Go's standard library provides comprehensive support for networking, encryption and concurrency. The built-in packages for HTTP, TLS and JSON processing simplify the implementation of RESTful APIs, secure communication channels and data serialization/deserialization, respectively. If additional functionalities are required, the language supports third-party packages through the Go module system; in order to download a custom package, the developer simply references it in the code via the link to the repository and the Go compiler will automatically download and install it.
 

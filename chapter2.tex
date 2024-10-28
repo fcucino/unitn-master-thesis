@@ -39,7 +39,6 @@ Secure software is not only composed of the CIA triad; there are also other obje
   \item \textbf{Monitoring}: observing the system for any unusual activity;
   \item \textbf{Intrusion detection}: detecting unauthorized access;
   \item \textbf{Intrusion prevention}: stopping unauthorized access;
-  \item ...and so on
 \end{itemize}
 
 Total security is unachievable, but the goal is to minimize the risks and the vulnerabilities. The security is a process, not a product, and it is a continuous process.~\cite{st-slides}
@@ -54,7 +53,7 @@ A system is secure as its weakest element. A vulnerability is a weakness in a sy
 
 CVE, which stands for \textit{Common Vulnerabilities and Exposures}, is a list of publicly known cybersecurity vulnerabilities. The CVE system provides a reference method for publicly known information-security vulnerabilities and exposures. Each CVE entry represents a unique identifier for a specific vulnerability, named \textit{CVE-ID}, making it easier to reference it across different tools.
 
-Each CVE entry is evaluated using the CVSS score, which stands for \textit{Common Vulnerability Scoring System}. This system provides a standardized way to assess the severity of vulnerabilities. It is important to note that CVSS measures severity, not risk. CVSS v2.0 and CVSS v3.x include three metric groups: Base, Temporal and Environmental. The latest version, CVSS v4.0, introduced in 2023, includes Base, Threat, Environmental and Supplemental metric groups. The Base metrics evaluate the intrinsic characteristics of a vulnerability that are constant over time and across user environments. The Temporal metrics adjust the valutation based on factors like patch availability and exploit code. The Environmental metrics allow organizations to customize the score based on their unique environment.\\
+Each CVE entry is evaluated using the CVSS score, which stands for \textit{Common Vulnerability Scoring System}. This system provides a standardized way to assess the severity of vulnerabilities. It is important to note that CVSS measures severity, not risk. CVSS v2.0 and CVSS v3.x include three metric groups: Base, Temporal and Environmental. The Base metrics evaluate the intrinsic characteristics of a vulnerability that are constant over time and across user environments. The Temporal metrics adjust the valutation based on factors like patch availability and exploit code. The Environmental metrics allow organizations to customize the score based on their unique environment. The latest version, CVSS v4.0, introduced in 2023, includes Base, Threat, Environmental and Supplemental metric groups. Compared to the previous version, the Threat metrics evaluate the likelihood of an attacker exploiting the vulnerability, the Environmental metrics evaluate the impact of the vulnerability on the organization's unique environment and the Supplemental ones provide additional information about the vulnerability.~\cite{cvss-4-spec}\\
 The metrics produce a numerical score from 0 to 10, and the assessment is also represented as a vector string, which is a concise textual representation of the values used to calculate the score.~\cite{cvss-metrics}
 
 % TODO: Add CVEs for year or some statistics in general
@@ -76,25 +75,13 @@ IT (\textit{Information Technology}) and OT (\textit{Operational Technology}) fo
 IT is primarily concerned with managing electronic data, supporting business operations and facilitating decision-making through the use of computers and software to securely gather, store, process and share information. In contrast, OT focuses on controlling physical processes and equipment, ensuring efficiency and safety in industrial operations such as manufacturing and energy. Unlike IT, OT directly interfaces with industrial machinery and processes, addressing the physical environment and operational requirements.~\cite{paloalto-it-ot-diff}
 
 We can devise some comparison points between the two types:
-\subsection{Primary priorities}
-
-IT security prioritizes Confidentiality, Integrity and Availability (CIA), with the main focus set to protect data from breaches and authorized actions, while OT security prioritizes Availability, Integrity and Confidentiality (AIC), ensuring the continuous operation of critical systems with safety and reliability being more important than data confidentiality.
-
-\subsection{Impact of Security Breaches}
-
-IT breaches typically affect data confidentiality and may result in privacy violations, financial losses or business disruptions. OT breaches can have severe direct consequences, including physical damage and environmental harm.
-
-\subsection{Security Measures}
-
-IT security can use cybersecurity tools such as firewalls, antivirus, encryption and user authentication. Instead, OT security should require specialized tools like network segmentation, strict access control and real-time monitoring.
-
-\subsection{Regulatory Requirements}
-
-The former uses regulations like GDPR, the \textit{General Data Protection Regulation} to protect personal data for a European citizen and standards like ISO-27001, while the latter follows regulations and standards like the IEC 62443, which is a series of standards for industrial automation and control systems management and security. More on these regulations in the next chapters.
-
-\subsection{Vulnerability management}
-
-IT systems can usually be patched with a software update in a short time without severe impact on operations, while OT systems may require a longer time to be patched, as they are often critical to the operation of industrial processes or incompatible with the running legacy systems.
+\begin{enumerate}
+  \item \textbf{Primary priorities}: IT security prioritizes Confidentiality, Integrity and Availability (CIA), with the main focus set to protect data from breaches and authorized actions, while OT security prioritizes Availability, Integrity and Confidentiality (AIC), ensuring the continuous operation of critical systems with safety and reliability being more important than data confidentiality.
+  \item \textbf{Impact of Security Breaches}: IT breaches typically affect data confidentiality and may result in privacy violations, financial losses or business disruptions. OT breaches can have severe direct consequences, including physical damage and environmental harm.
+  \item \textbf{Security Measures}: IT security can use cybersecurity tools such as firewalls, antivirus, encryption and user authentication. Instead, OT security should require specialized tools like network segmentation, strict access control and real-time monitoring.
+  \item \textbf{Regulatory Requirements}: The former uses regulations like GDPR, the \textit{General Data Protection Regulation} to protect personal data for a European citizen and standards like ISO-27001, while the latter follows regulations and standards like the IEC 62443, which is a series of standards for industrial automation and control systems management and security. More on these regulations in the next chapters.
+  \item \textbf{Vulnerability management}: IT systems can usually be patched with a software update in a short time without severe impact on operations, while OT systems may require a longer time to be patched, as they are often critical to the operation of industrial processes or incompatible with the running legacy systems.
+\end{enumerate}
 
 Despite their distinct differences, IT vs. OT cybersecurity share similarities and are increasingly overlapping and one approach has not to exclude the other.
 
@@ -127,10 +114,10 @@ Some specific technologies are pushing this revolution:~\cite{what-is-industry-4
 
 \section{Industrial devices: PLC and HMI}
 
-Industrial devices are used in many different sectors like manufacturing, energy, transportation and so on. We can trace back these devices to a common tablet placed on a wall or on a production line, with the difference that these devices support a wide range of industrial protocols. These devices are usually not connected to the internet and they take input from a physical human interaction directly on the place.
+Industrial devices are used in many different sectors like manufacturing, energy, transportation and so on. We can trace back these devices to a common tablet placed on a wall or on a production line, with the difference that these devices support a wide range of industrial protocols. These devices are usually not connected to the internet and they take input from a physical human interaction physically on the place.
 
-This type of device is called HMI, which stands for \textit{Human Machine Interface}, and they are defined as a feature or component of a certain device or software application that enables humans to engage and interact with machines.\\
-Traditionally, to integrate a manufacturing line with an HMI, the HMI had to be connected to a Programming Logic Controller (PLC) and the HMI displayed the data received from the PLC and gave the PLC input from users.~\cite{what-is-hmi}
+These type of devices are an example of HMI, which stands for \textit{Human Machine Interface}, and they are defined as a feature or component of a certain entity that enables humans to engage and interact with machines. In the past HMIs started to be command line interfaces handled by a keyboard, then they evolved to graphical user interfaces with the support for the mouse navigation and now they are touchscreens, where the end-user directly touches the screen.\\
+Traditionally, to integrate a manufacturing line with an HMI, the HMI had to be connected to a \textit{Programming Logic Controller} (PLC) to display the data received from the PLC and gave the PLC input from users.~\cite{what-is-hmi}
 
 In terms of the demands of Industry 4.0, industrial HMIs will also see further incorporation of new and emerging technologies that are impacting HMIs as a whole. First of all, there is the need to start integrating the Internet of Things (IoT) into industrial HMIs. This will allow for the collection of data from the factory floor and the ability to analyze that data in real time. This will also allow for the ability to control the factory floor from a remote location. Of course, making these devices connected to the internet makes the risks of cyberattacks higher.
 
@@ -140,11 +127,11 @@ ICS and IACS refer respectively to \textit{Industrial Control System} and \texti
 
 We use this terminology in the next chapters, especially related to the security regulations of the systems.
 
-\section{Security Scan}
+\section{Security vulnerabilities scan}
 
-A security scan is a process that looks for vulnerabilities in a system or network. It is a way to identify potential security risks and weaknesses that could be exploited by attackers. Security scans can be performed manually or automatically using specialized tools. The goal of a security scan is to identify vulnerabilities and provide recommendations for improving the security of the system.
+A security vulnerabilities scan is a process that looks for vulnerabilities in a system or network. It is a way to identify potential security risks and weaknesses that could be exploited by attackers. The scans can be performed manually or automatically using specialized tools. The goal of a this type of scan is to identify vulnerabilities and provide recommendations for improving the security of the system.
 
-There are different types of security scans, including network scans, vulnerability scans and penetration tests. Network scans are used to identify devices on a network and detect open ports and services. Vulnerability scans are used to identify security vulnerabilities in software and systems. Penetration tests are used to simulate cyberattacks and test the security of a system.
+There are also different types of security scans, including network scans and penetration tests. Network scans are used to identify devices on a network and detect open ports and services while penetration tests are used to simulate cyberattacks and test the security of a system.
 
 Security scans are an important part of a comprehensive security program. They can help organizations identify and address security vulnerabilities before they are exploited by attackers. By regularly performing security scans, organizations can improve their security attitude and reduce the risk of a security breach.
 
@@ -203,6 +190,15 @@ This section explains how a software can be deployed in a cloud environment, wit
 
 Microservice architecture is an architectural style that organizes an application into a set of services that can be deployed independently and are loosely coupled. This means each service is packaged as an executable unit ready for production and that the services do not have direct dependencies on each other, allowing for independent development, deployment and scaling.~\cite{microservices-what-are}
 
+Doing so, there is no need to scale or deploy the entire application when only a part of it needs to be updated or scaled. This approach allows for faster development and deployment cycles, as well as improved fault tolerance and scalability. The concept is shown in~\cref{fig:monolith-microservices}.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[scale=0.6]{chapters/02/assets/monolith-microservices.png}
+  \caption[Breaking a monolithic application into microservices]{Breaking a monolithic application into microservices. Image by \texttt{aws.amazon.com}}
+  \label{fig:monolith-microservices}
+\end{figure}
+
 \subsection{Virtualization}
 
 Virtualization is a technology that enables the creation of virtual versions of physical resources such as processors, storage devices, or network components. By simulating the functions of physical hardware, virtualization allows multiple operating systems to run on a single physical machine. This approach enhances IT agility, flexibility and scalability, while also providing significant cost savings by abstracting the underlying physical hardware.~\cite{virtualization-aws}
@@ -221,7 +217,7 @@ Docker itself enables the user to instantiate a single container at time from an
 
 \subsection{Orchestration}
 
-The containers are managed by \textit{Kubernetes}\footnote{\url{https://kubernetes.io}}, also known as \textit{K8s}, an open-source container orchestration platform that provides a platform for automating the deployment, scaling and operations of application containers across clusters of hosts. It works with a range of container tools, including Docker. Kubernetes was originally developed by Google, and in 2014 it has been open-sourced.~\cite{kubernetes-overview}
+The containers can be managed by \textit{Kubernetes}\footnote{\url{https://kubernetes.io}}, also known as \textit{K8s}, an open-source container orchestration platform that provides a platform for automating the deployment, scaling and operations of application containers across clusters of hosts. It works with a range of container tools, including Docker. Kubernetes was originally developed by Google, and in 2014 it has been open-sourced.~\cite{kubernetes-overview}
 
 Kubernetes is a powerful tool that allows the user to manage the containers in a declarative way, that is the user declares the desired state of the system, and Kubernetes takes care of the rest. The user can define the number of replicas of a container, the resources needed by the container, the network configuration, the storage configuration and much more. Kubernetes will take care of the deployment of the containers, the scaling of the containers, the recovery of the containers in case of failure and the load balancing of the containers.
 
@@ -233,7 +229,7 @@ Every action towards the cluster is performed through the API calls to the API s
 
 \textit{Helm}\footnote{\url{https://helm.sh}} is a package manager for Kubernetes that allows the user to define, install and upgrade Kubernetes applications. Helm uses a packaging format called \textit{charts}, that are a collection of files that describe a set of Kubernetes resources. Helm charts can be used to define the resources needed by the application, the dependencies, the configuration and the hooks that should be executed during the installation.
 
-Helm is used by the company to deploy the microservices on the Kubernetes cluster.
+Helm can be used to deploy the microservices on the Kubernetes cluster.
 
 \subsection{CI/CD}
 
@@ -241,7 +237,7 @@ We said that to be instantiated a Docker container needs an image. The image is 
 
 CI and CD are practices that allow the developers to automate the building, testing and deployment of the software. CI is the practice of integrating the code changes of the developers into a shared repository multiple times a day, and CD is the practice of automatically deploying the code changes to the production environment. CI/CD allows the developers to detect and fix the bugs early, to reduce the risk of integration issues and to deliver the software faster and more frequently.
 
-The company uses a series of flows to automate the building, testing and deployment of the software.
+A series of flows can be usedm to automate the building, testing and deployment of the software.
 Once the code is pushed to the main or to the developer branch of the repository, the CI tool, hosted on the GitHub Actions\footnote{\url{https://github.com/features/actions}}, automatically runs the tests and, if successful, builds the image for \texttt{amd64} and \texttt{arm64} and it pushes the image to a private container registry, hosted on Google Artifact Registry\footnote{\url{https://cloud.google.com/artifact-registry/docs}}.
 
 % terraform?
