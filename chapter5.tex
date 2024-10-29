@@ -18,6 +18,7 @@ The scopes for the different packages are the following:
   \item \textit{parsing}: it handles the parsing of the input parameters, for example the verbose flag or the list of checks to run;
   \item \textit{output}: it manages the output of the checks, like the output format and the output file;
   \item \textit{mapping}: contains the effective available mapping for the tool.
+  \item \textit{variab} and \textit{utils}: are utility packages that contain some common structures and functions that are used across the codebase.
 \end{itemize}
 
 The structure of a module is composed by the actual interface, named as \textit{<module>Interface}, where \textit{<module>} is the name of the module, a struct that implements the interface, named as \textit{<module>Struct} and a function that returns an instance of the struct, named as \textit{new<module>}.
@@ -37,11 +38,11 @@ The struct is defined as follows:
 
 \begin{lstlisting}[style=golang]
 type checkTimeStruct struct {
-	delta              time.Duration
-	getCliTime         func() (*string, error)
-	getRealTime        func(string, string, string, time.Duration) (*time.Time, error)
-	parameters...
-	timeout            time.Duration
+	delta             time.Duration
+	getCliTime        func() (*string, error)
+	getRealTime       func(string, string, string, time.Duration) (*time.Time, error)
+	[omitted]
+	timeout           time.Duration
 }
 \end{lstlisting}
 
@@ -50,11 +51,11 @@ There is an instance of the struct that is returned by the function \textit{newC
 \begin{lstlisting}[style=golang]
 func newCheckTime() checkTimeInterface {
 	return &checkTimeStruct{
-		delta:              DELTA_DURATION,
-		getCliTime:         getCliTime,
-		getRealTime:        getRealTime,
-		parameters...
-		timeout:            utils.TIMEOUT,
+		delta:          DELTA_DURATION,
+		getCliTime:     getCliTime,
+		getRealTime:    getRealTime,
+		[omitted]
+		timeout:        utils.TIMEOUT,
 	}
 }
 \end{lstlisting}
@@ -69,5 +70,91 @@ func CheckTime(ctx context.Context) variab.Result {
 }
 \end{lstlisting}
 
+% Some of the variables are omitted for brevity. The other ones come from both some constants and some utility variables defined accross the codebase. 
+The interface has a method that checks if the time of the device is correct, and it returns a \textit{variab.Result} struct that contains the result of the check.
+
+The \textit{Result} structure of the package \textit{variab} is a common structure that is used to return the result of the checks. It contains the a concise message for the output, an optional recommendation to solve the issue, a severity level ranging from \textit{none} to \textit{high} and an operation status, where \textit{OK} means that the module completed the task without noticing any vulnerability, \textit{ISSUE} means that the module contains a potential weakness, \textit{EXECUTION\_ERROR} in the case of a unhandled exception, \textit{UNKNOWN} otherwise. This structure is used by all the modules to return the result of a module.
+
+\begin{lstlisting}[style=json, caption={Result struct}]
+{
+  "message": string,
+  "recommendation": string,
+  "severity": none|low|moderate|high,
+  "status": OK|ISSUE|EXECUTION_ERROR|UNKNOWN
+}
+\end{lstlisting}
+
+This composition is common to all the modules, and it allows to easily test the modules in isolation, by mocking the dependencies of the struct. This is done by creating a new struct that implements the same interface, but with mocked methods, and then injecting this struct in the test. This way, we can test the module without having to actually run the code that is being mocked. This is a powerful feature of the Go language that allows to write more robust and maintainable code. More to follow about the testing phase in the next chapter.
+
+\subsection{CheckTime module}
+
+The \textit{CheckTime} module checks if the datetime of the device is correct. This is a fundamental thing to verify because the issues with the devices not connecting to the internet and to the cloud are most of the time due to the incorrect datetime, leading to an error with the SSL certificate. In fact, if the date is not correct, the SSL certificate could result as expired or not yet valid.
+
+It does so by getting the time from the device and the real time from a remote server, and then comparing the two times. If the difference between the two times is greater than a certain threshold, expressed in a range of few minutes, then the module returns an \textit{ISSUE} status, otherwise it returns an \textit{OK} status. Of course, this module works with an active internet connection only; if the device is not connected to the internet, then the module returns a valid execution error.
+
+To perform the execution, it execute the following steps:
+\begin{itemize}
+  \item first it gets the UNIX timestamp by executing a command on the local shell of the device and listening to the standard output channel;
+  \item then it call a remote endpoint that returns the real datetime;
+  \item it parses the two datetimes;
+  \item finally, it compares them and returns the result.
+\end{itemize}
+
+If any of the steps fails, then the module returns the status corresponding to a execution error.
+
+% proxy network call qui?
+
+\subsection{JSON output}
+
+Every module returns a structure representing the result of the execution, a brief message and a recommendation to solve the potential issue. The modules runner collects all the results from the modules in a map of maps, in order to have the direct mapping of the result of the module under the category and the name of the module.
+
+The resulting map is therefore given to the output package, that is responsible for the output of the results in the desired format. The default format is JSON, but it can be easily extended to support other formats like YAML by importing or implementing the corresponding marshaler, that is a function that the enconding of an \textit{any} value to the desired format.
+
+By default, the output is printed to the standard output of the terminal, but it can be redirected to a file by using the \textit{-o} flag. The output can be printed in a pretty format by using the \textit{--pretty} flag, useful for human readability. Anyway, the predefined formatting is minified.
+
+The list of the active modules is available with the command \texttt{./scantool list}, printed in the standard output of the terminal, one for line.
+
+For example, given the execution of the datetime module only, issued with the command \texttt{./scantool scan -l "check.time" --pretty} with no further parameters, the output could be the following:
+
+\begin{lstlisting}[style=json, caption={Output of the datetime module}]
+{
+"check": {
+  "time": {
+    "message": "The current datetime is synced",
+    "recommendation": "No action required",
+    "severity": "none",
+    "status": "OK"
+  }
+}
+\end{lstlisting}
+
+\section{Cross build script}
+
+The Go programming language provides a powerful feature called cross-compilation. This allows to build the binary for a different architecture than the one of the machine that is building it. This is useful to build the binary for a different architecture, like ARM, that is the architecture of some of the devices that we are going to use for debugging purposes.
+
+Go provides the built-in command \texttt{go build <file>} that builds the binary for the current architecture, but it also provides the \texttt{GOOS} and \texttt{GOARCH} environment variables that can be set to the desired values to build the binary for a different architecture.
+
+The former is the operating system, and the latter is the architecture. Possible values useful for the project are \texttt{linux} for the operating system and \textit{arm}, \textit{arm64} and \textit{amd64} for the architecture. All the available values can be found in the official documentation of the Go programming language.~\cite{go-valid-goos-goarch-combinations}
+
+By default, the binary includes debug symbols, that are useful for debugging purposes, but they are not necessary for the production environment. They increase the size of the binary of several megabytes, and they are not needed for the end user. In particular, we add two flags to the build command:~\cite{go-ldflags-all,go-ldflags-s-w}
+\begin{itemize}
+  \item \texttt{-s} turns off generation of the Go symbol table;
+  \item \texttt{-w} turns off debugging information, not being able to trace the resulting binary with the \texttt{gdb} debugger.
+\end{itemize}
+
+In the context of the automatic pipeline that builds the binary for the different architectures, we also inject the version number of the binary in the build command, by using the \texttt{-X importpath.name=value} flag. This flag allows to set the value of the string variable in \textit{importpath} named name to \textit{value}.~\cite{go-ldflags-all}
+
+Furthermore, we also explicitly set the environment variable \texttt{CGO\_ENABLED=0} to disable the use of the machine C compiler. Anyway, that is disabled by default when cross-compiling and the go builder chooses the appropriate compiler for the target architecture.~\cite{go-cgo-compiler}
+
+Finally, we set the \texttt{-trimpath} flag to remove the absolute path of the source files from the binary, in order to make the binary reproducible. This is a good practice to follow, as it does not leak any information about the source code and the environment where the binary was built.~\cite{go-trimpath-arg}
+
+The resulting binary for each architecture is placed in a tree of directory, where the root directory is the version of the binary, and the subdirectories are the architectures. The filename of the binary is the same as the name of the project, that is \texttt{scantool}.
+
+The final build command is the following:
+\begin{lstlisting}[caption={Go tool cross-build command}]
+  env GOOS=$GOOS GOARCH=$GOARCH CGO_ENABLED=0 go build -trimpath -ldflags="-s -w -X 'main.VERSION=$version'" -o $output_base_dir/$version/$arch/$filename main.go
+\end{lstlisting}
+
+The difference between the size of a build without any optimization and a optimized build is quite relevant. Taking as example the architecture \textit{arm64} on the \textit{Linux} operating system, the former takes 12MB and the latter takes 7.7MB. On industrial devices, such size difference matters a lot in terms of storage and used bandwidth to download it on the fly when needed.
 
 
