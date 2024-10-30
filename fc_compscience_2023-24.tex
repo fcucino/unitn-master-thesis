@@ -84,6 +84,11 @@
     language=Golang % this is it !
 }
 
+% disable ligatures -- and --- of all fonts
+% https://tex.stackexchange.com/a/36702 
+\usepackage{microtype}
+\DisableLigatures[-]{}
+
 
 % Note that you must put this before the \usepackage{hyperref}
 % \usepackage[a-1b,mathxmp]{pdfx}[2018/12/22] % PDF/A

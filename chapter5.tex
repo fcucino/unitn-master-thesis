@@ -21,7 +21,7 @@ The scopes for the different packages are the following:
   \item \textit{variab} and \textit{utils}: are utility packages that contain some common structures and functions that are used across the codebase.
 \end{itemize}
 
-The structure of a module is composed by the actual interface, named as \textit{<module>Interface}, where \textit{<module>} is the name of the module, a struct that implements the interface, named as \textit{<module>Struct} and a function that returns an instance of the struct, named as \textit{new<module>}.
+The structure of a module is composed by the actual interface, named as \textit{<module>Interface}, where \textit{<module>} is the name of the module, a struct that implements the interface, named as \textit{<module>Struct} and a function that returns an instance of the struct, named as \textit{new<Module>}.
 All the fields of the struct are private, and the public method is the one that returns the method of the interface.
 
 A practical example is the \textit{CheckTime} module, that checks if the time of the device is correct. The interface is defined as follows:
@@ -88,19 +88,19 @@ This composition is common to all the modules, and it allows to easily test the 
 
 \subsection{CheckTime module}
 
-The \textit{CheckTime} module checks if the datetime of the device is correct. This is a fundamental thing to verify because the issues with the devices not connecting to the internet and to the cloud are most of the time due to the incorrect datetime, leading to an error with the SSL certificate. In fact, if the date is not correct, the SSL certificate could result as expired or not yet valid.
+The \textit{CheckTime} module checks if the datetime of the device is correct. This is a fundamental thing to verify because the issues with the devices not connecting to the internet and to the cloud are most of the time due to the incorrect datetime, leading to an error with the SSL certificate. In fact, if the date is not correct, the SSL certificate could result as expired or not yet valid, warning the user that the connection is not secure.
 
 It does so by getting the time from the device and the real time from a remote server, and then comparing the two times. If the difference between the two times is greater than a certain threshold, expressed in a range of few minutes, then the module returns an \textit{ISSUE} status, otherwise it returns an \textit{OK} status. Of course, this module works with an active internet connection only; if the device is not connected to the internet, then the module returns a valid execution error.
 
-To perform the execution, it execute the following steps:
+To perform the execution, it runs the following steps:
 \begin{itemize}
-  \item first it gets the UNIX timestamp by executing a command on the local shell of the device and listening to the standard output channel;
-  \item then it call a remote endpoint that returns the real datetime;
+  \item first, it gets the UNIX timestamp, a integer number representing the elapsed seconds since 1\textsuperscript{st} January 1970, by executing the command \texttt{date +\%s} on the local shell;
+  \item then it calls a remote endpoint that returns the real datetime;
   \item it parses the two datetimes;
-  \item finally, it compares them and returns the result.
+  \item finally, it compares their difference and returns the result.
 \end{itemize}
 
-If any of the steps fails, then the module returns the status corresponding to a execution error.
+If any of the steps fails, the module returns the execution error status.
 
 % proxy network call qui?
 
@@ -110,7 +110,7 @@ Every module returns a structure representing the result of the execution, a bri
 
 The resulting map is therefore given to the output package, that is responsible for the output of the results in the desired format. The default format is JSON, but it can be easily extended to support other formats like YAML by importing or implementing the corresponding marshaler, that is a function that the enconding of an \textit{any} value to the desired format.
 
-By default, the output is printed to the standard output of the terminal, but it can be redirected to a file by using the \textit{-o} flag. The output can be printed in a pretty format by using the \textit{--pretty} flag, useful for human readability. Anyway, the predefined formatting is minified.
+By default, the output is printed to the standard output of the terminal, but it can be redirected to a file by using the \texttt{-o} flag. The output can be printed in a pretty format by using the \texttt{--pretty} flag, useful for human readability. Anyway, the predefined formatting is minified.
 
 The list of the active modules is available with the command \texttt{./scantool list}, printed in the standard output of the terminal, one for line.
 
@@ -156,5 +156,201 @@ The final build command is the following:
 \end{lstlisting}
 
 The difference between the size of a build without any optimization and a optimized build is quite relevant. Taking as example the architecture \textit{arm64} on the \textit{Linux} operating system, the former takes 12MB and the latter takes 7.7MB. On industrial devices, such size difference matters a lot in terms of storage and used bandwidth to download it on the fly when needed.
+
+\section{Scan OS version}
+
+The custom board of the industrial devices powers a custom Linux distribution, that is based on the Yocto Project. The updates are managed by the internal department of the company, with a internal version manager. The updates are not automatic, and they have to be requested by the customer.
+
+This module monitors whether the operating system is at its latest version or not. Given that the estimated work to implement it as a single block is not trivial, we can split it into two different specializations: the first one is the one that checks the version of the operating system by retrieving the build date, and the second one is the one that checks the version of the operating system by reading the online repository.
+
+The Device Settings API, a set of endpoints used to retrieve the information about the status of the device and to potentially change them, provides among other things the version number and the build date of the operating system. There is the \texttt{/api/v1/management/mainos} endpoint that returns a JSON object structured as follows:
+
+\begin{lstlisting}
+{
+  "version": "4.2.323",
+  "date": "2024-04-17T06:00:00.000Z"
+}
+\end{lstlisting}
+
+The module is implemented by the \textit{versionOsInterface} and \textit{versionOsStruct} structure. The interface is defined as:
+
+\begin{lstlisting}[style=golang]
+type versionOsInterface interface {
+  getOsInfo(context.Context) (*versionOsApiDto, error)
+  checkOsVersion(context.Context) variab.Result
+}
+\end{lstlisting}
+
+and the structure is composed by the following fields:
+
+\begin{lstlisting}[style=golang]
+type versionOsStruct struct {
+  xMonthAgo      int
+  [omitted]
+}
+\end{lstlisting}
+
+The \textit{xMonthAgo} field is the threshold expressed in a range of few months. The \textit{getOsInfo} method retrieves the information about the operating system from the Device Settings API, and the \textit{checkOsVersion} method actually perform the comparison.
+
+\subsection{Offline date based}
+
+The first specialization of the module checks the version of the operating system by reading the build date of the system. This is done by retrieving the build date of the system from the Device Settings API, that is the \textit{date} field of the API response. The date is then compared with the current date, and if the difference is greater than a certain threshold then the module returns an issue, otherwise it returns an OK status throug the \textit{Result} structure.
+
+\subsection{Online version based}
+
+This specialization should compare the local version of the operating system with the latest version available somewhere online. Since the company does not provide a public repository for the updates, this module cannot be implemented yet. The idea is to have a list of the latest versions for the different devices models and to compare the local version with the latest one. If the local version is not updated, then the module returns an issue, otherwise it returns an OK status. This is a future work that can be implemented when the company will provide a public repository for the updates. As a matter of fact, this story has been suspended in the context of our project.
+
+\section{Default BSP credentials}
+
+Setting common passwords is a bad practice, as they let an attacker to potentially gain unauthorized access to the management of the device.
+
+The devices ship with some default credentials for the two users that are available on the system, named \textit{admin} and \textit{user}. The credentials are required to interact with the Device Settings. They are asked to be changed at the first login, but the user could skip the step and keep the default ones.\footnote{verify}
+
+The module checks whether the default credentials are still in use by trying to login with a pre-defined set of passwords on the two users. The module performs $2*|passwords|$ HEAD requests to an arbitrary endpoint of the Device Settings API and it checks the status code of the response. If one of the responses' status code is \textit{200 Success}, meaning that the authorization has been granted and therefore username and password match, then the module returns an issue with a high severity, otherwise it returns an OK status.
+
+This security control is possible without stumbling into the device built-in authentication rate-limiting because the total number of requests is below the threshold of the requests for minute that the device accept before temporarily blocking the access from that access.
+
+The module is implemented by the \textit{checkCredentialsSystemSettingsInterface} and \textit{checkCredentialsSystemSettingsStruct} structure. The interface is defined as:
+
+\begin{lstlisting}[style=golang]
+type checkCredentialsSystemSettingsInterface interface {
+	checkCredentialsSystemSettings(context.Context) variab.Result
+}
+\end{lstlisting}
+
+and the structure is made of the following fields:
+
+\begin{lstlisting}[style=golang]
+type checkCredentialsSystemSettingsStruct struct {
+  [omitted]
+  hmiHeadRequest func(string, time.Duration, *string, *string) (*http.Response,error)
+  users          []string
+  passwords      []string
+}
+\end{lstlisting}
+
+The \textit{hmiHeadRequest} function is a utility function that performs a HEAD request to the given URL with a certain user and password. The \textit{users} and \textit{passwords} fields are the list of users and passwords to try to login with.
+
+\section{Scan SSH port}
+
+The SSH protocol, which stands for \textit{Secure Shell}, is a cryptographic network protocol that allows to securely connect to a remote device. It is widely used in the industry to connect to the devices for the purposes of debugging, maintenance and monitoring. The SSH protocol is based on the client-server model, where the client connects to the server and authenticates itself by providing a username and a password or a public key. The server then verifies the credentials and grants access to the client if they are correct.
+
+The SSH protocol is based on the TCP protocol, and it uses the port 22 by default. The server, that is the industrial device, listens on the port 22 for incoming connections. Because of the widespread adoption of the SSH protocol, that port is a common target for attackers that try to gain unauthorized access to the devices.
+
+This story is a specialization of a wider set of stories that check the status of the different services running on the device. The idea is to check whether the status of the service reported by the Device Settings API matches with the actual status of the service, and if enabled to warn that a port is exposed and therefore to be informed about the potential risks.
+
+The module is implemented by the \textit{checkServicesInterface} and \textit{checkServicesStruct} structure. The interface is defined as:
+
+\begin{lstlisting}[style=golang]
+type checkServicesInterface interface {
+  checkServices(context.Context, string) variab.Result
+  hmiConfig() (*hmiServicesDto, error)
+}
+\end{lstlisting}
+
+and the structure is composed by the following fields:
+
+\begin{lstlisting}[style=golang]
+type checkServicesStruct struct {
+  isPortOpen     func(uint, time.Duration) (bool, error)
+  [omitted]
+}
+\end{lstlisting}
+
+The \textit{hmiConfig} function retrieves the information about the services from the Device Settings API, and the \textit{checkServices} function actually performs the check. The API endpoint is located at \texttt{/api/v1/services} and it returns a JSON object structured as a list of object for each service, where each object contains its id, the name and the status.
+
+The \textit{isPortOpen} function is a utility function that checks if the port is open on the device. It works by trying to connect to the device on the port defined by a predefined map that contains a list of possible ports for each of the services. Depending on the protocol, the function tries to connect to each of the ports and returns true if the connection is successful, otherwise it returns false.
+
+By combining the two functions, the module checks if the SSH port status reported by the Device Settings API matches with the actual status of the port.
+
+\section{Check VNC credentials}
+
+As part of the services that are running on the device, one of them is the VNC service. VNC, which stands for \textit{Virtual Network Computing}, is a cross-platform graphical desktop sharing system to remotely control another computer. It transmits the screen of the remote device to the client, and it allows to interact with it by sending the mouse and keyboard events. It uses the RFB - \textit{Remote Framebuffer} - protocol that governs the format of the data that passes between the client and server within the VNC system. The protocol itself does not require a mandatory authentication method, but is supports many of them, like a password or a certificate.
+
+If the service is not properly configured and it does not require a password to connect, then an attacker could potentially gain unauthorized direct access to the graphical interface and perform any operation that a legitimate user could do.
+
+The module checks whether the VNC service is configured with a password or not. It does so by retrieving the configuration, in particular the port on which the service is running, from the Device Settings API, and then implementing the protocol itself to get the required authentication method. If the authentication method is not set, then the module returns an issue with a high severity, otherwise it returns an OK status.
+
+\subsection{RFB protocol}
+
+The RFB protocol is defined in the RFC 6143~\cite{rfc6143}. It works using the TCP protocol for the transport layer. The server, that is the industrial device, listens on the default port 5900 or on a custom one defined by the customer in the Device Settings.
+
+The protocol expects the following steps:
+
+\begin{enumerate}
+  \item the client connect to the server and the server sends the protocol version; the \textit{ProtocolVersion} message consists of 12 bytes interpreted as a string of ASCII characters in the format \texttt{RFB xxx.yyy\textbackslash n} where xxx and yyy are the major and minor version numbers, left-padded with zeros: the only published protocol versions at this time are 3.3, 3.7, and 3.8. Other version numbers are reported by some servers and clients, but should be interpreted as 3.3 since they do not implement the different handshake in 3.7 or 3.8.
+  \item the client replies to the server agreeing with its supported version, that must be less or equal to the one of the server;
+        \begin{itemize}
+          \item if the version is 3.3, then the server directly replies with a single integer number representing the security type;
+          \item otherwise, the server replies with a list of numbers representing the security types that the server supports;
+        \end{itemize}
+  \item at this point, instead of proceeding with the protocol, we close the connection and we return the security type.
+\end{enumerate}
+
+If the security type is equal to the number 1, the server does not require any authentication. If the number is equal to 0, this is not expected and probably something went wrong in the implementation of the protocol. Both cases return as result a high severity issue. \\
+If the security type is greater or equal to number 2, then the server correctly requires some access control. Note that we said greater than two and not strictly equal to 2 because other security types exist but are not publicly documented.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.5\textwidth]{chapters/05/assets/rfc6143-security-types}
+  \caption{RFC 6143 security types}
+  \label{fig:rfc6143-security-types}
+\end{figure}
+
+The module is implemented by the \textit{checkVncCredentialsInterface} and \textit{checkVncCredentialsStruct} structure. The interface is defined as:
+
+\begin{lstlisting}[style=golang]
+type checkCredentialsVNCInterface interface {
+	checkCredentialsVNC(context.Context) variab.Result
+}
+\end{lstlisting}
+
+and the structure is composed by the following fields:
+
+\begin{lstlisting}[style=golang]
+type checkCredentialsVNCStruct struct {
+  [omitted]
+  vncConn               func(string, time.Duration) (bool, net.Conn)
+  vncProtocolVersion    func(net.Conn) ([]byte, error)
+  vncAuthType3          func(net.Conn) (uint32, error)
+  vncAuthType7_8        func(net.Conn) (uint32, error)
+}
+\end{lstlisting}
+
+The \textit{vncConn} function create the connection to the VNC server, the \textit{vncProtocolVersion} function retrieves the protocol version, the \textit{vncAuthType3} function retrieves the authentication method for the version 3 of the protocol, and the \textit{vncAuthType7\_8} function retrieves the authentication method for the versions 7 and 8 of the protocol.
+
+The \textit{checkCredentialsVNC} function performs the check by combining the functions above.
+
+\section{Check certificate expiration}
+
+The device uses the HTTPS protocol to expose the Device Settings UI and API and the optional web page of the running project. The HTTPS protocol is a secure version of the HTTP protocol that uses the SSL/TLS protocol to encrypt the data that passes between the client and the server. The SSL/TLS protocol uses a certificate to establish the identity of the server and to encrypt the data that passes between the client and the server. This behaviour is needed to prevent an attacker from intercepting the data that passes between the client and the server.
+
+The certificate is issued by the company Authority and it is valid for a certain period of time, usually years. A customer can upload a custom certificate to the device. The certificate is stored in the device.
+
+The module checks whether the certificate is expired or not. Go provides built-in packages called \texttt{encoding/pem} and \texttt{crypto/x509} that allow to parse the certificate and to extract the expiration date. \\
+In particular, the certificate is read as bytes from the file system, then it is parsed by the \texttt{pem.Decode} function that returns a \texttt{pem.Block} structure. The \texttt{Block} structure contains the type of the block and the bytes of the block. The bytes are then passed to the \texttt{x509.ParseCertificate} function that returns a \texttt{x509.Certificate} structure. The \texttt{Certificate} structure also contains the expiration date of the certificate.
+
+The expiration date is then compared with the current date: if the expiration date happens in less than 30 days, the the module returns an issue. If the valid days left are less than 30, the severity is low; if they are less than 15, the severity is moderate; if they are less than 1, the severity is high.
+
+The module by the \textit{checkCertificatesInterface} and \textit{checkCertificatesStruct} structure. The interface is defined as:
+
+\begin{lstlisting}[style=golang]
+type checkCerticatesInterface interface {
+	checkCertificates(context.Context) variab.Result
+}
+\end{lstlisting}
+
+and the structure is composed by the following fields:
+
+\begin{lstlisting}[style=golang]
+type checkCertificatesStruct struct {
+	hmiCertPath string
+	loadCertFile func(string) ([]byte, error)
+}
+\end{lstlisting}
+
+The \textit{hmiCertPath} field is the path to the certificate file, and the \textit{loadCertFile} function reads the certificate file from the file system. The \textit{checkCertificates} function performs the check by combining the functions above.
+
+
 
 
