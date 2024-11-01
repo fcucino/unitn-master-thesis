@@ -86,6 +86,10 @@ The \textit{Result} structure of the package \textit{variab} is a common structu
 
 This composition is common to all the modules, and it allows to easily test the modules in isolation, by mocking the dependencies of the struct. This is done by creating a new struct that implements the same interface, but with mocked methods, and then injecting this struct in the test. This way, we can test the module without having to actually run the code that is being mocked. This is a powerful feature of the Go language that allows to write more robust and maintainable code. More to follow about the testing phase in the next chapter.
 
+\section{First sprint}
+
+The first sprint has the goal to implement the first set of modules, as expressed in the sprint planning.
+
 \subsection{CheckTime module}
 
 The \textit{CheckTime} module checks if the datetime of the device is correct. This is a fundamental thing to verify because the issues with the devices not connecting to the internet and to the cloud are most of the time due to the incorrect datetime, leading to an error with the SSL certificate. In fact, if the date is not correct, the SSL certificate could result as expired or not yet valid, warning the user that the connection is not secure.
@@ -105,12 +109,15 @@ If any of the steps fails, the module returns the execution error status.
 % proxy network call qui?
 
 \subsection{JSON output}
+\label{sec:json-output}
 
-Every module returns a structure representing the result of the execution, a brief message and a recommendation to solve the potential issue. The modules runner collects all the results from the modules in a map of maps, in order to have the direct mapping of the result of the module under the category and the name of the module.
+Every module returns a structure representing the result of the execution, a brief message and a recommendation to solve the potential issue. The modules runner collects all the results from the modules in a \textit{Report} type variable, that is defined as a map of maps, in order to have the direct mapping of the result of the module under the category and the name of the module.
 
-The resulting map is therefore given to the output package, that is responsible for the output of the results in the desired format. The default format is JSON, but it can be easily extended to support other formats like YAML by importing or implementing the corresponding marshaler, that is a function that the enconding of an \textit{any} value to the desired format.
+The resulting type is therefore given to the output package, which is responsible for the output of the results in the desired format. The default formatter is JSON, but it can be easily extended to support other formats like YAML by importing or implementing the corresponding marshaler, that is a function that transforms the encoding of an \textit{any} value to the desired format.
 
-By default, the output is printed to the standard output of the terminal, but it can be redirected to a file by using the \texttt{-o} flag. The output can be printed in a pretty format by using the \texttt{--pretty} flag, useful for human readability. Anyway, the predefined formatting is minified.
+By default, the output is printed to the standard output of the terminal, but the destination can be redirected to a file by using the built-in method with the \texttt{-o} flag. The output can be printed in a pretty format by using the \texttt{--pretty} flag, useful for human readability. Anyway, the predefined formatting is minified.
+
+The formatter can be choosen by using the \texttt{-o} flag, followed by the desired format.
 
 The list of the active modules is available with the command \texttt{./scantool list}, printed in the standard output of the terminal, one for line.
 
@@ -128,7 +135,7 @@ For example, given the execution of the datetime module only, issued with the co
 }
 \end{lstlisting}
 
-\section{Cross build script}
+\subsection{Cross build script}
 
 The Go programming language provides a powerful feature called cross-compilation. This allows to build the binary for a different architecture than the one of the machine that is building it. This is useful to build the binary for a different architecture, like ARM, that is the architecture of some of the devices that we are going to use for debugging purposes.
 
@@ -157,7 +164,7 @@ The final build command is the following:
 
 The difference between the size of a build without any optimization and a optimized build is quite relevant. Taking as example the architecture \textit{arm64} on the \textit{Linux} operating system, the former takes 12MB and the latter takes 7.7MB. On industrial devices, such size difference matters a lot in terms of storage and used bandwidth to download it on the fly when needed.
 
-\section{Scan OS version}
+\subsection{Scan OS version}
 
 The custom board of the industrial devices powers a custom Linux distribution, that is based on the Yocto Project. The updates are managed by the internal department of the company, with a internal version manager. The updates are not automatic, and they have to be requested by the customer.
 
@@ -192,15 +199,15 @@ type versionOsStruct struct {
 
 The \textit{xMonthAgo} field is the threshold expressed in a range of few months. The \textit{getOsInfo} method retrieves the information about the operating system from the Device Settings API, and the \textit{checkOsVersion} method actually perform the comparison.
 
-\subsection{Offline date based}
+\subsubsection{Offline date based}
 
 The first specialization of the module checks the version of the operating system by reading the build date of the system. This is done by retrieving the build date of the system from the Device Settings API, that is the \textit{date} field of the API response. The date is then compared with the current date, and if the difference is greater than a certain threshold then the module returns an issue, otherwise it returns an OK status throug the \textit{Result} structure.
 
-\subsection{Online version based}
+\subsubsection{Online version based}
 
 This specialization should compare the local version of the operating system with the latest version available somewhere online. Since the company does not provide a public repository for the updates, this module cannot be implemented yet. The idea is to have a list of the latest versions for the different devices models and to compare the local version with the latest one. If the local version is not updated, then the module returns an issue, otherwise it returns an OK status. This is a future work that can be implemented when the company will provide a public repository for the updates. As a matter of fact, this story has been suspended in the context of our project.
 
-\section{Default BSP credentials}
+\subsection{Default BSP credentials}
 
 Setting common passwords is a bad practice, as they let an attacker to potentially gain unauthorized access to the management of the device.
 
@@ -231,7 +238,7 @@ type checkCredentialsSystemSettingsStruct struct {
 
 The \textit{hmiHeadRequest} function is a utility function that performs a HEAD request to the given URL with a certain user and password. The \textit{users} and \textit{passwords} fields are the list of users and passwords to try to login with.
 
-\section{Scan SSH port}
+\subsection{Scan SSH port}
 
 The SSH protocol, which stands for \textit{Secure Shell}, is a cryptographic network protocol that allows to securely connect to a remote device. It is widely used in the industry to connect to the devices for the purposes of debugging, maintenance and monitoring. The SSH protocol is based on the client-server model, where the client connects to the server and authenticates itself by providing a username and a password or a public key. The server then verifies the credentials and grants access to the client if they are correct.
 
@@ -263,7 +270,7 @@ The \textit{isPortOpen} function is a utility function that checks if the port i
 
 By combining the two functions, the module checks if the SSH port status reported by the Device Settings API matches with the actual status of the port.
 
-\section{Check VNC credentials}
+\subsection{Check VNC credentials}
 
 As part of the services that are running on the device, one of them is the VNC service. VNC, which stands for \textit{Virtual Network Computing}, is a cross-platform graphical desktop sharing system to remotely control another computer. It transmits the screen of the remote device to the client, and it allows to interact with it by sending the mouse and keyboard events. It uses the RFB - \textit{Remote Framebuffer} - protocol that governs the format of the data that passes between the client and server within the VNC system. The protocol itself does not require a mandatory authentication method, but is supports many of them, like a password or a certificate.
 
@@ -271,7 +278,7 @@ If the service is not properly configured and it does not require a password to 
 
 The module checks whether the VNC service is configured with a password or not. It does so by retrieving the configuration, in particular the port on which the service is running, from the Device Settings API, and then implementing the protocol itself to get the required authentication method. If the authentication method is not set, then the module returns an issue with a high severity, otherwise it returns an OK status.
 
-\subsection{RFB protocol}
+\subsubsection{RFB protocol}
 
 The RFB protocol is defined in the RFC 6143~\cite{rfc6143}. It works using the TCP protocol for the transport layer. The server, that is the industrial device, listens on the default port 5900 or on a custom one defined by the customer in the Device Settings.
 
@@ -321,18 +328,19 @@ The \textit{vncConn} function create the connection to the VNC server, the \text
 
 The \textit{checkCredentialsVNC} function performs the check by combining the functions above.
 
-\section{Check certificate expiration}
+\subsection{Check certificate expiration}
 
 The device uses the HTTPS protocol to expose the Device Settings UI and API and the optional web page of the running project. The HTTPS protocol is a secure version of the HTTP protocol that uses the SSL/TLS protocol to encrypt the data that passes between the client and the server. The SSL/TLS protocol uses a certificate to establish the identity of the server and to encrypt the data that passes between the client and the server. This behaviour is needed to prevent an attacker from intercepting the data that passes between the client and the server.
 
-The certificate is issued by the company Authority and it is valid for a certain period of time, usually years. A customer can upload a custom certificate to the device. The certificate is stored in the device.
+The certificate is issued by the company authority and it is valid for a certain period of time, usually years. A customer can upload a custom certificate to the device. The certificate is stored in the device.
 
-The module checks whether the certificate is expired or not. Go provides built-in packages called \texttt{encoding/pem} and \texttt{crypto/x509} that allow to parse the certificate and to extract the expiration date. \\
+The module checks whether the certificate is expired or not. Go provides built-in packages called \texttt{encoding/pem} and \texttt{crypto/x509} that allow to parse the certificate and to extract the expiration date. The former implements the PEM data encoding, which originated in \textit{Privacy Enhanced Mail}. The most common use of PEM encoding today is in TLS keys and certificates~\cite{go-package-pem}. The latter allows parsing and generating certificates, certificate signing requests, certificate revocation lists, and encoded public and private keys. It also provides a certificate verifier with a chain builder~\cite{go-package-x509}.
+
 In particular, the certificate is read as bytes from the file system, then it is parsed by the \texttt{pem.Decode} function that returns a \texttt{pem.Block} structure. The \texttt{Block} structure contains the type of the block and the bytes of the block. The bytes are then passed to the \texttt{x509.ParseCertificate} function that returns a \texttt{x509.Certificate} structure. The \texttt{Certificate} structure also contains the expiration date of the certificate.
 
 The expiration date is then compared with the current date: if the expiration date happens in less than 30 days, the the module returns an issue. If the valid days left are less than 30, the severity is low; if they are less than 15, the severity is moderate; if they are less than 1, the severity is high.
 
-The module by the \textit{checkCertificatesInterface} and \textit{checkCertificatesStruct} structure. The interface is defined as:
+The implementation of the module is defined by the \textit{checkCertificatesInterface} and \textit{checkCertificatesStruct} structure. The interface looks like:
 
 \begin{lstlisting}[style=golang]
 type checkCerticatesInterface interface {
@@ -351,6 +359,45 @@ type checkCertificatesStruct struct {
 
 The \textit{hmiCertPath} field is the path to the certificate file, and the \textit{loadCertFile} function reads the certificate file from the file system. The \textit{checkCertificates} function performs the check by combining the functions above.
 
+\subsection{Verbose flag}
 
+This flag is a common one that is used in the command line interface of the tool to increase the verbosity of the output. By default, the output is minimal and it contains only the result of the checks, but by using the \texttt{--verbose} flag the output is increased to include more information about the execution of the modules.
+
+The flag is implemented taking advantage of the hooks provided by \textit{spf13/cobra}, that is the package that we use to implement the command line interface. The \texttt{cobra.Command} structure provides a \texttt{PersistentPreRun} callback that is called before the execution. We use this callback to set the verbosity level of the output for the \textit{zerolog} package with the \texttt{zerolog.SetGlobalLevel} function.
+
+This flag is defined as persistent, meaning that it is available for every commands and subcommands and it only defined once.
+
+\subsection{Add YAML report formatter}
+
+In addition to the JSON output, we also add the YAML output format. The YAML format is a human-readable data serialization standard that can be used in conjunction with all programming languages and is often used to write configuration files. The YAML format is more human-readable than the JSON format. It is not built-in in the Go programming language, but there is an official porting available at the \texttt{gopkg.in/yaml.v3} package.
+
+As described in~\cref{sec:json-output}, the output package is responsible for the output of the results in the desired format. The default format is JSON, but it can be easily extended to support other formats like YAML by importing the corresponding marshaler.
+
+In this case, we add the \texttt{yaml.Marshal} function to the output package the \textit{Report} structure. If the user specifies the \texttt{-o yaml} flag, then the output is formatted in YAML to the desidered destination.
+
+The high modularity of the Go language and of the project allows to easily extends the output formats by simply adding few lines of code. This is a powerful feature of the Go language that allows to write more maintainable code.
+
+\section{Sprint retrospective}
+
+The first sprint has been completed successfully. All the expected modules but one have been implemented. For each of the tests we have written comprehensive unit tests that runs on demand. The implementation of the modules has been straightforward. The use of the interfaces has allowed to easily test the modules in isolation, by mocking the dependencies of the struct.
+
+The only module that has not been implemented is the one that checks the version of the operating system by reading the online repository. This is because the company does not provide a public repository for the updates, and therefore we cannot implement the module yet. This is a future work that can be implemented when the company will provide a public repository for the updates.
+
+% TODO: sezione testing
+% The implementation of the modules has been done in a test-driven way. We have written the tests first, and then we have implemented the modules.
+
+Given that the first sprint has been completed successfully, we can move on to the second sprint. We did a meeting to show the results of the sprint to the office and to discuss the next steps. The feedback has been positive, and the team is happy with the results. The next sprint focuses on the implementation of more server side utilities and some more modules.
+
+\section{Second sprint}
+
+The second sprint has the goal to implement the following set of modules:
+
+\begin{itemize}
+  \item Create cloud app
+  \item Implement proxy network call
+  \item Automatic build and deploy
+  \item Enable to download latest version of the tool
+  \item Support internationalization
+\end{itemize}
 
 
