@@ -377,7 +377,7 @@ In this case, we add the \texttt{yaml.Marshal} function to the output package th
 
 The high modularity of the Go language and of the project allows to easily extends the output formats by simply adding few lines of code. This is a powerful feature of the Go language that allows to write more maintainable code.
 
-\section{Sprint retrospective}
+\section{First sprint retrospective}
 
 The first sprint has been completed successfully. All the expected modules but one have been implemented. For each of the tests we have written comprehensive unit tests that runs on demand. The implementation of the modules has been straightforward. The use of the interfaces has allowed to easily test the modules in isolation, by mocking the dependencies of the struct.
 
@@ -399,5 +399,15 @@ The second sprint has the goal to implement the following set of modules:
   \item Enable to download latest version of the tool
   \item Support internationalization
 \end{itemize}
+
+These are new features useful for the future adoption of the tool in the company.
+
+The first two are server side utilities that are needed to prepare the infrastructure for future development of the tool in terms of strictly network policies and user billing. In fact, the company is interested in the possibility to offer the tool as a service to the customers, and therefore it is necessary to have a server side application in order to handle the functioning. Furthermore, as previously said, industrial network policies are very strict and usually they do not allow to connect directly to the internet, and therefore a proxy is needed to perform the network calls. \\
+For example, given the case of a version check, if the remote location on which the version is stored happens on a third-party endpoint, like for a external dependency, each network administrator for each customer should manually allow the connection to that location, and beforehand the company should provide the list of the locations to allow and keep it updated. In order to avoid this, the company can provide a proxy server that is the only one that connects to the internet. The tool can then connect to the proxy server. This way, network administrators only have to allow the connection to the proxy server, that is already expected for the standard operation of the device.
+
+The second and third points are about the automatic build and deploy of the tool. The company is interested in the possibility to automatically build the tool for the different architectures and to deploy it on the devices. This is also useful for testing purposes, as the build is preceded by the execution of the tests and also for the continuous integration and continuous deployment of the tool.
+
+The latest point aims to provide the internationalization, that is the support for different languages. The company is interested in the possibility to offer the tool in different languages, in order to make it more accessible to the customers.
+
 
 
