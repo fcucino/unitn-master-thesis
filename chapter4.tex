@@ -1,6 +1,6 @@
 \chapter{Methodology and Design Process}
 
-This chapter contains the design of the application architecture, the design of the scanning methodology and the description of the Agile method used to develop the application.
+This chapter contains the design of the application architecture and scanning methodology. It explains the active studies finalized to the goal of the project.
 
 % •	Description of the application architecture suitable for security scanning (executable, terminal, later ui)
 %%% o	System Settings UI and API to control every aspect of the device
@@ -12,42 +12,116 @@ This chapter contains the design of the application architecture, the design of 
 % •	Design of the scanning methodology.
 %%% o	Aspects covered: Outdated OS, outdated libraries (e.g., OpenSSL), outdated software, default or weak credentials, insecure network communication, …
 
-\section{Agile method}
+\section{Standards and regulations}
 
-The \textit{Agile methodology} is a project management philosophy that involves breaking the project into phases and emphasizes continuous collaboration and improvement. Teams follow a cycle of planning, executing and evaluating. Teams choose agile so they can respond to changes in the marketplace or feedback from customers quickly without derailing a year's worth of plans. The publication of the Agile Manifesto\footnote{\url{https://agilemanifesto.org}} in 2001 marks the birth of agile as a methodology. Since then, many agile frameworks have emerged such as scrum, kanban or lean. Each embodies the core principles of frequent iteration, continuous learning and high quality in its own way.~\cite{agile-methodology} \\
-We are now going to explain the Scrum framework, used by the company.
+This section provides an overview of the most relevant standards and regulations for the context of the internship's research, focusing on the industrial sector and the required goals; in particular, we detail more about \textit{IEC 62443}, \textit{ISO 27001}, \textit{NIS 2} and \textit{CRA}.
 
-\subsection{Scrum}
+\subsection{IEC 62443}
+\label{sec:iec-62443}
 
-Scrum is an agile project management framework, which is different from Agile, a philosophy.\\
-The definition of scrum is based on empiricism and lean thinking. Empiricism says that knowledge comes from experience and that decisions are made based on what is observed. Lean thinking reduces waste and focuses on essentials. The scrum framework is heuristic; it is based on continuous learning and adjustment to fluctuating factors by acknowledging that the team does not know everything at the start of a project and it will evolve through experience. Scrum is structured to help teams to naturally adapt to changing conditions and user requirements, with re-prioritization built into the process and short release cycles so your team can constantly learn and improve.~\cite{scrum}
+The IEC 62443 provides guidelines, rules and definitions specifically crafted for any Industrial Automation and Control Systems (IACS). Compared to ISO 27001, it is more focused on the specific sector instead of being more universal and open for interpretation depending on the company it applies to.
 
-Scrum artefacts help to define the product, what work has to be done to create it and who has to do it. An \textit{epic} is a large body of work that can be broken down into smaller tasks. Each of these tasks is called \textit{story} and it is a short requirement written from the perspective of an end user. The story is linked to a person in the team that has to carry it out.
+The market requires the IEC 62443 certification for the companies that are involved in the production of industrial devices, as it is a guarantee of the security of the product and the company itself.
 
-The two main artefacts boards are the \textit{product backlog} and the \textit{sprint backlog}. \\
-The former is a list of all the tasks that needs to be done; it is a dynamic list of features, requirements, improvements, fixes and epics, ordered by their priority. Essentially, it is a \textit{"To Do"} list.\\
-The latter is a list of items selected for the current sprint cycle; the sprint cycle is a fixed period of time, usually up to four weeks. Before each sprint, the team selects items from the product backlog to work on. Epics are broken down into stories and stories are moved from the product backlog to the sprint backlog.~\cite{scrum-epic-stories}
+The IEC 62443 is a set of standards drafted by the \textit{Internation Electrotechnical Commission} (IEC) and it is divided into four categories:~\cite{understanding-iec-62443-parts}
+\begin{enumerate}
+  \item \textbf{General}: it covers topics that are common to the entire series;
+  \item \textbf{Policies and procedures}: focuses on methods and processes associated with IACS security;
+  \item \textbf{System}: it covers the requirements for the secure development and integration of systems;
+  \item \textbf{Component}: it covers the requirements for the secure development and integration of components.
+\end{enumerate}
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=0.8\textwidth]{chapters/04/assets/scrum}
-  \caption{Scrum sprint cycle. Taken from \texttt{atlassian.com}}
-  \label{fig:scrum-sprint-cycle}
+  \includegraphics[width=0.9\textwidth]{chapters/04/assets/iec62443.png}
+  \caption[IEC 62443 Parts and Sections. Image by Mohamed Wassef O. \protect\footnotemark]{IEC 62443 Parts and Sections. Image by Mohamed Wassef O. \protect\footnotemark}
+  \label{fig:iec-62443}
+\end{figure}
+\footnotetext{\url{https://www.linkedin.com/pulse/power-iec-62443-safeguarding-industrial-automation-othmani-gsrde}}
+
+Each category is divided into several subcategories, corresponding to different subjects and requirements. The IEC 62443 is a comprehensive standard that covers all the specific aspects starting from the product design up to the development.
+
+Each subcategory, identified by the category number followed by an increasing index, contains a list of System Requirements (SR) that the company must meet to obtain the certification.
+
+In example, a system requirement taken from the subcategory \textit{System security requirements and security levels} (\texttt{3-3}) is the one shown in~\cref{fig:iec62443_3-3_3_9}. We are going to explain it in detail.
+
+The SR 3.9 states the following:
+\begin{mdframed}
+  SR 3.9 - Protection of audit information: The control system shall protect audit information and audit tools (if present) from unauthorized access, modification and deletion.
+\end{mdframed}\label{sr:3-3_3-9}
+
+Log audits are essential for the prevention and detection of cyberattacks. When something goes wrong, the log audit can help to understand what happened, when and where it happened and who was involved. This is a fundamental requirement for the IEC 62443 certification.
+
+For each Security Requirement listed in the documentation, the standard also describes some potential rationale and supplemental guidance to help the company understand the requirement and how to implement it.
+
+Each SR is made of four security levels. \\
+A Security Level (SL) is a measure of the security of a system or component, which is eventually transmitted to the final client. It is a score from 1 to 4, where 1 indicates the lowest complexity of the solution we can apply to follow the requirement, and 4 indicates the highest complexity.~\cite{ixon-practical-guide-iec-62443}
+
+It is possible to increase the score of the security level by applying more non-trivial solutions, expressed as a \textit{Requirement Enhancement}. An enhancement to increase the security level from 3 to 4 is stated in \texttt{SR 3.9 RE 1}:
+\begin{mdframed}
+  SR 3.9 RE 1 - Audit records on write-once media: The control system shall provide the capability to produce audit records on hardware-enforced write-once media.
+\end{mdframed}\label{sr:3-3_3-9_re1}
+
+We would like to note that not every SR has exactly four RE; instead, it could be that there are less solutions in order to increase its score. For instance, this is the case for the SR 3.9, which has only one RE and the minimum applicable security level is the level 2, as shown in~\cref{fig:iec62443_3-3_3_9}.
+
+\begin{figure}[t]
+  \centering
+  \fbox{\includegraphics[width=1.0\textwidth]{chapters/04/assets/iec62443_3-3_3_9.png}}
+  \caption[Snapshot of a System Requirement]{Snapshot of a System Requirement}
+  \label{fig:iec62443_3-3_3_9}
 \end{figure}
 
-As visible in~\cref{fig:scrum-sprint-cycle}, Scrum is split in four principal phases:
+Moreover, sometimes the highest security level is not always the best solution or the most suitable for the company. Therefore, it is essential to evaluate the cost and the benefits of the solution before applying it.
+
+
+In the context of the company we are working with and the internship project we are involved in, because we are directly at the level of product design and component development and deployment, the relevant subcategories we are focusing on are \texttt{3-3}, \texttt{4-1} and \texttt{4-2}, respectively named \textit{System security requirements and security levels}, \textit{Product security development life cycle requirements} and \textit{Technical security requirements for IACS components}.
+
+At the system level, \texttt{IEC 62443-3-3} introduces security levels and corresponding requirements, offering a scalable framework to protect industrial systems. This part enables organizations to customize their security measures based on specific risk profiles and operational demands.
+
+\texttt{IEC 62443-4-1} lays the foundation for secure product development, emphasizing the critical importance of incorporating security measures right from the design phase. It encourages manufacturers to adopt a security-centric approach to product development, ensuring that components are fortified against cyber threats from the very beginning.
+
+Moving from development to deployment, \texttt{IEC 62443-4-2} specifies the technical security requirements for IACS components. It defines essential security capabilities such as robust authentication, encryption and intrusion detection, ensuring that each component reinforces the overall security of the system.~\cite{iec-62443-safeguarding-industrial-automation-linkedin}
+
+
+\subsection{ISO/IEC 27001}
+
+The ISO/IEC 27001 is a globally recognized standard addressed to companies of any size and from all sectors of activity with guidance for establishing, implementing, maintaining and continually improving an information security management system, which is a set of policies and procedures defining and managing controls that an organization needs to implement to ensure that it is sensibly protecting the confidentiality, availability and integrity of assets from threats and vulnerabilities. An information security management system that meets the requirements of ISO/IEC 27001 preserves the CIA triad and gives confidence to interested parties that risks are adequately managed.
+
+Conformity with this standard means that an organization or business has put in place a system to manage risks related to the security of data owned or handled by the company and that this system respects all the best practices and principles enshrined in this International Standard.
+
+It has been jointly published by the \textit{International Organization for Standardization} (ISO)~\cite{iso} and the \textit{International Electrotechnical Commission} (IEC)~\cite{iec}. The number indicates that it was published under the responsibility of Subcommittee 27 (on Information Security, Cybersecurity and Privacy Protection) of ISO's and IEC's Joint Technical Committee on Information Technology (ISO/IEC JTC 1).
+
+It is widely used around the world; as per the ISO Survey 2022, over 70000 certificates were reported in 150 countries and from all economic sectors, ranging from agriculture through manufacturing to social services.~\cite{iso-27001}
+
+\subsection{NIS Directive 2}
+\label{sec:nis-directive-2}
+
+The Network and Information Security (NIS) Directive is the first piece of EU-wide legislation on cybersecurity, drawn in 2016, and its specific aim was to achieve a high common level of cybersecurity across the Member States. To respond to the growing threats posed by digitalisation and the surge in cyber-attacks, the Commission has submitted a proposal to replace the NIS Directive and thereby strengthen the security requirements, address the security of supply chains, streamline reporting obligations and introduce more stringent supervisory measures and stricter enforcement requirements, including harmonised sanctions across the EU. NIS 2 entered into force on January 2023, and the Member States have until October 2024 to transpose its measures into national law.
+
+The major key features of the updated directive are:~\cite{nis2-directive-faqs}
 \begin{itemize}
-  \item The \textbf{sprint planning} is the initial phase of a sprint, the actual time period when the scrum team works; the team meets and decides what to do in the sprint by placing the tasks from the product backlog to the sprint backlog;
-  \item The \textbf{daily scrum} is a quotidian meeting where the team members synchronize with each other. It is usually taken stand-up, as a way to not waste time and to keep the meeting short;
-  \item The \textbf{sprint review} and \textbf{sprint retrospective} are the meetings at the end of the sprint where the team shows what they have done and demonstrates the work to the stakeholders and receive feedback;
+  \item \textbf{Expanded scope}: NIS2 extends its scope to cover more sectors and industries. It applies to essential and important entities: the former include energy (electricity, district heating and cooling, oil and gas), transport (air, rail, water and road), banking, health, pharmaceutical, water, digital infrastructure (internet exchange points, DNS providers, TLD name registries, cloud computing service providers, data centre service providers, content delivery networks), public administration and space. The latter include postal and courier services, waste management, chemicals, food, manufacturing of medical devices, computers and electronics, machinery equipment, motor vehicles and digital providers (online marketplaces, online search engines and social networking service platforms).\\
+        Anyway, Essential and Important entities are deemed to be under the jurisdiction of the Member State where they provide their services
+  \item \textbf{Incident Reporting}: Companies must report significant cybersecurity incidents within 24 hours of detection, improving coordination between national cybersecurity authorities and helping mitigate the impact of attacks.
+  \item \textbf{Fines and Penalties}: NIS2 introduces higher penalties for non-compliance, similar to the GDPR, with fines that could reach up to 2\% of an organization's total global turnover.
 \end{itemize}
 
-The company takes advantage of the Scrum framework to manage the development of the cloud software, via the \textit{Jira} suite\footnote{\url{https://www.atlassian.com/software/jira}}, a project management tool developed by Atlassian. The platform is used to manage the product and the sprint backlog, the epics and the stories and to track the progress of the team.
+NIS 2 aims to enhance the resilience of the European digital market, ensuring the continuity of essential services even in the face of sophisticated cyberattacks.
 
-% TODO: Descrivere board di Jira, colonne, priorità
+\subsection{Cyber Resilience Act}
 
-Given that we were part of the office team, together with the business tutor we created a new Epic for the scanning tool and we filled it with the stories that we thought were needed to develop the tool. In this specific case, the sprint period was two months because of the internship duration. At the end of the sprint, the product backlog contained some pending stories, because of the limited time and the ongoing updating of the priorities. The daily scrum was achieved by a quotidian quick meeting with the business tutor, where we keep him updated on the progress of the stories. Of course, new stories were added to the backlog and some of them were de-prioritized.
+While the cybersecurity of providers of digital services is regulated at EU level by the NIS Directive 2, as analyzed in~\cref{sec:nis-directive-2}, the security of products with digital elements and software products is so far not subject to any comprehensive piece of EU regulation.~\cite{cra-eu}
 
+Therefore, the European Commission proposed the Cyber Resilience Act in 2022; it has been approved in early 2024~\cite{cra-timelinel} and manufacturers have to place compliant products on the Union market by 2027, aiming to enhance the security of ICT products, services and processes.
+
+It applies to products connected directly or indirectly to another device or network except for specified exclusions such as open-source software or services that are already covered by existing rules, which is the case for medical devices, aviation and cars. A non-exhaustive list of products that are in scope of the CRA includes:~\cite{cra-overview}
+\begin{itemize}
+  \item \textbf{end devices}: laptops, smartphones, cameras, smart equipments, network equipments, Industrial Automation Control Systems (IACS);
+  \item \textbf{software}: firmware, operating systems, applications;
+  \item \textbf{components}: components like CPUs, video cards and libraries;
+\end{itemize}
+
+% With all being said, we now move to the next chapter, where we discuss how the directives and the standards we have just analyzed are applied in the context of the company we are working with and the internship project we are involved in.
 
 \section{How IEC 62443 has driven the design}
 \label{sec:iec-62443-driven-design}
@@ -171,18 +245,8 @@ The \textit{rs/zerolog} lib, standing for \textit{Zero Allocation JSON Logger}, 
 
 With all being said, we decided to use the \textit{rs/zerolog} library because of the performance and the features that it offers. The package was also already used by the company in the cloud software, so it was a good choice to keep the same library for the scanning tool.
 
-\section{Platform applications}
-
-The cloud management platform has an applications store where the developers can upload their \textit{apps}.
-
-The scaffolding of the app is provided by a public NPM package. It is a drafted working application, so the developer can start to develop the app without the need to set up the project from scratch. Furthermore, it contains the necessary base configuration files to deploy the app to the platform. The app has to be deployed in a dedicated Kubernetes namespace in a cluster, and later it has to be pushed to the app store by using the public platform APIs.
-
-An scaffolding app is composed of two layer: the frontend, which is the user interface, and the backend, which is the logic of the application. The frontend is written in VueJS\footnote{\url{https://vuejs.org}} and the backend is written in NestJS\footnote{\url{https://nestjs.com}}, a progressive Node.js framework. The former is a web application that the user can access from the cloud platform and the latter manages REST APIs.
-
-\subsection{Scanning tool app}
+\section{Scanning tool app}
 
 The scanning tool is a command-line interface (CLI) application written in Go. The tool is designed to be run on the terminal of the device, so it can be used by the user to check the configuration of the device. As an initial idea, the tool should be able to perform a scan of the device and to output the results to the console. Thinking about the future, the scanning tool should be able to be run periodically and report the results to a central server, so the user can have a dashboard with the status of all the devices.
 
 The idea to consider is to upload the scanning tool to the apps store, so the user can enable the wider automated view directly from the platform; doing so, the customer can create a campaign to check the configuration of all the devices from the same place and receive aggregated reports, with the goal to have a centralized view of the security status of the devices.
-
-% As a educational project during the internship, we also have to develop the platform app for the scanning tool. We effectively setup the backend to be used as a proxy, and the frontend is a simple page that 

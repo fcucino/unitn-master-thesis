@@ -127,6 +127,26 @@ ICS and IACS refer respectively to \textit{Industrial Control System} and \texti
 
 We use this terminology in the next chapters, especially related to the security regulations of the systems.
 
+\section{Standards and Regulations}
+Until the so-called third industrial age, or Industry 3.0, cybersecurity had minimal impact on manufacturing. Industrial machinery wasn't necessarily connected to the internet or each other, making external risks unlikely. However, with the dawn of Industry 4.0, smart machinery and smart factories have become vital for the smooth operation of production departments, placing cybersecurity at the forefront of concern.
+
+Cybersecurity involves protecting systems, networks and programs from digital attacks. Given the critical nature of the topic and the attention it demands, companies are embarking on paths to elevate their awareness of cyberattacks, adopting internal policies, or even pursuing specific certifications in cybersecurity. Concurrently, national and international legislators have introduced new legislative measures imposing new obligations on certain entities concerning cybersecurity.
+
+Let's now consider the most recent legislative measures on cybersecurity and the related certifications that manufacturing industries must take into account.\\
+Certifications provide a guarantee of product and company security. The main certifications currently considered include:
+\begin{itemize}
+  \item \textbf{IEC 62443}: This series of international standards is renowned for enhancing the security of industrial control systems, setting forth fundamental prerequisites to shield industrial systems from cyber threats;
+  \item \textbf{ISO/IEC 27001 (2022)}: This certification covers various aspects, including security policy, human resource security, physical and environmental security, communications management and regulatory compliance;
+\end{itemize}
+
+There are then several laws and regulations that address under various profiles the issue of cybersecurity among them it is worth noting:~\cite{cybersecurity-standards-regulations-compliance}
+\begin{itemize}
+  \item \textbf{Cyber Resilience Act (CRA)}~\footnote{\url{https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=celex:52022PC0454}}: While still pending final approval by the European Institutions, the Cyber Resilience Act seeks to enhance the resilience of the European digital market by ensuring that connected devices and digital services are equipped to withstand cyberattacks effectively. It will become effective in 2027;
+  \item  \textbf{NIS Directive 2}~\footnote{\url{https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32022L2555}}: This directive outlines essential criteria that companies must adhere to in order to maintain a robust level of cybersecurity. These criteria cover the implementation of risk analysis strategies, fortification of information system security and effective incident management protocols. EU Member States must transpose this directive, with enforcement specified in the respective national acts;
+  \item \textbf{Italian Cybersecurity Law (June 28th, 2024 No. 90)}~\footnote{\url{https://www.gazzettaufficiale.it/eli/id/2024/07/02/24G00108/sg}}: This Italian law pertains to national cybersecurity and applies to both public and private entities whose services are deemed critical. It mandates the implementation of security measures to protect critical digital infrastructures and sensitive information, including specific obligations to notify the Cybersecurity Agency of any cyber incidents;
+  \item \textbf{New Machinery Regulation No. 1230/2023}~\footnote{\url{https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1230}}: This regulation will replace the Machinery Directive No. 2006/42/EC, focusing on the overall safety of machinery and semi-machinery and it will become effective in 2027. It emphasizes the essential integration of cybersecurity into the design and manufacturing processes of machinery, recognizing the potential risks that cyber vulnerabilities pose to physical safety;
+\end{itemize}
+
 \section{Security vulnerabilities scan}
 
 A security vulnerabilities scan is a process that looks for vulnerabilities in a system or network. It is a way to identify potential security risks and weaknesses that could be exploited by attackers. The scans can be performed manually or automatically using specialized tools. The goal of a this type of scan is to identify vulnerabilities and provide recommendations for improving the security of the system.
@@ -134,12 +154,6 @@ A security vulnerabilities scan is a process that looks for vulnerabilities in a
 There are also different types of security scans, including network scans and penetration tests. Network scans are used to identify devices on a network and detect open ports and services while penetration tests are used to simulate cyberattacks and test the security of a system.
 
 Security scans are an important part of a comprehensive security program. They can help organizations identify and address security vulnerabilities before they are exploited by attackers. By regularly performing security scans, organizations can improve their security attitude and reduce the risk of a security breach.
-
-\subsection{Snyk}
-
-Snyk\footnote{\url{https://snyk.io}} is a security company that provides a platform that enables developers to find and fix vulnerabilities in their code and dependencies. Snyk integrates with popular development tools and workflows, making it easy for developers to identify and address security issues early in the development process.
-
-Snyk offers a range of security tools, including vulnerability scanning, dependency monitoring and container security. The platform provides real-time alerts and recommendations for fixing security issues, helping developers to secure their applications and prevent security breaches.
 
 \section{JSON and YAML}
 
@@ -205,39 +219,51 @@ Virtualization is a technology that enables the creation of virtual versions of 
 
 Each virtualized environment runs within its allocated resources. There are two main types of virtualization approaches: container-based virtualization and hypervisor-based virtualization, also known as virtual machines' virtualization.
 
-\subsection{Container vs. Virtual Machine}
+\subsubsection{Container vs. Virtual Machine}
 
 A modern and efficient way to execute microservices is to use \textit{containers}. \\
 Containers are lightweight software packages that contain all the dependencies required to execute the contained software application in a virtualized environment. They share the same kernel of the host system, but they are usually isolated from the host and from other containers and they can run different operating systems. Another advantage of containers is that they are immutable, meaning that they could be altered after their creation, but the state is restored at each execution, without considering possible further different configurations.\\
 Instead, compared to the containers, \textit{virtual machines}'s goal is to virtualize the entire system hardware, therefore they are slower and heavier - resources side and disk usage side - than containers.
 
-The company uses \textit{Docker}\footnote{\url{https://www.docker.com}} to create, deploy and run containers. Docker is an application that allows developers to build, package and run applications as containers.
-
-Docker itself enables the user to instantiate a single container at time from an image, that is a series of instructions that defines the environment of the container, starting from the base operating system up to all the steps needed to install the final software. Since we are talking of a microservices architecture, there is the need to run multiple containers at the same time, and to manage them, from the creation to the destruction up to the recovery in case of failure or the scaling in case of high load. This is where we need an orchestration tool.
+Since we are talking of a microservices architecture, there is the need to run multiple containers at the same time, and to manage them, from the creation to the destruction up to the recovery in case of failure or the scaling in case of high load. This is where we need an orchestration tool.
 
 \subsection{Orchestration}
 
-The containers can be managed by \textit{Kubernetes}\footnote{\url{https://kubernetes.io}}, also known as \textit{K8s}, an open-source container orchestration platform that provides a platform for automating the deployment, scaling and operations of application containers across clusters of hosts. It works with a range of container tools, including Docker. Kubernetes was originally developed by Google, and in 2014 it has been open-sourced.~\cite{kubernetes-overview}
-
-Kubernetes is a powerful tool that allows the user to manage the containers in a declarative way, that is the user declares the desired state of the system, and Kubernetes takes care of the rest. The user can define the number of replicas of a container, the resources needed by the container, the network configuration, the storage configuration and much more. Kubernetes will take care of the deployment of the containers, the scaling of the containers, the recovery of the containers in case of failure and the load balancing of the containers.
-
-An instance of Kubernetes is called a \textit{cluster} and it is composed of \textit{master nodes} and one or more \textit{worker nodes}. The master node is in charge of the orchestration of the containers, while the worker nodes are in charge of running the containers. The master node is composed of the API server, the scheduler, the controller manager and \textit{etcd}, that is a distributed key-value store used to store the state of the cluster. The worker nodes are composed of the \textit{kubelet}, which is the agent that runs on each node and is responsible for the communication between the master node and the worker node and the \textit{kube-proxy}, that is a network proxy that runs on each node and maintains network rules.
-
-Every action towards the cluster is performed through the API calls to the API server, that is the entry point for the cluster. The user can interact with the cluster through the \textit{kubectl} command-line tool, that is the Kubernetes command-line tool, or through the many available third-party softwares that interact with the Kubernetes API.
-
-\subsection{Helm}
-
-\textit{Helm}\footnote{\url{https://helm.sh}} is a package manager for Kubernetes that allows the user to define, install and upgrade Kubernetes applications. Helm uses a packaging format called \textit{charts}, that are a collection of files that describe a set of Kubernetes resources. Helm charts can be used to define the resources needed by the application, the dependencies, the configuration and the hooks that should be executed during the installation.
-
-Helm can be used to deploy the microservices on the Kubernetes cluster.
+Orchestration is a term referring to the automated configuration, coordination and management of virtualization softwares. It is used to manage the deployment, scaling and operation of application containers. Orchestration tools are used to automate the deployment and scaling of containers, as well as to manage the networking, the storage configurations of the containers and much more. The most popular orchestration tool is Kubernetes.
 
 \subsection{CI/CD}
 
-We said that to be instantiated a Docker container needs an image. The image is effectively the software to be executed, and the container is its running instance. The images must be built on the source code of the software and the building process can be automated by a \textit{Continuous Integration} (CI) tool. Later, the images must be pushed to a registry, that is a repository where the images are stored, and the deployment of the images can be automated by a \textit{Continuous Deployment} (CD) tool.
+A container needs an image, that is a series of instructions that defines the environment of the container, starting from the base operating system up to all the steps needed to install the final software. The image is effectively the software to be executed, and the container is its running instance. The images must be built on the source code of the software and the building process can be automated by a \textit{Continuous Integration} (CI) tool. Later, the images must be pushed to a registry, that is a repository where the images are stored, and the deployment of the images can be automated by a \textit{Continuous Deployment} (CD) tool.
 
 CI and CD are practices that allow the developers to automate the building, testing and deployment of the software. CI is the practice of integrating the code changes of the developers into a shared repository multiple times a day, and CD is the practice of automatically deploying the code changes to the production environment. CI/CD allows the developers to detect and fix the bugs early, to reduce the risk of integration issues and to deliver the software faster and more frequently.
 
-A series of flows can be usedm to automate the building, testing and deployment of the software.
-Once the code is pushed to the main or to the developer branch of the repository, the CI tool, hosted on the GitHub Actions\footnote{\url{https://github.com/features/actions}}, automatically runs the tests and, if successful, builds the image for \texttt{amd64} and \texttt{arm64} and it pushes the image to a private container registry, hosted on Google Artifact Registry\footnote{\url{https://cloud.google.com/artifact-registry/docs}}.
-
 % terraform?
+
+\section{Agile method}
+
+The \textit{Agile methodology} is a project management philosophy that involves breaking the project into phases and emphasizes continuous collaboration and improvement. Teams follow a cycle of planning, executing and evaluating. Teams choose agile so they can respond to changes in the marketplace or feedback from customers quickly without derailing a year's worth of plans. The publication of the Agile Manifesto\footnote{\url{https://agilemanifesto.org}} in 2001 marks the birth of agile as a methodology. Since then, many agile frameworks have emerged such as scrum, kanban or lean. Each embodies the core principles of frequent iteration, continuous learning and high quality in its own way.~\cite{agile-methodology}
+
+\subsection{Scrum}
+
+Scrum is an agile project management framework, which is different from Agile, a philosophy.\\
+The definition of scrum is based on empiricism and lean thinking. Empiricism says that knowledge comes from experience and that decisions are made based on what is observed. Lean thinking reduces waste and focuses on essentials. The scrum framework is heuristic; it is based on continuous learning and adjustment to fluctuating factors by acknowledging that the team does not know everything at the start of a project and it will evolve through experience. Scrum is structured to help teams to naturally adapt to changing conditions and user requirements, with re-prioritization built into the process and short release cycles so your team can constantly learn and improve.~\cite{scrum}
+
+Scrum artefacts help to define the product, what work has to be done to create it and who has to do it. An \textit{epic} is a large body of work that can be broken down into smaller tasks. Each of these tasks is called \textit{story} and it is a short requirement written from the perspective of an end user. The story is linked to a person in the team that has to carry it out.
+
+The two main artefacts boards are the \textit{product backlog} and the \textit{sprint backlog}. \\
+The former is a list of all the tasks that needs to be done; it is a dynamic list of features, requirements, improvements, fixes and epics, ordered by their priority. Essentially, it is a \textit{"To Do"} list.\\
+The latter is a list of items selected for the current sprint cycle; the sprint cycle is a fixed period of time, usually up to four weeks. Before each sprint, the team selects items from the product backlog to work on. Epics are broken down into stories and stories are moved from the product backlog to the sprint backlog.~\cite{scrum-epic-stories}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=0.8\textwidth]{chapters/02/assets/scrum}
+  \caption{Scrum sprint cycle. Taken from \texttt{atlassian.com}}
+  \label{fig:scrum-sprint-cycle}
+\end{figure}
+
+As visible in~\cref{fig:scrum-sprint-cycle}, Scrum is split in four principal phases:
+\begin{itemize}
+  \item The \textbf{sprint planning} is the initial phase of a sprint, the actual time period when the scrum team works; the team meets and decides what to do in the sprint by placing the tasks from the product backlog to the sprint backlog;
+  \item The \textbf{daily scrum} is a quotidian meeting where the team members synchronize with each other. It is usually taken stand-up, as a way to not waste time and to keep the meeting short;
+  \item The \textbf{sprint review} and \textbf{sprint retrospective} are the meetings at the end of the sprint where the team shows what they have done and demonstrates the work to the stakeholders and receive feedback;
+\end{itemize}
