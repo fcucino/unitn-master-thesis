@@ -432,7 +432,77 @@ The proxy server is managed by a controller on the cloud app backend. The contro
 The proxy controller is a class that it is decorated with the \texttt{@Controller} decorator, that is provided by the NestJS framework, with the parameter that is the base path of the controller. A decorator is a special kind of declaration that can be attached to a class, method or property, and it is used to modify their behaviour. The class is also decorated with \texttt{@ApiTags}, needed to generate the OpenAPI documentation, and by a \texttt{@UseInterceptors} directive with the \textit{LoggingInterceptor} custom one that logs the incoming requests. \\
 The class contains the declaration of the services that are used by the controller to perform the actual operations. The services are injected in the constructor of the class. The class also contains the methods that are the actual endpoints of the controller. The methods are decorated with the \texttt{@Get}, \texttt{@Post}, \texttt{@Put} or \texttt{@Delete} decorators, depending on the HTTP method that they handle. The methods also contain the logic to handle the incoming requests and to return the responses. The responses are returned in the form of specific \textit{DTO}s, which stands for \textit{data transfer object} and it is a object that carries data between processes, automatically serialized by the NestJS framework to the JSON format.
 
+\subsection{Automatic build and deploy}
 
+The continuous integration and continuous deployment of the tool is a crucial part of the development process: it allows to automatically build the tool for the different architectures and deploy them to the different environments. It is also useful for testing purposes, as the build is preceded by the execution of the tests.
 
+The environments need the following set of images:
+\begin{itemize}
+  \item the tool written in Go language is built for three different architectures: \textit{amd64}, \textit{arm} and \textit{arm64};
+  \item the frontend and the backend are built into two different set of images, each exported for both \textit{amd64} and \textit{arm64};
+\end{itemize}
 
+About the tool, the different images are needed for the devices which run the \textit{arm} architectures. \\
+Instead, the frontend and the backend images are built for the cluster environment, that is the \textit{amd64} architecture on the Google Cloud Platform Kubernetes cluster, and for the development runtime where the laptop are based both on \textit{amd64} and \textit{arm64} architecture. This way, each developer can run its own instance of the cluster on its laptop and directly test the application as it would be deployed on the real cluster.
+
+The automatic build and deploy is managed by the Google Cloud Build service. It is integrated with the repositories of the projects and it is triggered by the push of the code to the repository on a specific tag or on the master branch. The service is configured by a configuration file which contains all the steps that are needed to build the images. The images are then pushed to a remote registry and then they are automatically deployed to the cluster. Instead, the built tool binaries are stored in a public storage bucket. The bucket always contains the reference to the latest master version and all the previous tagged versions. We decided to store the binaries in a public storage bucket because of the simplicity of the service for our intership project.
+
+Therefore, the storage looks like a tree of directories, where the root directory is the version of the binary, and the subdirectories are the architectures. The filename of final binary is the name of the tool. The tree is structured as follows:
+
+\begin{lstlisting}[caption={Storage bucket tree of directories}]
+  .
+  |-- 0.1.0
+  |   |-- linux-amd64
+  |   |   |-- scantool
+  |   |-- linux-arm
+  |   |   |-- scantool
+  |   |-- linux-arm64
+  |       |-- scantool
+  |-- 0.1.1
+  |   |-- linux-amd64
+  |   |   |-- scantool
+  |   |-- linux-arm
+  |   |   |-- scantool
+  |   |-- linux-arm64
+  |       |-- scantool
+  |-- latest
+      |-- linux-amd64
+      |   |-- scantool
+      |-- linux-arm
+      |   |-- scantool
+      |-- linux-arm64
+          |-- scantool
+\end{lstlisting}
+
+Doing so, the developers can focus on the development of the tool and they do not have to worry about the building and deploying process.
+
+\subsection{Enable to download latest version of the tool}
+
+Recalling the tool, it is a command line software that is used to scan the device for potential misconfigurations on its settings. The tool is run on the terminal of the device, and therefore it is required to obtain the executable file. To enable the customers to download the latest version of the tool, we provide a public endpoint that returns the latest version of the tool for the different architectures.
+
+The cloud app frontend is powered by this endpoints to assists the testers and the customers to download the latest version of the tool. The frontend is a VueJS application, part of the cloud app. For the internship purposes, we shipped a simple frontend composed by a dropdown that lists the available architectures, a \textit{download} button that get the binary and a \textit{copy command} to copy the \textit{curl}\footnote{\url{https://curl.se/}} command, to simplify the download process by not involving the copy between the local host and the remote device. This way, the customer can easily copy and paste the command and execute it on the terminal of the device.
+
+% TODO: screenshot
+
+The endpoint is a public REST API that is implemented by a controller on the cloud app backend. The controller is responsible for handling the incoming requests from the frontend and for forwarding them to the respective methods. The controller is also responsible for handling the authentication with the platform. The controller asks to the related service model to actually lists the available architectures and returns the final download link.
+
+The endpoint is available at the \texttt{/v1/cli-release} base path; in particular, the \texttt{/platforms} path returns a dynamic list of the available architectures at that time, and the \texttt{/:version/:platform} path returns the actual download link for the specifiec version and platform. The download link is a direct link to the storage bucket that contains the binaries.
+
+Notice that, altough the app is accessible using a private account but the download link is public, we do not consider this a security issue because of the initial stage of the project and the limited access to the preview version of the app. In fact, only the company testers can access it at this time. Future work will be to implement a proper authentication system to access the download link.
+
+\subsection{Support internationalization}
+
+The support for different languages is a fondamental step for a company with a global presence. The company is interested in the possibility to offer the tool in different languages, in order to make it more accessible to the customers.
+
+In order to support internationalization, also known as \textit{i18n} because of the 18 letters between the \textit{i} and the \textit{n}, we use the \texttt{vue-i18n} package to translate the cloud app. The package is a plugin for VueJS that provides the i18n features to the application and it is available on the public NPM registry. The package allows to define the translations in a JSON file and to use them in the application by using the \texttt{\$t} function. The package also provides the ability to switch the language at runtime.
+
+Also the tool is translated in different languages, primarily in English and Italian. The translations are again stored in different YAML files, one for each language, and they are loaded at runtime by the tool. The tool uses the \texttt{go-i18n} package. We did some wrapper functions to make the package similar to the way it works in the application by exposing a \texttt{t} function used to return the translation of a key. We decided to use a YAML translation file because it is even easier to read and write than a JSON file.
+
+Both the translation methods support the variable replacement, that is the ability to replace a placeholder in the translation with a value. This is useful for example to translate a sentence that contains a variable part, like a number or a name. Also, they support the pluralization, that is the ability to translate a sentence in different ways depending on the number of items. A clear example is the translation of the word \textit{item} in English, that is translated in two different ways depending on the number of items: \textit{item} for one item and \textit{items} for zero or more than one item. The pluralization is done by using the \texttt{one}, \texttt{other} and \texttt{few} keys in the translation file. The \texttt{one} key is used for the singular form, the \texttt{other} key is used for the plural form, and the \texttt{few} key is used for the few form. The package automatically selects the correct form based on the number of items passed as parameter.
+
+Usually the name of these functions are very short to reduce the verbosity in the code, given that they are used really really often in the code.
+
+\section{Second sprint retrospective}
+
+The second sprint has been completed successfully. All the expected modules have been implemented. The implementation of the modules has been straightforward. Compared to the first sprint, we adjusted the estimation of the complexity and the time needed to develop the new features and we have been able to complete the sprint in time. This is the end of the internship period. The company is satisfied by our job and it looks forward to further development.
 
