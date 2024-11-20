@@ -183,9 +183,9 @@ Available Commands:
   version     Print the version number
 
 Flags:
-  -h, --help      help for ciss
+  -h, --help      help for scantool
   --verbose       Log developer messages on stdout
-  -v, --version   version for ciss
+  -v, --version   version for scantool
 \end{lstlisting}
 
 Moreover, we thought that the tool should be able to perform a scan in every network condition, to not exclude a priori a customer with an offline configuration or with a network that does not allow outcoming connections. Therefore, we decided to implement two different modes: the online mode where the tool can reach the cloud to determine the latest available version of the softwares, and the offline mode where the tool cannot reach the cloud and it has to rely on the local timestamp supplied by some of the softwares and libraries. \\
@@ -249,4 +249,4 @@ With all being said, we decided to use the \textit{rs/zerolog} library because o
 
 The scanning tool is a command-line interface (CLI) application written in Go. The tool is designed to be run on the terminal of the device, so it can be used by the user to check the configuration of the device. As an initial idea, the tool should be able to perform a scan of the device and to output the results to the console. Thinking about the future, the scanning tool should be able to be run periodically and report the results to a central server, so the user can have a dashboard with the status of all the devices.
 
-The idea to consider is to upload the scanning tool to the apps store, so the user can enable the wider automated view directly from the platform; doing so, the customer can create a campaign to check the configuration of all the devices from the same place and receive aggregated reports, with the goal to have a centralized view of the security status of the devices.
+The idea to consider is to upload the scanning tool to the applications store, so the user can enable the wider automated concept directly from the platform; doing so, the customer can create a campaign to check the configuration of all the devices from the same place and receive aggregated reports, with the goal to have a complete dashboard for the security status of the devices.

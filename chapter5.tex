@@ -8,6 +8,8 @@ The Go programming language provides a powerful feature called interfaces. An in
 
 We setup each one of the checks as a separate interface, so that we can easily test them in isolation and also to make it easier to manage the codebase and add new checks in the future, like if they are modules that can be added or removed from the system.
 
+The modularity of a project is a key feature that allows to easily extend the codebase and to add new features. Without modularity, the codebase would be a monolithic block of code that is difficult to handle with the time and the natural growth of a codebase.
+
 Therefore, we created different packages for the different categories of modules, like \textit{check} and \textit{version} plus some utility packages like \textit{parsing}, \textit{output} and \textit{mapping}.
 
 The scopes for the different packages are the following:
@@ -88,7 +90,7 @@ This composition is common to all the modules, and it allows to easily test the 
 
 \section{First sprint}
 
-The first sprint has the goal to implement the first set of modules, as expressed in the sprint planning.
+The first sprint has the goal to implement the first set of modules, as expressed in the sprint planning. We are going to detail the implementation of every story from the sprint backlog.
 
 \subsection{CheckTime module}
 
@@ -113,15 +115,15 @@ If any of the steps fails, the module returns the execution error status.
 
 Every module returns a structure representing the result of the execution, a brief message and a recommendation to solve the potential issue. The modules runner collects all the results from the modules in a \textit{Report} type variable, that is defined as a map of maps, in order to have the direct mapping of the result of the module under the category and the name of the module.
 
-The resulting type is therefore given to the output package, which is responsible for the output of the results in the desired format. The default formatter is JSON, but it can be easily extended to support other formats like YAML by importing or implementing the corresponding marshaler, that is a function that transforms the encoding of an \textit{any} value to the desired format.
+The resulting type is therefore given to the \textit{output} package, which is responsible for the desired destination format. The default formatter is JSON, but it can be easily extended to support other formats like YAML by importing or implementing the corresponding marshaler, that is a function that transforms the encoding of an \textit{any} value to the desired format.
 
-By default, the output is printed to the standard output of the terminal, but the destination can be redirected to a file by using the built-in method with the \texttt{-o} flag. The output can be printed in a pretty format by using the \texttt{--pretty} flag, useful for human readability. Anyway, the predefined formatting is minified.
+By default, the output is printed to the standard output of the terminal, but the destination can be redirected to a file by using the built-in method with the \texttt{-d} flag.
 
-The formatter can be choosen by using the \texttt{-o} flag, followed by the desired format.
+The output can be printed in a pretty format by using the \texttt{--pretty} flag, useful for human readability. Anyway, the predefined formatting is minified. The formatter can be choosen by using the \texttt{-o} flag, followed by the desired format. For example, to output the result in YAML format in the terminal the command is \texttt{./scantool scan -o yaml}, or \texttt{./scantool scan -o yaml -d output.yaml} to redirect the output to a file.
 
 The list of the active modules is available with the command \texttt{./scantool list}, printed in the standard output of the terminal, one for line.
 
-For example, given the execution of the datetime module only, issued with the command \texttt{./scantool scan -l "check.time" --pretty} with no further parameters, the output could be the following:
+For example, given the execution of the datetime module only, issued with the command \texttt{./scantool scan --list "check.time" --pretty} with no further parameters, the output structure would be as the following:
 
 \begin{lstlisting}[style=json, caption={Output of the datetime module}]
 {
@@ -149,7 +151,7 @@ By default, the binary includes debug symbols, that are useful for debugging pur
   \item \texttt{-w} turns off debugging information, not being able to trace the resulting binary with the \texttt{gdb} debugger.
 \end{itemize}
 
-In the context of the automatic pipeline that builds the binary for the different architectures, we also inject the version number of the binary in the build command, by using the \texttt{-X importpath.name=value} flag. This flag allows to set the value of the string variable in \textit{importpath} named name to \textit{value}.~\cite{go-ldflags-all}
+In the context of the automatic pipeline that builds the binary for the different architectures, we also inject the version number of the binary in the build command, by using the \texttt{-X importpath.name=value} flag. This flag allows to set the value of the string variable in \textit{importpath} named \textit{name} to \textit{value}.~\cite{go-ldflags-all}
 
 Furthermore, we also explicitly set the environment variable \texttt{CGO\_ENABLED=0} to disable the use of the machine C compiler. Anyway, that is disabled by default when cross-compiling and the go builder chooses the appropriate compiler for the target architecture.~\cite{go-cgo-compiler}
 
@@ -211,9 +213,10 @@ This specialization should compare the local version of the operating system wit
 
 Setting common passwords is a bad practice, as they let an attacker to potentially gain unauthorized access to the management of the device.
 
-The devices ship with some default credentials for the two users that are available on the system, named \textit{admin} and \textit{user}. The credentials are required to interact with the Device Settings. They are asked to be changed at the first login, but the user could skip the step and keep the default ones.\footnote{verify}
+The devices ship with some default credentials for the two users that are available on the system, named \textit{admin} and \textit{user}. The credentials are required to interact with the Device Settings.
+% They are asked to be changed at the first login, but the user could skip the step and keep the default ones.\footnote{verify}
 
-The module checks whether the default credentials are still in use by trying to login with a pre-defined set of passwords on the two users. The module performs $2*|passwords|$ HEAD requests to an arbitrary endpoint of the Device Settings API and it checks the status code of the response. If one of the responses' status code is \textit{200 Success}, meaning that the authorization has been granted and therefore username and password match, then the module returns an issue with a high severity, otherwise it returns an OK status.
+The module checks whether the default credentials are still in use by trying to login with a pre-defined set of passwords on the two users. The module performs $2*|harcodedPasswords|$ HEAD requests to an arbitrary endpoint of the Device Settings API and it checks the status code of the response. If one of the responses' status code is \textit{200 Success}, meaning that the authorization has been granted and therefore username and password match, then the module returns an issue with a high severity, otherwise it returns an OK status.
 
 This security control is possible without stumbling into the device built-in authentication rate-limiting because the total number of requests is below the threshold of the requests for minute that the device accept before temporarily blocking the access from that access.
 
@@ -266,7 +269,7 @@ type checkServicesStruct struct {
 
 The \textit{hmiConfig} function retrieves the information about the services from the Device Settings API, and the \textit{checkServices} function actually performs the check. The API endpoint is located at \texttt{/api/v1/services} and it returns a JSON object structured as a list of object for each service, where each object contains its id, the name and the status.
 
-The \textit{isPortOpen} function is a utility function that checks if the port is open on the device. It works by trying to connect to the device on the port defined by a predefined map that contains a list of possible ports for each of the services. Depending on the protocol, the function tries to connect to each of the ports and returns true if the connection is successful, otherwise it returns false.
+The \textit{isPortOpen} function is a utility function that checks if the port is open on the device. It works by trying to opening a socket on the port defined by a predefined map that contains a list of default ports for each of the services. Depending on the protocol, the function tries to connect to each of the ports and returns true if the connection is successful, otherwise it returns false.
 
 By combining the two functions, the module checks if the SSH port status reported by the Device Settings API matches with the actual status of the port.
 
@@ -338,8 +341,8 @@ The module checks whether the certificate is expired or not. Go provides built-i
 
 In particular, the certificate is read as bytes from the file system, then it is parsed by the \texttt{pem.Decode} function that returns a \texttt{pem.Block} structure. The \texttt{Block} structure contains the type of the block and the bytes of the block. The bytes are then passed to the \texttt{x509.ParseCertificate} function that returns a \texttt{x509.Certificate} structure. The \texttt{Certificate} structure also contains the expiration date of the certificate.
 
-The expiration date is then compared with the current date: if the expiration date happens in less than 30 days, the the module returns an issue. If the valid days left are less than 30, the severity is low; if they are less than 15, the severity is moderate; if they are less than 1, the severity is high.
-
+The expiration date is then compared with the current date: if the expiration date happens in less than 30 days, the module returns an issue. If the valid days left are less than 30, the severity is low; if they are less than 15, the severity is moderate; if they are less than 1, the severity is high.
+-
 The implementation of the module is defined by the \textit{checkCertificatesInterface} and \textit{checkCertificatesStruct} structure. The interface looks like:
 
 \begin{lstlisting}[style=golang]
@@ -369,7 +372,7 @@ This flag is defined as persistent, meaning that it is available for every comma
 
 \subsection{Add YAML report formatter}
 
-In addition to the JSON output, we also add the YAML output format. The YAML format is a human-readable data serialization standard that can be used in conjunction with all programming languages and is often used to write configuration files. The YAML format is more human-readable than the JSON format. It is not built-in in the Go programming language, but there is an official porting available at the \texttt{gopkg.in/yaml.v3} package.
+In addition to the JSON output, we also add the YAML output format. The YAML format is a human-readable data serialization standard that can be used in conjunction with all programming languages and is often used to write configuration files. The YAML format is more human-readable than the JSON format. It is not native in the Go programming language, but there is an official porting available at the \texttt{gopkg.in/yaml.v3} package.
 
 As described in~\cref{sec:json-output}, the output package is responsible for the output of the results in the desired format. The default format is JSON, but it can be easily extended to support other formats like YAML by importing the corresponding marshaler.
 
@@ -417,13 +420,13 @@ The skeleton of the application is generated by a public utility developed by th
 
 The app also provides a running configuration of \textit{PostgreSQL} database that is used to store its data. The database is also deployed on the Kubernetes cluster.
 
-The application has to be deployed on a Kubernetes cluster. The code also contains the required charts files, personalized for the application, that are used by the Helm package manager to deploy the application on the cluster, and the Dockerfile that is used to build the Docker image of the application.
+The application has to be deployed on a Kubernetes cluster. The code also contains the required charts files, customized for the application, that are used by the Helm package manager to deploy the application on the cluster, and the Dockerfile that is used to build the Docker image of the application.
 
 Once the deployment is live on the cluster, the application can be linked to the platform store by using the public REST API of the platform. Doing so, the application is visible on the platform website and it can be accessed by the customers.
 
 \subsection{Implement proxy network call}
 
-As said, usually the industrial networks attached to the devices are very strict and do not allow to communicate with every host on the internet. This is a security measure that is taken to reduce the risks of exposing a relatively weak devices. In fact, unfortunately the devices are usually not updated frequently by the customers and they are not patched for the latest vulnerabilities. The goal of the tool described in this thesis is also to make aware the customers of a potential vulnerability that could be exploited by an attacker and new avaiable updates. In order to do so, the tool has to communicate with the internet to check the latest version of the software. How to do that given all the constraints?
+As said, usually the industrial networks attached to the devices are very strict and do not allow to communicate with every host on the internet. This is a security measure that is taken to reduce the risks of exposing a relatively weak devices. In fact, according to internal statistics, unfortunately the devices are usually not updated frequently by the customers and they are not patched for the latest vulnerabilities. The goal of the tool described in this thesis is also to make aware the customers of a potential vulnerability that could be exploited by an attacker and new avaiable updates. In order to do so, the tool has to communicate with the internet to check the latest version of the software. How to do that given all the constraints?
 
 The solution we thought is to provide a proxy server that is the only one that connects to the final endpoints. The tool can then connect to the proxy server. This way, network administrators only have to allow the connection to the proxy server, that is already expected for the standard operation of the device.
 
@@ -431,6 +434,94 @@ The proxy server is managed by a controller on the cloud app backend. The contro
 
 The proxy controller is a class that it is decorated with the \texttt{@Controller} decorator, that is provided by the NestJS framework, with the parameter that is the base path of the controller. A decorator is a special kind of declaration that can be attached to a class, method or property, and it is used to modify their behaviour. The class is also decorated with \texttt{@ApiTags}, needed to generate the OpenAPI documentation, and by a \texttt{@UseInterceptors} directive with the \textit{LoggingInterceptor} custom one that logs the incoming requests. \\
 The class contains the declaration of the services that are used by the controller to perform the actual operations. The services are injected in the constructor of the class. The class also contains the methods that are the actual endpoints of the controller. The methods are decorated with the \texttt{@Get}, \texttt{@Post}, \texttt{@Put} or \texttt{@Delete} decorators, depending on the HTTP method that they handle. The methods also contain the logic to handle the incoming requests and to return the responses. The responses are returned in the form of specific \textit{DTO}s, which stands for \textit{data transfer object} and it is a object that carries data between processes, automatically serialized by the NestJS framework to the JSON format.
+
+The decorators starting with \texttt{@Api} are used to generate the OpenAPI documentation. The \texttt{@ApiTags} decorator is used to specify the category of the endpoint and the \texttt{@ApiHeader} decorator is used to specify the header parameters that are required. The \texttt{@ApiBearerAuth} decorator is used to specify that the endpoint requires a bearer token to be accessed. The \texttt{@UseGuards} decorator is used to specify the guards that are used to protect the endpoint from unauthorized access.
+
+An example of the proxy controller class is shown in~\cref{lst:proxy-controller}.
+
+\begin{lstlisting}[language=Javascript, caption={Proxy controller class}, label={lst:proxy-controller}]
+[... imports ...]
+
+@Controller('v1/proxy')
+@ApiTags('Proxy')
+@ApiHeader({ name: 'x-instance-id', required: true })
+@ApiHeader({ name: 'x-organization-id', required: true })
+@ApiHeader({ name: 'x-device-id', required: true })
+@ApiBearerAuth()
+@UseInterceptors(LoggingInterceptor)
+@UseGuards(AuthGuardFromHeaders, InstallationRoleGuard)
+export class ProxyController {
+  private readonly _logger: Logger;
+
+  private readonly _proxyTimeService: IProxyTimeService;
+
+  constructor(
+    @Inject('IProxyTimeService') proxyTimeService: IProxyTimeService,
+    logger: Logger
+  ) {
+    this._proxyTimeService = proxyTimeService;
+    this._logger = logger;
+  }
+
+  @Get('time')
+  @UseGuards(RateLimiter({ max: 1 }))
+  async time() {
+    this._logger.info('time');
+
+    const filteredApi = await this._proxyTimeService.ntp();
+
+    return filteredApi;
+  }
+}
+\end{lstlisting}
+
+The \textit{proxyTimeService} service is the one that actually retrieve the real time from a public NTP server. NTP stands for \textit{Network Time Protocol} and it is a protocol used to synchronize the clocks of computer systems over a network. The service is injected in the constructor of the controller, which means that there is no need to explicitly instantiate it. The service is defined by an interface that contains the methods that are needed to perform the operations. The service is then implemented by a class that implements the interface and that contains the actual logic to perform the operations. The service is responsible for handling the business logic of the application, and it is used by the controller to perform the actual operations.
+
+An example of the proxy service class is shown in~\cref{lst:proxy-service}.
+
+\begin{lstlisting}[language=Javascript, caption={Proxy service class}, label={lst:proxy-service}]
+[... imports ...]
+
+export class NtpTimeDto {
+  time: Date;
+
+  constructor(timestamp: Date) {
+    this.time = timestamp;
+  }
+}
+
+export interface IProxyTimeService {
+  ntp(): Promise<NtpTimeDto>;
+}
+
+@Injectable()
+export class ProxyTimeService implements IProxyTimeService {
+  private readonly _logger: Logger;
+
+  private readonly _ntpServerUrl = 'time.cloudflare.com';
+  private readonly _ntpServerTimeout = 5000;
+
+  constructor(logger: Logger) {
+    this._logger = logger;
+  }
+
+  private async getNtpTime(url: string, timeout: number): Promise<NTPPacket> {
+    this._logger.info(`NTP client call to url '${url}'`);
+    const ntpClient: NTP = new NTP(url, 123, { timeout });
+    return ntpClient.syncTime();
+  }
+
+  async ntp(): Promise<NtpTimeDto> {
+    this._logger.info('ntp');
+
+    const ntpTime = await this.getNtpTime(this._ntpServerUrl, this._ntpServerTimeout);
+
+    return new NtpTimeDto(ntpTime.time);
+  }
+}
+\end{lstlisting}
+
+The interface contains the public definition for the \texttt{ntp} method, then implemented by the \texttt{ProxyTimeService} class. The \textit{NtpTimeDto} class is a data transfer object that is used to carry the data between the service and the controller.
 
 \subsection{Automatic build and deploy}
 
@@ -442,10 +533,10 @@ The environments need the following set of images:
   \item the frontend and the backend are built into two different set of images, each exported for both \textit{amd64} and \textit{arm64};
 \end{itemize}
 
-About the tool, the different images are needed for the devices which run the \textit{arm} architectures. \\
+About the tool, the different images are needed for the devices running the \textit{arm*} architectures. \\
 Instead, the frontend and the backend images are built for the cluster environment, that is the \textit{amd64} architecture on the Google Cloud Platform Kubernetes cluster, and for the development runtime where the laptop are based both on \textit{amd64} and \textit{arm64} architecture. This way, each developer can run its own instance of the cluster on its laptop and directly test the application as it would be deployed on the real cluster.
 
-The automatic build and deploy is managed by the Google Cloud Build service. It is integrated with the repositories of the projects and it is triggered by the push of the code to the repository on a specific tag or on the master branch. The service is configured by a configuration file which contains all the steps that are needed to build the images. The images are then pushed to a remote registry and then they are automatically deployed to the cluster. Instead, the built tool binaries are stored in a public storage bucket. The bucket always contains the reference to the latest master version and all the previous tagged versions. We decided to store the binaries in a public storage bucket because of the simplicity of the service for our intership project.
+The automatic build and deploy is managed by the Google Cloud Build service. It is directly integrated with the projects repositories and it is triggered by the push of the code on a specific tag or on the master branch. The service is programmed by a configuration file, called \textit{Dockerfile}, which contains all the steps that are needed to build the images. The images are then pushed to a remote registry and then they are automatically deployed to the cluster. Instead, the built tool binaries are stored in a public storage bucket. The bucket always contains the reference to the latest master version and all the previous tagged versions. We decided to store the binaries in a public storage bucket because of the simplicity of the service for our intership project.
 
 Therefore, the storage looks like a tree of directories, where the root directory is the version of the binary, and the subdirectories are the architectures. The filename of final binary is the name of the tool. The tree is structured as follows:
 
@@ -478,11 +569,16 @@ Doing so, the developers can focus on the development of the tool and they do no
 
 \subsection{Enable to download latest version of the tool}
 
-Recalling the tool, it is a command line software that is used to scan the device for potential misconfigurations on its settings. The tool is run on the terminal of the device, and therefore it is required to obtain the executable file. To enable the customers to download the latest version of the tool, we provide a public endpoint that returns the latest version of the tool for the different architectures.
+Recalling the tool, it is a command line software that is used to scan the device for potential misconfigurations on its settings. The tool is run on the terminal of the device, and therefore it is required to obtain the executable file. To enable the customers to download the latest version of the tool, we provide a public endpoint that returns the latest version for the different architectures.
 
-The cloud app frontend is powered by this endpoints to assists the testers and the customers to download the latest version of the tool. The frontend is a VueJS application, part of the cloud app. For the internship purposes, we shipped a simple frontend composed by a dropdown that lists the available architectures, a \textit{download} button that get the binary and a \textit{copy command} to copy the \textit{curl}\footnote{\url{https://curl.se/}} command, to simplify the download process by not involving the copy between the local host and the remote device. This way, the customer can easily copy and paste the command and execute it on the terminal of the device.
+The cloud app frontend is powered by this endpoints to assists the testers and the customers to download the latest version of the tool. The frontend is a VueJS application, part of the cloud app. For the internship purposes, we shipped a simple frontend composed by a dropdown that lists the available architectures, a \textit{download} button that get the binary and a \textit{copy command} to copy the \textit{curl}\footnote{\url{https://curl.se/}} command, to simplify the download process by not involving the copy between the local host and the remote device. This way, the customer can easily copy and paste the command and execute it on the terminal of the device. \cref{fig:cloud-app-frontend} shows the frontend.
 
-% TODO: screenshot
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=1.0\textwidth]{chapters/05/assets/cloud-app-frontend}
+  \caption{Cloud app frontend}
+  \label{fig:cloud-app-frontend}
+\end{figure}
 
 The endpoint is a public REST API that is implemented by a controller on the cloud app backend. The controller is responsible for handling the incoming requests from the frontend and for forwarding them to the respective methods. The controller is also responsible for handling the authentication with the platform. The controller asks to the related service model to actually lists the available architectures and returns the final download link.
 
@@ -504,5 +600,5 @@ Usually the name of these functions are very short to reduce the verbosity in th
 
 \section{Second sprint retrospective}
 
-The second sprint has been completed successfully. All the expected modules have been implemented. The implementation of the modules has been straightforward. Compared to the first sprint, we adjusted the estimation of the complexity and the time needed to develop the new features and we have been able to complete the sprint in time. This is the end of the internship period. The company is satisfied by our job and it looks forward to further development.
+With this last task done, the second sprint has been completed successfully. All the expected modules have been implemented. The implementation of the modules has been straightforward. Compared to the first sprint, we adjusted the estimation of the complexity and the time needed to develop the new features and we have been able to complete the sprint in time. This is the end of the internship period. The company is satisfied by our job and it looks forward to further development.
 
