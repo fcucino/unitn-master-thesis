@@ -1,4 +1,5 @@
-FROM texlive/texlive:latest
+FROM texlive/texlive@sha256:bb2c100c5035c4df7856294f23423f7d74c6d772134ea6b41b001f961039ebf4
+#2024-11-24
 #FROM texlive/texlive@sha256:35df6f5eda3dba6420515c8cfd38cbe22b07ad417310edf0d8980460599a098c
 #2020-11-13T23:00:23.019512792+01:00
 
