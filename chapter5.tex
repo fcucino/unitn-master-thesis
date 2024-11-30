@@ -73,9 +73,9 @@ func CheckTime(ctx context.Context) variab.Result {
 \end{lstlisting}
 
 % Some of the variables are omitted for brevity. The other ones come from both some constants and some utility variables defined accross the codebase. 
-The interface has a method that checks if the time of the device is correct, and it returns a \textit{variab.Result} struct that contains the result of the check.
+The interface has a method that checks if the time of the device is correct, and it always returns a \textit{variab.Result} struct that contains the result of the check.
 
-The \textit{Result} structure of the package \textit{variab} is a common structure that is used to return the result of the checks. It contains the a concise message for the output, an optional recommendation to solve the issue, a severity level ranging from \textit{none} to \textit{high} and an operation status, where \textit{OK} means that the module completed the task without noticing any vulnerability, \textit{ISSUE} means that the module contains a potential weakness, \textit{EXECUTION\_ERROR} in the case of a unhandled exception, \textit{UNKNOWN} otherwise. This structure is used by all the modules to return the result of a module.
+The \textit{Result} structure of the package \textit{variab} is a common structure that is used to return the result of the checks. It contains a concise message for the output, an optional recommendation to solve the issue, a severity level ranging from \textit{none} to \textit{high} and an operation status, where \textit{OK} means that the module completed the task without noticing any vulnerability, \textit{ISSUE} means that the module contains a potential weakness, \textit{EXECUTION\_ERROR} in the case of a unhandled exception, \textit{UNKNOWN} otherwise. This structure is used by all the modules to return the result of a module. Any exception is handled in order to guarantee the robustness of the tool in case of any failure, allowing the user to always obtain a valid output.
 
 \begin{lstlisting}[style=json, caption={Result struct}]
 {
@@ -396,7 +396,7 @@ Given that the first sprint has been completed successfully, we can move on to t
 The second sprint has the goal to implement the following set of modules:
 
 \begin{itemize}
-  \item Create cloud app
+  \item Create cloud web app
   \item Implement proxy network call
   \item Automatic build and deploy
   \item Enable to download latest version of the tool
@@ -412,7 +412,7 @@ The second and third points are about the automatic build and deploy of the tool
 
 The latest point aims to provide the internationalization, that is the support for different languages. The company is interested in the possibility to offer the tool in different languages, in order to make it more accessible to the customers.
 
-\subsection{Create cloud app}
+\subsection{Create cloud web app}
 
 Recalling~\cref{sec:platform-applications}, the cloud app is an entire runtime made by a frontend and a backend that is visible through the platform website. The frontend is a VueJS application and the backend uses NestJS as framework for handling the controllers, the models and the logic. Both the frontend and the backend are written in TypeScript and both implement the authentication with the platform, as it is really integrated with the platform itself and cannot be used in a standalone mode.
 

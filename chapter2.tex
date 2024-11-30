@@ -49,11 +49,19 @@ We talked about risks in the previous section, but what is a risk? A risk is the
 
 Safety is about protecting from accidental risks, while security is about mitigating the risk of dangers caused by intentional and malicious actors.
 
-A system is secure as its weakest element. A vulnerability is a weakness in a system that can be exploited by a threat. A threat is a potential danger that can exploit a vulnerability. A threat agent is the actor that can exploit a vulnerability. An attack is the exploitation of a vulnerability by a threat agent. An exploit is the code that takes advantage of a vulnerability.
+A system is secure as its weakest element. A vulnerability is a weakness in a system that can be exploited by a threat. A threat is a potential danger that can exploit a vulnerability. A threat agent is the actor that can exploit a vulnerability. An attack is the exploitation of a vulnerability by a threat agent. An exploit is the code that takes advantage of a vulnerability. A graphical flow of these concepts is shown in~\cref{fig:security-meta-model-def}.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[scale=0.6]{chapters/02/assets/security-meta-model-def}
+  \caption[Security meta-model definition. Image by prof. A. Marchetto taken from commoncriteriaportal.org.]{Security meta-model definition. Image by prof. A. Marchetto taken from \url{commoncriteriaportal.org}.}
+  \label{fig:security-meta-model-def}
+\end{figure}
 
 CVE, which stands for \textit{Common Vulnerabilities and Exposures}, is a list of publicly known cybersecurity vulnerabilities. The CVE system provides a reference method for publicly known information-security vulnerabilities and exposures. Each CVE entry represents a unique identifier for a specific vulnerability, named \textit{CVE-ID}, making it easier to reference it across different tools.
 
-Each CVE entry is evaluated using the CVSS score, which stands for \textit{Common Vulnerability Scoring System}. This system provides a standardized way to assess the severity of vulnerabilities. It is important to note that CVSS measures severity, not risk. CVSS v2.0 and CVSS v3.x include three metric groups: Base, Temporal and Environmental. The Base metrics evaluate the intrinsic characteristics of a vulnerability that are constant over time and across user environments. The Temporal metrics adjust the valutation based on factors like patch availability and exploit code. The Environmental metrics allow organizations to customize the score based on their unique environment. The latest version, CVSS v4.0, introduced in 2023, includes Base, Threat, Environmental and Supplemental metric groups. Compared to the previous version, the Threat metrics evaluate the likelihood of an attacker exploiting the vulnerability, the Environmental metrics evaluate the impact of the vulnerability on the organization's unique environment and the Supplemental ones provide additional information about the vulnerability.~\cite{cvss-4-spec}\\
+Each CVE entry is evaluated using the CVSS score, which stands for \textit{Common Vulnerability Scoring System}. This system provides a standardized way to assess the severity of vulnerabilities. It is important to note that CVSS measures severity, not risk. \\
+CVSS v2.0 and CVSS v3.x include three metric groups: Base, Temporal and Environmental. The Base metrics evaluate the intrinsic characteristics of a vulnerability that are constant over time and across user environments. The Temporal metrics adjust the valutation based on factors like patch availability and exploit code and the Environmental metrics allow organizations to customize the score based on their unique environment. The latest version, CVSS v4.0, introduced in 2023, includes Base, Threat, Environmental and Supplemental metric groups. Compared to the previous version, the Threat metrics evaluate the likelihood of an attacker exploiting the vulnerability, the Environmental metrics evaluate the impact of the vulnerability on the organization's unique environment and the Supplemental ones provide additional information about the vulnerability.~\cite{cvss-4-spec}\\
 The metrics produce a numerical score from 0 to 10, and the assessment is also represented as a vector string, which is a concise textual representation of the values used to calculate the score.~\cite{cvss-metrics}
 
 % TODO: Add CVEs for year or some statistics in general
@@ -72,7 +80,14 @@ Many security issues are related to vulnerabilities due to bugs, but not all bug
 
 IT (\textit{Information Technology}) and OT (\textit{Operational Technology}) focus on protecting different types of systems and they have distinct priorities.
 
-IT is primarily concerned with managing electronic data, supporting business operations and facilitating decision-making through the use of computers and software to securely gather, store, process and share information. In contrast, OT focuses on controlling physical processes and equipment, ensuring efficiency and safety in industrial operations such as manufacturing and energy. Unlike IT, OT directly interfaces with industrial machinery and processes, addressing the physical environment and operational requirements.~\cite{paloalto-it-ot-diff}
+IT is primarily concerned with managing electronic data, supporting business operations and facilitating decision-making through the use of computers and software to securely gather, store, process and share information; basically, it represents the internet access to the cloud we are used to interact with every day. In contrast, OT focuses on controlling physical processes and equipment in industrial operations such as manufacturing and energy. Unlike IT, OT directly interfaces with industrial machinery and processes, addressing the physical environment and operational requirements~\cite{paloalto-it-ot-diff}, as visible in~\cref{fig:it-ot-diff}.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=1.0\textwidth]{chapters/02/assets/it-ot-diff.jpg}
+  \caption[IT vs OT: how they differ. Image by onlogic.com]{IT vs OT: how they differ. Image by \url{onlogic.com}}
+  \label{fig:it-ot-diff}
+\end{figure}
 
 We can devise some comparison points between the two types:
 \begin{enumerate}
@@ -241,7 +256,7 @@ CI and CD are practices that allow the developers to automate the building, test
 
 \section{Agile method}
 
-The \textit{Agile methodology} is a project management philosophy that involves breaking the project into phases and emphasizes continuous collaboration and improvement. Teams follow a cycle of planning, executing and evaluating. Teams choose agile so they can respond to changes in the marketplace or feedback from customers quickly without derailing a year's worth of plans. The publication of the Agile Manifesto\footnote{\url{https://agilemanifesto.org}} in 2001 marks the birth of agile as a methodology. Since then, many agile frameworks have emerged such as scrum, kanban or lean. Each embodies the core principles of frequent iteration, continuous learning and high quality in its own way.~\cite{agile-methodology}
+The \textit{Agile methodology} is a project management philosophy that involves breaking the project into phases and emphasizing continuous collaboration and improvement. Teams follow a cycle of planning, executing and evaluating. Teams choose agile so they can respond to changes in the marketplace or feedback from customers quickly without derailing a year's worth of plans. The publication of the Agile Manifesto\footnote{\url{https://agilemanifesto.org}} in 2001 marks the birth of the methodology. Since then, many agile frameworks have emerged such as scrum, kanban or lean. Each embodies the core principles of frequent iteration, continuous learning and high quality in its own way.~\cite{agile-methodology}
 
 \subsection{Scrum}
 

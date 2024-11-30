@@ -2,16 +2,6 @@
 
 This chapter contains the design of the application architecture and scanning methodology. It explains the active studies finalized to the goal of the project.
 
-% •	Description of the application architecture suitable for security scanning (executable, terminal, later ui)
-%%% o	System Settings UI and API to control every aspect of the device
-% •	Agile method, stories, backlog
-
-% IEC62443 findings and table
-% Go language
-% Explanation of the libraries used (Cobra for CLI, Zerolog for logging) and their benefits
-% •	Design of the scanning methodology.
-%%% o	Aspects covered: Outdated OS, outdated libraries (e.g., OpenSSL), outdated software, default or weak credentials, insecure network communication, …
-
 \section{Standards and regulations}
 
 This section provides an overview of the most relevant standards and regulations for the context of the internship's research, focusing on the industrial sector and the required goals; in particular, we detail more about \textit{IEC 62443}, \textit{ISO 27001}, \textit{NIS 2} and \textit{CRA}.
@@ -34,10 +24,9 @@ The IEC 62443 is a set of standards drafted by the \textit{Internation Electrote
 \begin{figure}[t]
   \centering
   \includegraphics[width=0.9\textwidth]{chapters/04/assets/iec62443.png}
-  \caption[IEC 62443 Parts and Sections. Image by Mohamed Wassef O. \protect\footnotemark]{IEC 62443 Parts and Sections. Image by Mohamed Wassef O. \protect\footnotemark}
+  \caption[IEC 62443 Parts and Sections. Image by Mohamed Wassef O.]{IEC 62443 Parts and Sections. Image by Mohamed Wassef O. on \url{https://www.linkedin.com/pulse/power-iec-62443-safeguarding-industrial-automation-othmani-gsrde}}
   \label{fig:iec-62443}
 \end{figure}
-\footnotetext{\url{https://www.linkedin.com/pulse/power-iec-62443-safeguarding-industrial-automation-othmani-gsrde}}
 
 Each category is divided into several subcategories, corresponding to different subjects and requirements. The IEC 62443 is a comprehensive standard that covers all the specific aspects starting from the product design up to the development.
 
@@ -188,7 +177,7 @@ Flags:
   -v, --version   version for scantool
 \end{lstlisting}
 
-Moreover, we thought that the tool should be able to perform a scan in every network condition, to not exclude a priori a customer with an offline configuration or with a network that does not allow outcoming connections. Therefore, we decided to implement two different modes: the online mode where the tool can reach the cloud to determine the latest available version of the softwares, and the offline mode where the tool cannot reach the cloud and it has to rely on the local timestamp supplied by some of the softwares and libraries. \\
+Moreover, we thought that the tool should be able to perform a scan in every network condition, to not exclude a priori a customer with an offline configuration or with a network that does not allow outcoming connections. Therefore, we decided to implement two different modes: the online mode where the tool can reach the cloud to determine the latest available version of the softwares, and the offline mode where the tool cannot reach the cloud and it has to rely on the local timestamp supplied by some of the softwares and libraries. The choice of the mode is automatic. \\
 From the board side, for each of the check that the tool should perform, we put at least two different stories, respectively one for the online mode and one for the offline mode.
 
 Then, we sketched out the stories about the checks to perform, starting from those extracted from the IEC 62443 standard, as explained in~\cref{sec:iec-62443-driven-design}, but also adding some other checks that we thought were needed to be performed. We also added some stories about the cross-compilation of the tool, the logging library to use and the CLI library to use.
@@ -199,6 +188,7 @@ The following list shows the stories that we have drafted for the scanning tool 
 \begin{itemize}
   \item Choose a CLI library
   \item Choose a logging library
+  \item Parse input parameters and output
   \item Split flow into offline and online usage
   \item Check correct time
   \item JSON output
@@ -245,7 +235,7 @@ The \textit{rs/zerolog} lib, standing for \textit{Zero Allocation JSON Logger}, 
 
 With all being said, we decided to use the \textit{rs/zerolog} library because of the performance and the features that it offers. The package was also already used by the company in the cloud software, so it was a good choice to keep the same library for the scanning tool.
 
-\section{Scanning tool app}
+\section{Scanning tool web app}
 
 The scanning tool is a command-line interface (CLI) application written in Go. The tool is designed to be run on the terminal of the device, so it can be used by the user to check the configuration of the device. As an initial idea, the tool should be able to perform a scan of the device and to output the results to the console. Thinking about the future, the scanning tool should be able to be run periodically and report the results to a central server, so the user can have a dashboard with the status of all the devices.
 

@@ -112,6 +112,18 @@ describe('parse version number', () => {
 
 The \texttt{expect} function is used to assert the expected behaviour of the system and the \texttt{toThrow} function is used to assert that the function throws an error. The \texttt{toBe} function is used to assert that the function returns the correct value. The \texttt{describe} function is used to group the test cases and the \texttt{test} function is used to define the test cases. The \texttt{it} function is an alias for the \texttt{test} function.
 
+\subsection{Snyk}
+
+We also use Snyk to scan for vulnerabilities in the dependencies of the tool project. Snyk offers a CLI tool embedded in a container image\footnote{\url{https://hub.docker.com/r/snyk/snyk}}. We run the \texttt{golang-1.22} tagged version to get the results. The tool is very useful to find out the vulnerabilities in the dependencies and to fix them. In our case, we found a vulnerability in a package, that we fixed by updating the package to the latest available version.
+
+This software is also specialized in finding vulnerabilities in NodeJS projects; therefore, we use it to scan the cloud web app project, in addition to the \textit{audit} command provided by the NodeJS package manager \texttt{npm}. The tagged version we use is \texttt{node-22}. Due to the way the dependencies proliferates and the number of discovered vulnerabilities each day, it is important to run the tool frequently to keep the project secure.
+
+An example of command to issue for scanning dependencies in a Go project is the following:
+\begin{mdframed}
+  \texttt{docker run --rm -it --env SNYK\_TOKEN -v \$(pwd):/app snyk/snyk:golang-1.22}
+\end{mdframed}
+The \texttt{SNYK\_TOKEN} is an environment variable that contains the token to authenticate the user to the Snyk service. The \texttt{-v} flag is used to mount the current directory to the \texttt{/app} directory in the container. The \texttt{--rm} flag is used to remove the container at the end and the \texttt{-it} flag is used to run the container in interactive mode to see the output of the command.
+
 \section{Manual system testing}
 
 In addition to the automated testing, the functionalities of the products are tested by a real group of people. In fact, the company has a dedicated testing team composed by six people, located in the Indian offices. They take care of the manual testing of the system. To synchronize the work, we do a weekly stand-up meeting focused on the completed tests and on the upcoming ones. The team is divided in different groups: there is the group in charge of testing the infrastructure, the group in charge of testing the frontend, and the group in charge of testing the backend.
