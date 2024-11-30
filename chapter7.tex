@@ -1,3 +1,17 @@
 \chapter{Conclusions}
 
+The increased connectivity of legacy devices, driven by the integration of the Industrial Internet of Things and digital technologies, has significantly expanded the cyberattack surface in industrial sectors.
 
+This thesis has presented an approach to secure the industrial devices by aknowledging the customers of potential risks in the configuration of their devices fleet.
+
+The analysis of the industrial regulations and standards arised the need for a security framework that can be used to assess the security of the industrial devices. Therefore, the presented scanning tool is a response to this need.
+
+First, we have identified the main security requirements for industrial devices, by analyzing the most common regulations and standards. There are some common requirements that are shared among the regulations and others that are specific to a single regulation due to the different sectors that they are focused on. The scanning tool has been designed to cover those requirements for which a solution can be taken by the customer through the configuration of the device, without the need of a hardware or software update.
+
+The scanning tool is able to identify the misconfigurations of the industrial devices and to provide the customers with a report that can be used to improve their security, by lowering the risks. At the end of the internship period, the scanning tool was able to be run locally on a device terminal and to provide the customers with a text report.
+
+Future work should be focused on the improvement of the user experience of the tool, by providing a graphical user interface where the results are stored and can be easily accessed by the customers. That should be the expansion of the existing cloud application. Furthermore, the experience should be simplified on the device side also, to not have the customer to run the tool on a terminal, but through another user interface accessible on the device along the existing settings.
+
+One of the requirements given by the the laws is the periodic scanning: although it is not been implemented in the scanning tool itself, it can be already achieved by taking advantage of a local cron job that runs it periodically, or by performing further changes to be able to remotely schedule the scanning from the cloud application.
+
+It has been a great experience to work on this project and to be able to contribute to the security of the industrial devices. I am grateful to the company for the opportunity to work on this project from scratch.
