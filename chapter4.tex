@@ -147,7 +147,7 @@ With this approach, we have identified the checks that the scanning tool should 
 
 \section{Backlog stories}
 
-With the help of the supervisor, we created a backlog of stories for the scanning tool. We drafted a new epic on the board and we filled it with the stories that we thought were needed to develop the tool.
+We have a backlog of stories for the scanning tool. Therefore, we drafted a new epic on the board and we filled it with the stories that we thought were needed to develop the tool.
 
 We considered each story as an independent task that could be developed and tested in a short time, usually in a week. So, we split the epic into small stories, each one with a title, a description and a priority.
 
@@ -214,7 +214,7 @@ Starting from the scratch, we have to take care at first point of some utility l
 
 The comparison for the CLI parameters parsing is between a library called \textit{urfave/cli/v2}\footnote{\url{https://github.com/urfave/cli}} (\texttt{v2.27.1}) and another one called \textit{spf13/cobra}\footnote{\url{https://github.com/spf13/cobra}} (\texttt{v1.8.0}). Data and evaluation refers to March 2024.
 
-Both the libraries have been suggested by the supervisor, and they are both widely used in the Go community. The evaluation between the two libraries is based on the features that they offer, the ease of use and the community support. In particular, we are interested in the ability to define flags and arguments, the ability to define commands and subcommands, the complexity to have the help page or the version of the tool.\\
+Both the libraries have been recommended by the supervisor, and they are both widely used in the Go community. The evaluation between the two libraries is based on the features that they offer, the ease of use and the community support. In particular, we are interested in the ability to define flags and arguments, the ability to define commands and subcommands, the complexity to have the help page or the version of the tool.\\
 Flags and arguments are the parameters that the user can pass to the tool to modify its behaviour, while commands are the different actions that the tool can perform. For example, the \texttt{scan} command is a command, while \texttt{--verbose} is a flag. Flag could be global, meaning that can be issued with every other command, or local, meaning that it has to be recognized only after a specified command or argument. A pattern to follow is \texttt{APPNAME COMMAND ARG --FLAG}. Finally, it's not obvious that a library supports the \textit{context} parameter, that is a way to pass data between the functions accross the application.
 
 \textit{urfave/cli/v2} is a package for building command line apps in Go. The package provides a way to define flags and arguments, and it also provides a way to define commands. The package has a friendly documentation and it is actively maintained by the contributors. It is quick to define the actions for each flag or option. It supports the \textit{context} parameter. There is an upcoming major version \texttt{v3} in development, but it is not yet documented at all. The package has 21k stars on GitHub.

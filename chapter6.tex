@@ -14,7 +14,7 @@ There are several reasons why testing is important. We can group them in four ca
 \begin{itemize}
   \item
         First of all, testing helps to prevent regressions. A regression is a bug that is introduced when a feature is added or especially modified in the system. It helps to prevent them by testing the system after each change. \\
-        According to my supervisor, the unit tests should be defined after the definition of the project, but before writing any code implementation. This way, the developer defines the expected behavior of the system before writing the code. It is an iterative approach combining programming, unit test creation, and refactoring. This method is called Test-Driven Development (aka TDD), and it is also originated from the Agile manifesto principles~\cite{agile-test-driven-development}. For example, a TDD approach involves writing a test case for the "contains" function and then writing the actual implementation to pass that test, and so on. The TDD approach is shown in~\cref{fig:tdd};
+        The unit tests can be defined after the definition of the project, but before writing any code implementation. This way, the developer defines the expected behavior of the system before writing the code. It is an iterative approach combining programming, unit test creation, and refactoring. This method is called Test-Driven Development (aka TDD), and it is also originated from the Agile manifesto principles~\cite{agile-test-driven-development}. The TDD approach is shown in~\cref{fig:tdd};
   \item
         Documentation: testing helps to enrich the documentation of the source functions. The test cases are a good way to understand the expected behavior of the system. They can be used as examples to understand how the system works. Compared to a separate documentation, the test cases are obviously always updated with the source code, avoiding possible inconsistencies due to the missing update of the documentation after a refactor;
   \item
@@ -23,7 +23,7 @@ There are several reasons why testing is important. We can group them in four ca
         Knowledge: testing helps to master the programming language you use. It also helps to understand the best practices of the programming language.
 \end{itemize}
 
-\begin{figure}[h]
+\begin{figure}[t]
   \centering
   \includegraphics[width=1.0\textwidth]{chapters/06/assets/tdd}
   \caption[Test Driven Development workflow]{Test Driven Development workflow. Image by \texttt{developer.ibm.com}}
@@ -118,9 +118,10 @@ We also use Snyk to scan for vulnerabilities in the dependencies of the tool pro
 
 This software is also specialized in finding vulnerabilities in NodeJS projects; therefore, we use it to scan the cloud web app project, in addition to the \textit{audit} command provided by the NodeJS package manager \texttt{npm}. The tagged version we use is \texttt{node-22}. Due to the way the dependencies proliferates and the number of discovered vulnerabilities each day, it is important to run the tool frequently to keep the project secure.
 
-An example of command to issue for scanning dependencies in a Go project is the following:
+An example of commands to issue for scanning dependencies in a Go project is the following:
 \begin{mdframed}
-  \texttt{docker run --rm -it --env SNYK\_TOKEN -v \$(pwd):/app snyk/snyk:golang-1.22}
+  \texttt{\$ export SNYK\_TOKEN=token}\\
+  \texttt{\$ docker run --rm -it --env SNYK\_TOKEN -v \$(pwd):/app snyk/snyk:golang-1.22}
 \end{mdframed}
 The \texttt{SNYK\_TOKEN} is an environment variable that contains the token to authenticate the user to the Snyk service. The \texttt{-v} flag is used to mount the current directory to the \texttt{/app} directory in the container. The \texttt{--rm} flag is used to remove the container at the end and the \texttt{-it} flag is used to run the container in interactive mode to see the output of the command.
 
@@ -132,4 +133,10 @@ Once the implementation of the stories related to a functionality are completed,
 
 If the manual test does not pass the minimum requirements, the ticket related to that story is reopened and therefore handled by the developer again. After that the fixes are applied, the ticket is assigned back to the testers, and so on. If the testers are satisfied with the implementation, the ticket is closed and the story is considered done, and the feature is ready to be released.
 
-Despite the automated testing, sometimes the testers still report troubles with test cases not handled by the developer. This is a good way to improve the test coverage and to understand the real needs of the users.
+\section{Considerations}
+
+We wrote more than two hundreds test cases, including various parameter combinations and edge cases. We used the two syntaxes described in the previous subsections respectively for the two programming language and we also took advantage of the table-driven tests to test the same function with different parameters.
+
+Despite the automated testing, sometimes the testers still report troubles with test cases not handled by the developer. This is a another good way to improve the test coverage.
+
+In our personal projects, we never had a so defined and strictly testing methodology. TDD is really such a new concept for us, but it is essential to be efficient in the development process because it helps to focus on the actual requirements of the system. It is also a good way to understand the expected behaviour of the system and to identify the edge cases that need to be handled.
