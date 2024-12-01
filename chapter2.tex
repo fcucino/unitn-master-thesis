@@ -13,9 +13,9 @@ This chapter contains an explanation of many fundamental terms used in the thesi
 
 \section{Software vs. Security}
 
-A software is a set of programs and data which provides functionalities. Security is understanding and identifying software-induced security risks and how to manage them. Software and functionalities come with certain risks and software security is about managing these ones.
+A software is a set of programs and data which provides functionalities. Security is understanding and identifying software-induced security risks and how to manage them. Software and functionalities come with certain risks and software security is about managing these.
 
-Therefore, software plays a crucial role in providing security, but it is also one of the relevant sources of security issues and problems. Many times the developers have a limited training on this concept or many times the goal is the speed of the development rather than the attention to the hidden details; as result, security is always considered a secondary factor, because it is a complex and expansive task, hard to evaluate when nothing bad happens but usually too late to evaluate when something bad happens.~\cite{st-slides}
+Therefore, software plays a crucial role in providing security, but it is also one of the relevant sources of security issues and problems. Many times the developers have limited training on this concept or many times the goal is the speed of the development rather than the attention to the hidden details; as result, security is always considered a secondary factor, because it is a complex and expansive task, hard to evaluate when nothing bad happens but usually too late to evaluate when something bad happens.~\cite{st-slides}
 
 A software system is secure if it satisfies specified security objectives, starting from the CIA triad:
 \begin{itemize}
@@ -23,9 +23,7 @@ A software system is secure if it satisfies specified security objectives, start
   \item \textbf{Integrity}: unauthorized actors cannot change or alter the information;
   \item \textbf{Availability}: authorized actors can always have access to the information;
 \end{itemize}
-The CIA triad is a common model that stands as basis for the development of security systems.
-% it helps guiding teams as they pinpoint the different ways in which they can address each concern.\\
-Ideally, when all three standards have been met, the security profile of the organization is stronger and better equipped to handle threat incidents.~\cite{cia-triad}
+The CIA triad is a common model that stands as the basis for the development of security systems. Ideally, when all three standards have been met, the security profile of the organization is stronger and better equipped to handle threat incidents.~\cite{cia-triad}
 
 Secure software is not only composed of the CIA triad; there are also other objectives like~\cite{st-slides}
 \begin{itemize}
@@ -41,7 +39,7 @@ Secure software is not only composed of the CIA triad; there are also other obje
   \item \textbf{Intrusion prevention}: stopping unauthorized access;
 \end{itemize}
 
-Total security is unachievable, but the goal is to minimize the risks and the vulnerabilities. The security is a process, not a product, and it is a continuous process.~\cite{st-slides}
+Total security is unachievable, but the goal is to minimize the risks and the vulnerabilities. Security is a process, not a product, and it is a continuous process.~\cite{st-slides}
 
 \section{Risk vs. vulnerability vs. CVE}
 
@@ -49,7 +47,7 @@ We talked about risks in the previous section, but what is a risk? A risk is the
 
 Safety is about protecting from accidental risks, while security is about mitigating the risk of dangers caused by intentional and malicious actors.
 
-A system is secure as its weakest element. A vulnerability is a weakness in a system that can be exploited by a threat. A threat is a potential danger that can exploit a vulnerability. A threat agent is the actor that can exploit a vulnerability. An attack is the exploitation of a vulnerability by a threat agent. An exploit is the code that takes advantage of a vulnerability. A graphical flow of these concepts is shown in~\cref{fig:security-meta-model-def}.
+A system is secure as its weakest element. A vulnerability is a weakness in a system that can be exploited by a threat. A threat is a potential danger that can exploit a vulnerability. A threat agent is an actor that can exploit a vulnerability. An attack is the exploitation of a vulnerability by a threat agent. An exploit is the code that takes advantage of a vulnerability. A graphical flow of these concepts is shown in~\cref{fig:security-meta-model-def}.
 
 \begin{figure}[h]
   \centering
@@ -74,13 +72,13 @@ NIST (\textit{National Institute of Standards and Technology}) is a U.S. federal
 
 A bug is a flaw in a system that is not behaving as it is designed to do; a vulnerability is a way of abusing the system, in a security-related way, whether that's due to a design fault or an implementation fault, so a bug.
 
-Many security issues are related to vulnerabilities due to bugs, but not all bugs are vulnerabilities. The exploitation is the activity composed by many steps in which an attacker uses a bug to gain its goal.
+Many security issues are related to vulnerabilities due to bugs, but not all bugs are vulnerabilities. Exploitation is an activity composed of many steps in which an attacker uses a bug to gain its goal.
 
 \section{IT and OT Security}
 
 IT (\textit{Information Technology}) and OT (\textit{Operational Technology}) focus on protecting different types of systems and they have distinct priorities.
 
-IT is primarily concerned with managing electronic data, supporting business operations and facilitating decision-making through the use of computers and software to securely gather, store, process and share information; basically, it represents the internet access to the cloud we are used to interact with every day. In contrast, OT focuses on controlling physical processes and equipment in industrial operations such as manufacturing and energy. Unlike IT, OT directly interfaces with industrial machinery and processes, addressing the physical environment and operational requirements~\cite{paloalto-it-ot-diff}, as visible in~\cref{fig:it-ot-diff}.
+IT is primarily concerned with managing electronic data, supporting business operations and facilitating decision-making through the use of computers and software to securely gather, store, process and share information; basically, it represents the internet access to the cloud we are used to interacting with every day. In contrast, OT focuses on controlling physical processes and equipment in industrial operations such as manufacturing and energy. Unlike IT, OT directly interfaces with industrial machinery and processes, addressing the physical environment and operational requirements~\cite{paloalto-it-ot-diff}, as visible in~\cref{fig:it-ot-diff}.
 
 \begin{figure}[h]
   \centering
@@ -131,8 +129,8 @@ Some specific technologies are pushing this revolution:~\cite{what-is-industry-4
 
 Industrial devices are used in many different sectors like manufacturing, energy, transportation and so on. We can trace back these devices to a common tablet placed on a wall or on a production line, with the difference that these devices support a wide range of industrial protocols. These devices are usually not connected to the internet and they take input from a physical human interaction physically on the place.
 
-These type of devices are an example of HMI, which stands for \textit{Human Machine Interface}, and they are defined as a feature or component of a certain entity that enables humans to engage and interact with machines. In the past HMIs started to be command line interfaces handled by a keyboard, then they evolved to graphical user interfaces with the support for the mouse navigation and now they are touchscreens, where the end-user directly touches the screen.\\
-Traditionally, to integrate a manufacturing line with an HMI, the HMI had to be connected to a \textit{Programming Logic Controller} (PLC) to display the data received from the PLC and gave the PLC input from users.~\cite{what-is-hmi}
+These types of devices are an example of HMI, which stands for \textit{Human Machine Interface}, and they are defined as a feature or component of a certain entity that enables humans to engage and interact with machines. In the past HMIs started to be command line interfaces handled by a keyboard, then they evolved to graphical user interfaces with the support for the mouse navigation and now they are touchscreens, where the end-user directly touches the screen.\\
+Traditionally, to integrate a manufacturing line with an HMI, the HMI had to be connected to a \textit{Programming Logic Controller} (PLC) to display the data received from the PLC and give the PLC input from users.~\cite{what-is-hmi}
 
 In terms of the demands of Industry 4.0, industrial HMIs will also see further incorporation of new and emerging technologies that are impacting HMIs as a whole. First of all, there is the need to start integrating the Internet of Things (IoT) into industrial HMIs. This will allow for the collection of data from the factory floor and the ability to analyze that data in real time. This will also allow for the ability to control the factory floor from a remote location. Of course, making these devices connected to the internet makes the risks of cyberattacks higher.
 
@@ -164,7 +162,7 @@ There are then several laws and regulations that address under various profiles 
 
 \section{Security vulnerabilities scan}
 
-A security vulnerabilities scan is a process that looks for vulnerabilities in a system or network. It is a way to identify potential security risks and weaknesses that could be exploited by attackers. The scans can be performed manually or automatically using specialized tools. The goal of a this type of scan is to identify vulnerabilities and provide recommendations for improving the security of the system.
+A security vulnerabilities scan is a process that looks for vulnerabilities in a system or network. It is a way to identify potential security risks and weaknesses that could be exploited by attackers. The scans can be performed manually or automatically using specialized tools. The goal of this type of scan is to identify vulnerabilities and provide recommendations for improving the security of the system.
 
 There are also different types of security scans, including network scans and penetration tests. Network scans are used to identify devices on a network and detect open ports and services while penetration tests are used to simulate cyberattacks and test the security of a system.
 
