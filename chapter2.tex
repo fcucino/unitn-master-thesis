@@ -15,7 +15,7 @@ This chapter contains an explanation of many fundamental terms used in the thesi
 
 A software is a set of programs and data which provides functionalities. Security is understanding and identifying software-induced security risks and how to manage them. Software and functionalities come with certain risks and software security is about managing these.
 
-Therefore, software plays a crucial role in providing security, but it is also one of the relevant sources of security issues and problems. Many times the developers have limited training on this concept or many times the goal is the speed of the development rather than the attention to the hidden details; as result, security is always considered a secondary factor, because it is a complex and expansive task, hard to evaluate when nothing bad happens but usually too late to evaluate when something bad happens.~\cite{st-slides}
+Therefore, software plays a crucial role in providing security, but it is also one of the relevant sources of security issues and problems. Many times the developers have limited training on this concept or many times the goal is the speed of the development rather than the attention to the hidden details; as result, security is always considered a secondary factor, because it is a complex and expansive task, hard to evaluate when nothing bad happens but usually too late to evaluate when something bad happens.~\cite{marchetto-st-slides}
 
 A software system is secure if it satisfies specified security objectives, starting from the CIA triad:
 \begin{itemize}
@@ -25,7 +25,7 @@ A software system is secure if it satisfies specified security objectives, start
 \end{itemize}
 The CIA triad is a common model that stands as the basis for the development of security systems. Ideally, when all three standards have been met, the security profile of the organization is stronger and better equipped to handle threat incidents.~\cite{cia-triad}
 
-Secure software is not only composed of the CIA triad; there are also other objectives like~\cite{st-slides}
+Secure software is not only composed of the CIA triad; there are also other objectives like~\cite{marchetto-st-slides}
 \begin{itemize}
   \item \textbf{Authentication}: who is performing a task;
   \item \textbf{Authorization}: what is that actor allowed to do;
@@ -39,7 +39,7 @@ Secure software is not only composed of the CIA triad; there are also other obje
   \item \textbf{Intrusion prevention}: stopping unauthorized access;
 \end{itemize}
 
-Total security is unachievable, but the goal is to minimize the risks and the vulnerabilities. Security is a process, not a product, and it is a continuous process.~\cite{st-slides}
+Total security is unachievable, but the goal is to minimize the risks and the vulnerabilities. Security is a process, not a product, and it is a continuous process.~\cite{marchetto-st-slides}
 
 \section{Risk vs. vulnerability vs. CVE}
 
@@ -49,7 +49,7 @@ Safety is about protecting from accidental risks, while security is about mitiga
 
 A system is secure as its weakest element. A vulnerability is a weakness in a system that can be exploited by a threat. A threat is a potential danger that can exploit a vulnerability. A threat agent is an actor that can exploit a vulnerability. An attack is the exploitation of a vulnerability by a threat agent. An exploit is the code that takes advantage of a vulnerability. A graphical flow of these concepts is shown in~\cref{fig:security-meta-model-def}.
 
-\begin{figure}[h]
+\begin{figure}[ht]
   \centering
   \includegraphics[scale=0.6]{chapters/02/assets/security-meta-model-def}
   \caption[Security meta-model definition. Image by prof. A. Marchetto taken from commoncriteriaportal.org.]{Security meta-model definition. Image by prof. A. Marchetto taken from \url{commoncriteriaportal.org}.}
@@ -78,11 +78,11 @@ Many security issues are related to vulnerabilities due to bugs, but not all bug
 
 IT (\textit{Information Technology}) and OT (\textit{Operational Technology}) focus on protecting different types of systems and they have distinct priorities.
 
-IT is primarily concerned with managing electronic data, supporting business operations and facilitating decision-making through the use of computers and software to securely gather, store, process and share information; basically, it represents the internet access to the cloud we are used to interacting with every day. In contrast, OT focuses on controlling physical processes and equipment in industrial operations such as manufacturing and energy. Unlike IT, OT directly interfaces with industrial machinery and processes, addressing the physical environment and operational requirements~\cite{paloalto-it-ot-diff}, as visible in~\cref{fig:it-ot-diff}.
+IT is primarily concerned with managing electronic data, supporting business operations and facilitating decision-making through the use of computers and software to securely gather, store, process and share information; basically, it represents the internet access to the cloud we are used to interacting with every day. In contrast, OT focuses on controlling physical processes and equipment in industrial operations such as manufacturing and energy. Unlike IT, OT directly interfaces with industrial machinery and processes, addressing the physical environment and operational requirements~\cite{it-ot-diff-paloalto}, as visible in~\cref{fig:it-ot-diff}.
 
-\begin{figure}[h]
+\begin{figure}[ht]
   \centering
-  \includegraphics[width=1.0\textwidth]{chapters/02/assets/it-ot-diff.jpg}
+  \includegraphics[width=0.9\textwidth]{chapters/02/assets/it-ot-diff.jpg}
   \caption[IT vs OT: how they differ. Image by onlogic.com]{IT vs OT: how they differ. Image by \url{onlogic.com}}
   \label{fig:it-ot-diff}
 \end{figure}
@@ -100,7 +100,7 @@ Despite their distinct differences, IT vs. OT cybersecurity share similarities a
 
 According to the \textit{2023 State of Operational Technology and Cybersecurity Report} by Fortinet\footnote{\url{https://www.fortinet.com}}, as shown in~\cref{fig:fortinet-intrusions-env-impacted}, nearly one-third of respondents indicated both IT and OT systems were impacted, up from the 21\% in 2022.
 
-\begin{figure}[h]
+\begin{figure}[ht]
   \centering
   \includegraphics[scale=0.8]{chapters/02/assets/fortinet-intrusions-env-impacted.png}
   \caption[Environments impacted]{Environments impacted}
@@ -108,7 +108,7 @@ According to the \textit{2023 State of Operational Technology and Cybersecurity 
 \end{figure}
 
 
-As a general rule, OT devices are traditionally kept separate from the public internet and often internal networks, which means they can only be accessed by authorized employees. However, it is increasingly possible for OT systems to be controlled and monitored by IT systems or remotely via the Internet.~\cite{it-vs-ot-cybersecurity}
+As a general rule, OT devices are traditionally kept separate from the public internet and often internal networks, which means they can only be accessed by authorized employees. However, it is increasingly possible for OT systems to be controlled and monitored by IT systems or remotely via the Internet.~\cite{it-ot-cybersecurity}
 
 \section{Industry 4.0}
 
@@ -219,7 +219,7 @@ Microservice architecture is an architectural style that organizes an applicatio
 
 Doing so, there is no need to scale or deploy the entire application when only a part of it needs to be updated or scaled. This approach allows for faster development and deployment cycles, as well as improved fault tolerance and scalability. The concept is shown in~\cref{fig:monolith-microservices}.
 
-\begin{figure}[h]
+\begin{figure}[ht]
   \centering
   \includegraphics[scale=0.6]{chapters/02/assets/monolith-microservices.png}
   \caption[Breaking a monolithic application into microservices]{Breaking a monolithic application into microservices. Image by \texttt{aws.amazon.com}}
@@ -267,7 +267,7 @@ The two main artefacts boards are the \textit{product backlog} and the \textit{s
 The former is a list of all the tasks that needs to be done; it is a dynamic list of features, requirements, improvements, fixes and epics, ordered by their priority. Essentially, it is a \textit{"To Do"} list.\\
 The latter is a list of items selected for the current sprint cycle; the sprint cycle is a fixed period of time, usually up to four weeks. Before each sprint, the team selects items from the product backlog to work on. Epics are broken down into stories and stories are moved from the product backlog to the sprint backlog.~\cite{scrum-epic-stories}
 
-\begin{figure}[t]
+\begin{figure}[ht]
   \centering
   \includegraphics[width=0.8\textwidth]{chapters/02/assets/scrum}
   \caption{Scrum sprint cycle. Taken from \texttt{atlassian.com}}

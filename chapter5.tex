@@ -300,7 +300,7 @@ The protocol expects the following steps:
 If the security type is equal to the number 1, the server does not require any authentication. If the number is equal to 0, this is not expected and probably something went wrong in the implementation of the protocol. Both cases return as result a high severity issue. \\
 If the security type is greater or equal to number 2, then the server correctly requires some access control. Note that we said greater than two and not strictly equal to 2 because other security types exist but are not publicly documented.
 
-\begin{figure}[h]
+\begin{figure}[ht]
   \centering
   \includegraphics[width=0.5\textwidth]{chapters/05/assets/rfc6143-security-types}
   \caption{RFC 6143 security types}
@@ -570,7 +570,7 @@ Recalling the tool, it is a command line software that is used to scan the devic
 
 The cloud app frontend is powered by these endpoints to assist the testers and the customers in downloading the latest version of the tool. The frontend is a VueJS application, part of the cloud app. For the internship purposes, we shipped a simple frontend composed of a dropdown that lists the available architectures, a \textit{download} button that get binary and a \textit{copy command} to copy the \textit{curl}\footnote{\url{https://curl.se/}} command, to simplify the download process by not involving the copy between the local host and the remote device. This way, the customer can easily copy and paste the command and execute it on the terminal of the device. \cref{fig:cloud-app-frontend} shows the frontend.
 
-\begin{figure}[h]
+\begin{figure}[ht]
   \centering
   \includegraphics[width=1.0\textwidth]{chapters/05/assets/cloud-app-frontend}
   \caption{Cloud app frontend}
