@@ -157,7 +157,9 @@ At first glance, we decided to implement the following flow: the user runs the t
 
 The scan with no further options should perform all the checks that the tool can do as a default option, while the user can choose to perform only a subset of the checks by opting in using the \texttt{--list} flag. The list of the available checks is available by issuing the \texttt{list} command.
 
-\begin{lstlisting}[caption={Man page}]
+\noindent\begin{minipage}{\linewidth}
+  \vspace{0.5cm}
+  \begin{lstlisting}[caption={Man page}]
 $ ./scantool
 Industrial Security Scanning
 
@@ -176,6 +178,7 @@ Flags:
   --verbose       Log developer messages on stdout
   -v, --version   version for scantool
 \end{lstlisting}
+\end{minipage}
 
 Moreover, we thought that the tool should be able to perform a scan in every network condition, to not exclude a priori a customer with an offline configuration or with a network that does not allow outcoming connections. Therefore, we decided to implement two different modes: the online mode where the tool can reach the cloud to determine the latest available version of the software and the offline mode where the tool cannot reach the cloud and has to rely on the local timestamp supplied by some of the software and libraries. The choice of the mode is automatic. \\
 From the board side, for each of the checks that the tool should perform, we put at least two different stories, respectively one for the online mode and one for the offline mode.

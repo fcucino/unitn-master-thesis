@@ -52,7 +52,9 @@ The Go test runner scans all the test files in the project, runs them based on t
 
 The \texttt{testing.T} object is used to perform atomic tests, that are the smallest unit of testing. Fuzzing is part of this category and finds out new test cases that might lead to crashes or failures and where the outcomes are not predictable; it is especially useful for strings-based functions and for dealing with user inputs.
 
-\begin{lstlisting}[language=Golang, caption={Go testing framework example file parsing\_test.go}]
+\noindent\begin{minipage}{\linewidth}
+  \vspace{0.5cm}
+  \begin{lstlisting}[language=Golang, caption={Go testing framework example file parsing\_test.go}]
 package parsing
 
 func TestParseVersionInvalidStringNonNumbers(t *testing.T) {
@@ -80,6 +82,7 @@ func TestParseVersionValidStringReturnsCorrectNumber(t *testing.T) {
   }
 }
 \end{lstlisting}
+\end{minipage}
 
 An alternative to the previous syntax is to use the \texttt{t.Run} method and subtests. Doing this way, the syntax would be very similar to how Typescript testing is performed. Anyway, it is not the default convention for the Go coders.
 
@@ -89,7 +92,9 @@ Of course, also the cloud app needs to be tested. The chosen testing framework i
 
 A notable syntactical difference is placed in how the files are named and how the evaluation system works; in our configuration, the framework looks for files with the extension ending with \textit{.spec.ts}. Then, all we need is the method named \textit{test} which runs a test. By default, we do not need to define test functions with a uniquely identifiable name, but we \textit{describe} the expected behaviour. For example, the following snippet describes the testing for a utility to parse a valid version number:
 
-\begin{lstlisting}[language=Javascript, caption={Jest testing framework example file parsing.spec.ts}]
+\noindent\begin{minipage}{\linewidth}
+  \vspace{0.5cm}
+  \begin{lstlisting}[language=Javascript, caption={Jest testing framework example file parsing.spec.ts}]
 [...]
 describe('parse version number', () => {
   describe('given an invalid string', () => {
@@ -109,6 +114,7 @@ describe('parse version number', () => {
   });
 });
 \end{lstlisting}
+\end{minipage}
 
 The \texttt{expect} function is used to assert the expected behaviour of the system and the \texttt{toThrow} function is used to assert that the function throws an error. The \texttt{toBe} function is used to assert that the function returns the correct value. The \texttt{describe} function is used to group the test cases and the \texttt{test} function is used to define the test cases. The \texttt{it} function is an alias for the \texttt{test} function.
 
