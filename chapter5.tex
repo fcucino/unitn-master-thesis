@@ -96,7 +96,7 @@ The first sprint has the goal of implementing the first set of modules, as expre
 
 The \textit{CheckTime} module checks if the datetime of the device is correct. This is a fundamental thing to verify because the issues with the devices not connecting to the internet and to the cloud are most of the time due to the incorrect datetime, leading to an error with the SSL certificate. In fact, if the date is not correct, the SSL certificate could result as expired or not yet valid, warning the user that the connection is not secure.
 
-It does so by getting the time from the device and the real time from a remote server, and then comparing the two times. If the difference between the two times is greater than a certain threshold, expressed in a range of few minutes, then the module returns an \textit{ISSUE} status, otherwise it returns an \textit{OK} status. Of course, this module works with an active internet connection only; if the device is not connected to the internet, then the module returns a valid execution error.
+It does so by getting the time from the device and the real-time from a remote server, and then comparing the two times. If the difference between the two times is greater than a certain threshold, expressed in a range of few minutes, then the module returns an \textit{ISSUE} status, otherwise it returns an \textit{OK} status. Of course, this module works with an active internet connection only; if the device is not connected to the internet, then the module returns a valid execution error.
 
 To perform the execution, it runs the following steps:
 \begin{itemize}
@@ -190,7 +190,7 @@ type versionOsInterface interface {
 }
 \end{lstlisting}
 
-and the structure is composed by the following fields:
+and the structure is formed of the following fields:
 
 \begin{lstlisting}[style=golang]
 type versionOsStruct struct {
@@ -315,7 +315,7 @@ type checkCredentialsVNCInterface interface {
 }
 \end{lstlisting}
 
-and the structure is composed by the following fields:
+and the structure contains the following fields:
 
 \begin{lstlisting}[style=golang]
 type checkCredentialsVNCStruct struct {
@@ -351,7 +351,7 @@ type checkCerticatesInterface interface {
 }
 \end{lstlisting}
 
-and the structure is composed by the following fields:
+and the structure is made up of the following fields:
 
 \begin{lstlisting}[style=golang]
 type checkCertificatesStruct struct {
@@ -395,7 +395,7 @@ The second sprint has the goal of implementing the following set of modules:
 \begin{itemize}
   \item Create cloud web app
   \item Implement proxy network call
-  \item Automatic build and deploy
+  \item Automatic build and deployment
   \item Enable to download latest version of the tool
   \item Support internationalization
 \end{itemize}
@@ -472,7 +472,7 @@ export class ProxyController {
 }
 \end{lstlisting}
 
-The \textit{proxyTimeService} service is the one that actually retrieve the real time from a public NTP server. NTP stands for \textit{Network Time Protocol} and it is a protocol used to synchronize the clocks of computer systems over a network. The service is injected in the constructor of the controller, which means that there is no need to explicitly instantiate it. The service is defined by an interface that contains the methods that are needed to perform the operations. The service is then implemented by a class that implements the interface and that contains the actual logic to perform the operations. The service is responsible for handling the business logic of the application, and it is used by the controller to perform the actual operations.
+The \textit{proxyTimeService} service is the one that actually retrieve the real-time from a public NTP server. NTP stands for \textit{Network Time Protocol} and it is a protocol used to synchronize the clocks of computer systems over a network. The service is injected in the constructor of the controller, which means that there is no need to explicitly instantiate it. The service is defined by an interface that contains the methods that are needed to perform the operations. The service is then implemented by a class that implements the interface and that contains the actual logic to perform the operations. The service is responsible for handling the business logic of the application, and it is used by the controller to perform the actual operations.
 
 An example of the proxy service class is shown in~\cref{lst:proxy-service}.
 
@@ -520,7 +520,7 @@ export class ProxyTimeService implements IProxyTimeService {
 
 The interface contains the public definition for the \texttt{ntp} method, then implemented by the \texttt{ProxyTimeService} class. The \textit{NtpTimeDto} class is a data transfer object that is used to carry the data between the service and the controller.
 
-\subsection{Automatic build and deploy}
+\subsection{Automatic build and deployment}
 
 The continuous integration and continuous deployment of the tool is a crucial part of the development process: it allows to automatically build the tool for the different architectures and deploy them to different environments. It is also useful for testing purposes, as the build is preceded by the execution of the tests.
 
