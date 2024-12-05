@@ -9,7 +9,7 @@ This section provides an overview of the most relevant standards and regulations
 \subsection{IEC 62443}
 \label{sec:iec-62443}
 
-The IEC 62443 provides guidelines, rules and definitions specifically crafted for any Industrial Automation and Control Systems (IACS). Compared to ISO 27001, it is more focused on the specific sector instead of being more universal and open for interpretation depending on the company it applies to.
+The IEC 62443 provides guidelines, rules and definitions specifically crafted for Industrial Automation and Control Systems (IACS). It is more focused on the specific sector while ISO 27001 is more universal and open for interpretation depending on the company it applies to.
 
 The market requires the IEC 62443 certification for the companies that are involved in the production of industrial devices, as it is a guarantee of the security of the product and the company itself.
 
@@ -32,7 +32,7 @@ Each category is divided into several subcategories, corresponding to different 
 
 Each subcategory, identified by the category number followed by an increasing index, contains a list of System Requirements (SR) that the company must meet to obtain the certification.
 
-In example, a system requirement taken from the subcategory \textit{System security requirements and security levels} (\texttt{3-3}) is the one shown in~\cref{fig:iec62443_3-3_3_9}. We are going to explain it in detail.
+For example, a system requirement taken from the subcategory \textit{System security requirements and security levels} (\texttt{3-3}) is the one shown in~\cref{fig:iec62443_3-3_3_9}. We are going to explain it in detail.
 
 The SR 3.9 states the following:
 \begin{mdframed}
@@ -43,7 +43,7 @@ Log audits are essential for the prevention and detection of cyberattacks. When 
 
 For each Security Requirement listed in the documentation, the standard also describes some potential rationale and supplemental guidance to help the company understand the requirement and how to implement it.
 
-Each SR is made of four security levels. \\
+Each Security Requirement is made of four security levels. \\
 A Security Level (SL) is a measure of the security of a system or component, which is eventually transmitted to the final client. It is a score from 1 to 4, where 1 indicates the lowest complexity of the solution we can apply to follow the requirement, and 4 indicates the highest complexity.~\cite{iec-62443-ixon-practical-guide}
 
 It is possible to increase the score of the security level by applying more non-trivial solutions, expressed as a \textit{Requirement Enhancement}. An enhancement to increase the security level from 3 to 4 is stated in \texttt{SR 3.9 RE 1}:
@@ -62,14 +62,13 @@ We would like to note that not every SR has exactly four RE; instead, it could b
 
 Moreover, sometimes the highest security level is not always the best solution or the most suitable for the company. Therefore, it is essential to evaluate the cost and the benefits of the solution before applying it.
 
-
 In the context of the company we are working with and the internship project we are involved in, because we are directly at the level of product design and component development and deployment, the relevant subcategories we are focusing on are \texttt{3-3}, \texttt{4-1} and \texttt{4-2}, respectively named \textit{System security requirements and security levels}, \textit{Product security development life cycle requirements} and \textit{Technical security requirements for IACS components}.
 
 At the system level, \texttt{IEC 62443-3-3} introduces security levels and corresponding requirements, offering a scalable framework to protect industrial systems. This part enables organizations to customize their security measures based on specific risk profiles and operational demands.
 
 \texttt{IEC 62443-4-1} lays the foundation for secure product development, emphasizing the critical importance of incorporating security measures right from the design phase. It encourages manufacturers to adopt a security-centric approach to product development, ensuring that components are fortified against cyber threats from the very beginning.
 
-Moving from development to deployment, \texttt{IEC 62443-4-2} specifies the technical security requirements for IACS components. It defines essential security capabilities such as robust authentication, encryption and intrusion detection, ensuring that each component reinforces the overall security of the system.~\cite{iec-62443-safeguarding-industrial-automation-linkedin}
+In the context of component level, moving from development to deployment, \texttt{IEC 62443-4-2} specifies the technical security requirements for IACS components. It defines essential security capabilities such as robust authentication, encryption and intrusion detection, ensuring that each component reinforces the overall security of the system.~\cite{iec-62443-safeguarding-industrial-automation-linkedin}
 
 
 \subsection{ISO/IEC 27001}

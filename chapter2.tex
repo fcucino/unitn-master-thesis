@@ -15,15 +15,15 @@ This chapter contains an explanation of many fundamental terms used in the thesi
 
 A software is a set of programs and data which provides functionalities. Security is understanding and identifying software-induced security risks and how to manage them. Software and functionalities come with certain risks and software security is about managing these.
 
-Therefore, software plays a crucial role in providing security, but it is also one of the relevant sources of security issues and problems. Many times the developers have limited training on this concept or many times the goal is the speed of the development rather than the attention to the hidden details; as result, security is always considered a secondary factor, because it is a complex and expansive task, hard to evaluate when nothing bad happens but usually too late to evaluate when something bad happens.~\cite{marchetto-st-slides}
+Therefore, software plays a crucial role in providing security, but it is also one of the relevant sources of security issues and problems. Many times the developers have limited training on this concept or the goal is the speed of the development rather than the attention to the hidden details; as result, security is often considered a secondary factor, because it is a complex and expansive task, hard to evaluate when nothing bad happens but usually too late to evaluate when something bad happens.~\cite{marchetto-st-slides}
 
-A software system is secure if it satisfies specified security objectives, starting from the CIA triad:
+A software system is secure if it satisfies specified security objectives, starting from the CIA triad which stands for:
 \begin{itemize}
   \item \textbf{Confidentiality}: unauthorized actors cannot have access or read the information;
   \item \textbf{Integrity}: unauthorized actors cannot change or alter the information;
   \item \textbf{Availability}: authorized actors can always have access to the information;
 \end{itemize}
-The CIA triad is a common model that stands as the basis for the development of security systems. Ideally, when all three standards have been met, the security profile of the organization is stronger and better equipped to handle threat incidents.~\cite{cia-triad}
+The CIA triad is a common model that stands as the basis for the development of security systems. Ideally, when all three objectives have been met, the security profile of the organization is stronger and better equipped to handle threat incidents.~\cite{cia-triad}
 
 Secure software is not only composed of the CIA triad; there are also other objectives like~\cite{marchetto-st-slides}
 \begin{itemize}
@@ -32,11 +32,11 @@ Secure software is not only composed of the CIA triad; there are also other obje
   \item \textbf{Privacy}: controlling personal information from being shared;
   \item \textbf{Anonymity}: remaining unidentified to others;
   \item \textbf{Non-repudiation}: actor cannot deny having taken an action;
-  \item \textbf{Reliability}: the extent to which a software yields consistent and results as expected;
+  \item \textbf{Reliability}: the extent to which a software yields consistent and expected results;
   \item \textbf{Audit}: having traces of performed actions in separate systems or places;
   \item \textbf{Monitoring}: observing the system for any unusual activity;
   \item \textbf{Intrusion detection}: detecting unauthorized access;
-  \item \textbf{Intrusion prevention}: stopping unauthorized access;
+  \item \textbf{Intrusion prevention}: preventing unauthorized access;
 \end{itemize}
 
 Total security is unachievable, but the goal is to minimize the risks and the vulnerabilities. Security is a process, not a product, and it is a continuous process.~\cite{marchetto-st-slides}
@@ -92,7 +92,7 @@ We can devise some comparison points between the two types:
   \item \textbf{Primary priorities}: IT security prioritizes Confidentiality, Integrity and Availability (CIA), with the main focus set to protect data from breaches and authorized actions, while OT security prioritizes Availability, Integrity and Confidentiality (AIC), ensuring the continuous operation of critical systems with safety and reliability being more important than data confidentiality.
   \item \textbf{Impact of Security Breaches}: IT breaches typically affect data confidentiality and may result in privacy violations, financial losses or business disruptions. OT breaches can have severe direct consequences, including physical damage and environmental harm.
   \item \textbf{Security Measures}: IT security can use cybersecurity tools such as firewalls, antivirus, encryption and user authentication. Instead, OT security should require specialized tools like network segmentation, strict access control and real-time monitoring.
-  \item \textbf{Regulatory Requirements}: The former uses regulations like GDPR, the \textit{General Data Protection Regulation} to protect personal data for a European citizen and standards like ISO-27001, while the latter follows regulations and standards like the IEC 62443, which is a series of standards for industrial automation and control systems management and security. More on these regulations in the next chapters.
+  \item \textbf{Regulatory Requirements}: IT uses regulations like GDPR, the \textit{General Data Protection Regulation} to protect personal data for a European citizen and standards like ISO-27001, while OT follows regulations and standards like the IEC 62443, which is a series of standards for industrial automation and control systems management and security. More on these regulations in the next chapters.
   \item \textbf{Vulnerability management}: IT systems can usually be patched with a software update in a short time without severe impact on operations, while OT systems may require a longer time to be patched, as they are often critical to the operation of industrial processes or incompatible with the running legacy systems.
 \end{enumerate}
 
@@ -118,7 +118,7 @@ This is the Fourth Industrial Revolution, characterized by increasing automation
 
 Some specific technologies are pushing this revolution:~\cite{what-is-industry-4-0}
 \begin{itemize}
-  \item \textbf{Internet of Things (IoT)}: machines on the factory floor are equipped with boars that allow the machines to connect with remote services, making possible for large amounts of valuable data to be collected, analyzed and exchanged.
+  \item \textbf{Internet of Things (IoT)}: machines on the factory floor are equipped with boards that allow the machines to connect with remote services, making possible for large amounts of valuable data to be collected, analyzed and exchanged.
   \item \textbf{Cloud computing}: the typically large amount of data being stored and analyzed can be processed efficiently and cost-effectively with \textit{the cloud}. Cloud computing can also reduce startup costs for small- and medium-sized manufacturers who can right-size their needs and scale as their business grows.
   \item \textbf{AI and machine learning}: Artificial Intelligence (AI) and machine learning can create insights providing visibility, predictability and automation of operations and business processes. The data collected from these assets can help businesses perform predictive maintenance based on machine learning algorithms, resulting in more uptime and higher efficiency.
   \item \textbf{Edge computing}: to reduce latency and improve security, edge computing can be used to process the needed data closer to the source, rather than sending all the raw statistics to the cloud, wasting bandwidth and time.
@@ -127,21 +127,21 @@ Some specific technologies are pushing this revolution:~\cite{what-is-industry-4
 
 \section{Industrial devices: PLC and HMI}
 
-Industrial devices are used in many different sectors like manufacturing, energy, transportation and so on. We can trace back these devices to a common tablet placed on a wall or on a production line, with the difference that these devices support a wide range of industrial protocols. These devices are usually not connected to the internet and they take input from a physical human interaction physically on the place.
+Industrial devices are used in many different sectors like manufacturing, energy, transportation and so on. We can trace back these devices to a common tablet placed on a wall or on a production line, with the difference that these devices support a wide range of industrial protocols. They are usually not connected to the internet and they take input from a physical human interaction physically on the place.
 
 These types of devices are an example of HMI, which stands for \textit{Human Machine Interface}, and they are defined as a feature or component of a certain entity that enables humans to engage and interact with machines. In the past HMIs started to be command line interfaces handled by a keyboard, then they evolved to graphical user interfaces with the support for the mouse navigation and now they are touchscreens, where the end-user directly touches the screen.\\
 Traditionally, to integrate a manufacturing line with an HMI, the HMI had to be connected to a \textit{Programming Logic Controller} (PLC) to display the data received from the PLC and give the PLC input from users.~\cite{what-is-hmi}
 
-In terms of the demands of Industry 4.0, industrial HMIs will also see further incorporation of new and emerging technologies that are impacting HMIs as a whole. First of all, there is the need to start integrating the Internet of Things (IoT) into industrial HMIs. This will allow for the collection of data from the factory floor and the ability to analyze that data in real-time. This will also allow for the ability to control the factory floor from a remote location. Of course, making these devices connected to the internet makes the risks of cyberattacks higher.
+In terms of the demands of Industry 4.0, industrial HMIs will also see further incorporation of new and emerging technologies that are impacting HMIs as a whole. First of all, there is the need to start integrating the Internet of Things (IoT) into industrial HMIs. This will allow the collection of data from the factory floor and the ability to analyze those data in real-time. This will also allow the ability to control the factory floor from a remote location. Of course, making these devices connected to the internet makes the risks of cyberattacks higher.
 
 \section{ICS and IACS}
 
-ICS and IACS refer respectively to \textit{Industrial Control System} and \textit{Industrial Automation and Control Systems}. In our context, they can be used interchangeably to define the collection of hardware, software and policies that control and manage the industrial process. Basically, it means that anything interacting with the system influencing its safety, security and operations belongs to IACS.~\cite{ics-or-iacs}
+ICS and IACS refer respectively to \textit{Industrial Control System} and \textit{Industrial Automation and Control Systems}. In our context, they can be used interchangeably to define the collection of hardware, software and policies that control and manage an industrial process. Basically, it means that anything interacting with the system influencing its safety, security and operations belongs to IACS.~\cite{ics-or-iacs}
 
 We use this terminology in the next chapters, especially related to the security regulations of the systems.
 
 \section{Standards and Regulations}
-Until the so-called third industrial age, or Industry 3.0, cybersecurity had minimal impact on manufacturing. Industrial machinery wasn't necessarily connected to the internet or each other, making external risks unlikely. However, with the dawn of Industry 4.0, smart machinery and smart factories have become vital for the smooth operation of production departments, placing cybersecurity at the forefront of concern.
+Until the so-called third industrial age, or Industry 3.0, cybersecurity had minimal impact on manufacturing. Industrial machinery wasn't necessarily connected to the internet or to each other, making external risks unlikely. However, with the dawn of Industry 4.0, smart machinery and smart factories have become vital for the smooth operation of production departments, placing cybersecurity at the forefront of concern.
 
 Cybersecurity involves protecting systems, networks and programs from digital attacks. Given the critical nature of the topic and the attention it demands, companies are embarking on paths to elevate their awareness of cyberattacks, adopting internal policies, or even pursuing specific certifications in cybersecurity. Concurrently, national and international legislators have introduced new legislative measures imposing new obligations on certain entities concerning cybersecurity.
 
@@ -152,7 +152,9 @@ Certifications provide a guarantee of product and company security. The main cer
   \item \textbf{ISO/IEC 27001 (2022)}: This certification covers various aspects, including security policy, human resource security, physical and environmental security, communications management and regulatory compliance;
 \end{itemize}
 
-There are then several laws and regulations that address under various profiles the issue of cybersecurity among them it is worth noting:~\cite{cybersecurity-standards-regulations-compliance}
+There are then several laws and regulations that address the issue of cybersecurity under various profiles.
+
+Among them it is worth noting:~\cite{cybersecurity-standards-regulations-compliance}
 \begin{itemize}
   \item \textbf{Cyber Resilience Act (CRA)}~\footnote{\url{https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=celex:52022PC0454}}: While still pending final approval by the European Institutions, the Cyber Resilience Act seeks to enhance the resilience of the European digital market by ensuring that connected devices and digital services are equipped to withstand cyberattacks effectively. It will become effective in 2027;
   \item  \textbf{NIS Directive 2}~\footnote{\url{https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32022L2555}}: This directive outlines essential criteria that companies must adhere to in order to maintain a robust level of cybersecurity. These criteria cover the implementation of risk analysis strategies, fortification of information system security and effective incident management protocols. EU Member States must transpose this directive, with enforcement specified in the respective national acts;
@@ -207,17 +209,17 @@ The example in~\cref{lst:json-example} show the data represented in JSON, while~
 
 \section{REST API}
 
-REST stands for \textit{REpresentational State Transfer}, and it is an architectural style for designing networked applications. It relies on a stateless client-server communication protocol, meaning that each request from a client to a server must contain all the information necessary to understand the request. REST is often used in web services development as a way to communicate between client and server.
+REST stands for \textit{REpresentational State Transfer}, and it is an architectural style for designing networked applications. It relies on a stateless client-server communication protocol, meaning that each request from a client to a server must contain all the information necessary to understand that request. REST is usually used in web services development as a way to communicate between client and server.
 
-A REST API is an application programming interface that uses HTTP requests to perform operations on a server. The endpoints can be called in a RESTful way, meaning that the user transfers a representation of the state of the resource to the requester or endpoint with appropriate HTTP methods to perform standard database functions like creating, reading, updating and deleting records (also known as \textit{CRUD}) within a resource.~\cite{rest-api}
+A REST API is an application programming interface that uses HTTP requests to perform operations on a server. The endpoints can be called in a RESTful way, meaning that the user transfers a representation of the state of the resource to the destination endpoint with appropriate HTTP methods to perform standard functions like creating, reading, updating and deleting records (also known as \textit{CRUD}) within a resource.~\cite{rest-api}
 
-\section{Deployment of the microservices}
+\section{Microservices deployment}
 
 This section explains how a software can be deployed in a cloud environment, with a focus on the microservices architecture.
 
 \subsection{Microservice}
 
-Microservice architecture is an architectural style that organizes an application into a set of services that can be deployed independently and are loosely coupled. This means each service is packaged as an executable unit ready for production and that the services do not have direct dependencies on each other, allowing for independent development, deployment and scaling.~\cite{microservices-what-are}
+Microservice architecture is an architectural style that organizes an application into a set of services that can be deployed independently and are loosely coupled. This means each service is packaged as an executable unit ready for production; in addition, the services do not have direct dependencies on each other, allowing for independent development, deployment and scaling on the needs.~\cite{microservices-what-are}
 
 Doing so, there is no need to scale or deploy the entire application when only a part of it needs to be updated or scaled. This approach allows for faster development and deployment cycles, as well as improved fault tolerance and scalability. The concept is shown in~\cref{fig:monolith-microservices}.
 
@@ -237,7 +239,7 @@ Each virtualized environment runs within its allocated resources. There are two 
 \subsubsection{Container vs. Virtual Machine}
 
 A modern and efficient way to execute microservices is to use \textit{containers}. \\
-Containers are lightweight software packages that contain all the dependencies required to execute the contained software application in a virtualized environment. They share the same kernel of the host system, but they are usually isolated from the host and from other containers and they can run different operating systems. Another advantage of containers is that they are immutable, meaning that they could be altered after their creation, but the state is restored at each execution, without considering possible further different configurations.\\
+Containers are lightweight software packages that contain all the dependencies required to execute the contained software application in a virtualized environment. They share the same kernel of the host system, but they are usually isolated from the host and from other containers and they can run different operating systems. Another advantage of containers is that they are immutable, meaning that they could be altered after their execution, but the state is restored at each restart.\\
 Instead, compared to the containers, \textit{virtual machines}'s goal is to virtualize the entire system hardware, therefore they are slower and heavier - resources side and disk usage side - than containers.
 
 Since we are talking of a microservices architecture, there is the need to run multiple containers at the same time, and to manage them, from the creation to the destruction up to the recovery in case of failure or the scaling in case of high load. This is where we need an orchestration tool.
@@ -248,7 +250,7 @@ Orchestration is a term referring to the automated configuration, coordination a
 
 \subsection{CI/CD}
 
-A container needs an image, that is a series of instructions that defines the environment of the container, starting from the base operating system up to all the steps needed to install the final software. The image is effectively the software to be executed, and the container is its running instance. The images must be built on the source code of the software and the building process can be automated by a \textit{Continuous Integration} (CI) tool. Later, the images must be pushed to a registry, that is a repository where the images are stored, and the deployment of the images can be automated by a \textit{Continuous Deployment} (CD) tool.
+A container needs an image, that is a series of instructions that define the environment of the container, starting from the base operating system up to all the steps needed to install the final software. The image is effectively the software to be executed, and the container is its running instance. The images must be built on the source code of the software and the building process can be automated by a \textit{Continuous Integration} (CI) tool. Later, the images must be pushed to a registry, that is a repository where the images are stored. The deployment of the images can be automated by a \textit{Continuous Deployment} (CD) tool.
 
 CI and CD are practices that allow the developers to automate the building, testing and deployment of the software. CI is the practice of integrating the code changes of the developers into a shared repository multiple times a day, and CD is the practice of automatically deploying the code changes to the production environment. CI/CD allows the developers to detect and fix the bugs early, to reduce the risk of integration issues and to deliver the software faster and more frequently.
 
@@ -256,7 +258,7 @@ CI and CD are practices that allow the developers to automate the building, test
 
 \section{Agile method}
 
-The \textit{Agile methodology} is a project management philosophy that involves breaking the project into phases and emphasizing continuous collaboration and improvement. Teams follow a cycle of planning, executing and evaluating. Teams choose agile so they can respond to changes in the marketplace or feedback from customers quickly without derailing a year's worth of plans. The publication of the Agile Manifesto\footnote{\url{https://agilemanifesto.org}} in 2001 marks the birth of the methodology. Since then, many agile frameworks have emerged such as scrum, kanban or lean. Each embodies the core principles of frequent iteration, continuous learning and high quality in its own way.~\cite{agile-methodology}
+The \textit{Agile methodology} is a project management philosophy that involves breaking the project into phases and emphasizing continuous collaboration and improvement. Teams follow a cycle of planning, executing and evaluating. Teams choose agile so they can respond to changes in the market or feedback from customers quickly without derailing a year's worth of plans. The publication of the Agile Manifesto\footnote{\url{https://agilemanifesto.org}} in 2001 marks the birth of the methodology. Since then, many agile frameworks have emerged such as scrum, kanban or lean. Each embodies the core principles of frequent iteration, continuous learning and high quality in its own way.~\cite{agile-methodology}
 
 \subsection{Scrum}
 
@@ -279,6 +281,6 @@ The latter is a list of items selected for the current sprint cycle; the sprint 
 As visible in~\cref{fig:scrum-sprint-cycle}, Scrum is split in four principal phases:
 \begin{itemize}
   \item The \textbf{sprint planning} is the initial phase of a sprint, the actual time period when the scrum team works; the team meets and decides what to do in the sprint by placing the tasks from the product backlog to the sprint backlog;
-  \item The \textbf{daily scrum} is a quotidian meeting where the team members synchronize with each other. It is usually taken stand-up, as a way to not waste time and to keep the meeting short;
+  \item The \textbf{daily scrum} is a daily meeting where the team members synchronize with each other. It is usually taken stand-up, as a way to not waste time and to keep the meeting short;
   \item The \textbf{sprint review} and \textbf{sprint retrospective} are the meetings at the end of the sprint where the team shows what they have done and demonstrates the work to the stakeholders and receive feedback;
 \end{itemize}

@@ -25,13 +25,13 @@ The cloud management software, developed by the second company, is composed of f
 
 The cloud software is developed using the microservices architecture, that is a design pattern that structures an application as a collection of loosely coupled services. Services can be developed, deployed and scaled independently.
 
-We were virtually part of the apps team, and we were in charge of developing a scanning tool that can be used to check the security of the devices powered by the cloud management software and to report the potential issues to the customer.
+We were part of the apps team, and we were in charge of developing a scanning tool that can be used to check the security of the devices powered by the cloud management software and to report the potential issues to the customer.
 
 \section{Initial design}
 
-Under the hood, every PLC is powered by a custom Linux distribution, provided by \textit{Yocto Project}, an open-source collaboration project that helps developers create custom Linux-based systems regardless of the hardware architecture~\cite{yocto-project}, developed by the internal \textit{Research \& Development} (R\&D) team.
+Under the hood, every device is powered by a custom Linux distribution, provided by \textit{Yocto Project}, an open-source collaboration project that helps developers create custom Linux-based systems regardless of the hardware architecture~\cite{yocto-project}, developed by the internal \textit{Research \& Development} (R\&D) team.
 
-In order to be able to make the device interact with the industrial machines, the company provides a proprietary IDE software, needed to scratch projects and deploy them on the device. This software lets the user define the inputs and outputs of the device and the logic that will be executed on the device. In example, the user can define a trigger, an alarm that will be raised when a certain condition is met, a personalized handling of the data received by the many supported protocols and so on.
+In order to be able to make the device interact with the industrial machines, the company provides a proprietary IDE software, needed to scratch projects and deploy them on the device. This software lets the user define the inputs and outputs of the device and the logic that will be executed on the device. For example, the user can define a trigger, an alarm that will be raised when a certain condition is met, a personalized handling of the data received by the many supported protocols and so on.
 
 Furthermore, the same IDE is used to draw the graphical interface that will be displayed on the HMI and to define the behaviour of the interface itself.\\
 The graphical interface is composed of widgets, that are the building blocks of the interface. The user can define the position of the widgets, their size, their colour and their behaviour. The widgets can be buttons, labels, images, graphs or custom-defined ones.
@@ -42,12 +42,13 @@ Given that, at the beginning stages, our scanning tool could not be installed an
 
 \section{Device settings}
 
-The PLC backend provides a web interface that can be used to view and change the system settings of the device. The user can change the network settings, set the datetime, set the management user password, manage the startup of the services like the SSH server and much more. The HMI touchscreen, through dedicated gestures, lets the user directly interact locally with the onboard interface, otherwise it is possible to reach it by connecting to the local webserver exposed at the device's network address. \\
+The device provides a web interface that can be used to view and change the system settings of the device. The user can change the network settings, set the datetime, set the management user password, manage the startup of the services like the SSH server and much more. The web interface can be operated directly on the device, interacting with a touchscreen, or remotely by connecting to the local webserver exposed at the device's network address. \\
 Client and server, respectively the graphical interface and the backend, are independent of each other; the web interface is powered by REST APIs.
 
 For the internship project, we will take advantage of the REST APIs to retrieve the status of the device and to potentially change its settings. Internally to the company, the APIs are documented with the \textit{OpenAPI Specification}, formerly \textit{Swagger Specification}, which is an API description format that depicts the endpoints, the parameters, the responses, the authentication needed to call them and licenses or other information. The Swagger file can be visualized through the Swagger UI, a web interface that renders OpenAPI definitions as interactive documentation.~\cite{openapi-swagger}
 
-We can devise two different scenarios: API calls made by a remote host over a network and API calls made by the local host. In the first case, the TLS protocol secures the communication using the public-key authentication first, and then the APIs are protected by a basic authentication, that is the client must provide the username of a management account and its related password. In the second case, the webserver listens as read-only over a port accessible by the same host only with no further authentication needed. Given that the scanning tool will be run on the device itself, we will take advantage of the second case. From the security side, the combination of read-only access and physical access to be able to call unauthenticated endpoints is considered secure.
+We can devise two different scenarios: API calls made by a remote host over a network and API calls made by the local host. In the first case, the TLS protocol secures the communication using the public-key authentication first, and then the APIs are protected by basic authentication, that is the client must provide the username of a management account and its related password. In the second case, the webserver listens over a port accessible bound to same host only, with no further authentication needed. Given that the scanning tool will be run on the device itself, we will take advantage of the second case. \\
+On the security side, we consider the \textit{localhost} perimeter as secure, because the device is a closed system and the user must have physical access to it.
 
 \section{\textit{Go} programming language}
 \label{sec:go-lang}
@@ -61,11 +62,11 @@ Go also offers a robust testing framework to write unit tests and benchmarks to 
 
 Another point in favor is the efficiency of the language. Go is compiled into machine code, which makes it faster than interpreted languages like Python. The language's garbage collection mechanism automatically manages memory allocation and deallocation, reducing the risk of memory leaks and improving the overall performance of the application. The language is more than a full order of magnitude faster than Python, with a smaller memory footprint and faster execution times.~\cite{go-lang-performance}
 
-One of the main reasons for choosing Go for the internship project is its versatility in building executable binaries for multiple platforms, including Windows, macOS and Linux. Go's cross-compilation capabilities allow the developers to build binaries for different operating systems and architectures from a single codebase, simplifying the deployment process and ensuring compatibility across various platforms. Given that industrial devices run on different architectures and operating systems, the ability to build cross-platform binaries is essential. The language natively supports the binaries compilation for over 50 combinations of operating systems and architectures~\cite{go-lang-compilation-combo}; given that the majority of the company's devices run either on \texttt{Arm 32bit} or \texttt{Arm 64bit} or \texttt{x86 64bit} architectures, the Go compiler can generate the executables for these architectures with no further configuration needed.
+One of the main reasons for choosing Go for the internship project is its versatility in building executable binaries for multiple platforms, including Windows, macOS and Linux. Go's cross-compilation capabilities allow the developers to build binaries for different operating systems and architectures from a single codebase, simplifying the deployment process and ensuring compatibility across various platforms. Given that industrial devices run on different architectures and operating systems, the ability to build cross-platform binaries is essential. The language natively supports the binaries compilation for over 50 combinations of operating systems and architectures~\cite{go-lang-compilation-combo}; given that the majority of the company's devices run either on \texttt{Arm 32bit} or \texttt{Arm 64bit} or \texttt{x86 64bit} architectures, the Go compiler can generate the executables for these architectures with no further configuration needed. The real breakthrough is the native ability to produce static binaries, that is the binary contains all the libraries needed to run the software without any dependency on the target host system.
 
 \section{Adopted technologies}
 
-Referring to~\cref{cha:background}, the company take advantage of many technologies to develop the software that runs on the industrial devices and on the cloud platform. We are going to describe the most relevant software used in the company.
+Referring to~\cref{cha:background}, the company takes advantage of many technologies to develop the software that runs on the industrial devices and on the cloud platform. We are going to describe the most relevant software used in the company.
 
 \subsection{Security vulnerabilities scan}
 
@@ -81,17 +82,17 @@ Specific software are used to manage the entire infrastructure of the cloud plat
 
 The company uses \textit{Docker}\footnote{\url{https://www.docker.com}} to create, deploy and run containers. Docker is an application that allows developers to build, package and run applications as containers.
 
-Docker itself enables the user to instantiate a single container at time from an image, that is a series of instructions that defines the environment of the container, starting from the base operating system up to all the steps needed to install the final software.
+Docker itself enables the user to instantiate a single container at a time from an image, that is a series of instructions defining the environment of the container, starting from the base operating system up to all the steps needed to install the final software.
 
 Docker containers can be deployed on any platform that supports Docker, including Linux, Windows and macOS. The company uses Linux as the operating system for the cloud platform, and the containers are deployed on a Kubernetes cluster.
 
 \subsubsection{Kubernetes}
 
-The containers can be managed by \textit{Kubernetes}\footnote{\url{https://kubernetes.io}}, also known as \textit{K8s}, an open-source container orchestration platform that provides a platform for automating the deployment, scaling and operations of application containers across clusters of hosts. It works with a range of container tools, including Docker. Kubernetes was originally developed by Google, and in 2014 it has been open-sourced.~\cite{kubernetes-overview}
+The containers can be managed by \textit{Kubernetes}\footnote{\url{https://kubernetes.io}}, also known as \textit{K8s}, an open-source container orchestration platform that provides a platform for automating the deployment, scaling and operation of application containers across clusters of hosts. It works with a range of container tools, including Docker. Kubernetes was originally developed by Google, and in 2014 it has been open-sourced.~\cite{kubernetes-overview}
 
 Kubernetes is a powerful tool that allows the user to manage the containers in a declarative way, that is the user declares the desired state of the system, and Kubernetes takes care of the rest. The user can define the number of replicas of a container, the resources needed by the container, the network configuration, the storage configuration and much more. Kubernetes will take care of the deployment of the containers, the scaling of the containers, the recovery of the containers in case of failure and the load balancing of the containers.
 
-An instance of Kubernetes is called a \textit{cluster} and it is composed of \textit{master nodes} and one or more \textit{worker nodes}. The master node is in charge of the orchestration of the containers, while the worker nodes are in charge of running the containers. The master node is composed of the API server, the scheduler, the controller manager and \textit{etcd}, that is a distributed key-value store used to store the state of the cluster. The worker nodes are composed of the \textit{kubelet}, which is the agent that runs on each node and is responsible for the communication between the master node and the worker node and the \textit{kube-proxy}, that is a network proxy that runs on each node and maintains network rules.
+An instance of Kubernetes is called a \textit{cluster} and it is composed of at least one \textit{master nodes} and one or more \textit{worker nodes}. The master node is in charge of the orchestration of the containers, while the worker nodes are in charge of running the containers. The master node is composed of the API server, the scheduler, the controller manager and \textit{etcd}, that is a distributed key-value store used to store the state of the cluster. The worker nodes are composed of the \textit{kubelet}, which is the agent that runs on each node and is responsible for the communication between the master node and the worker node and the \textit{kube-proxy}, that is a network proxy that runs on each node and maintains network rules.
 
 Every action towards the cluster is performed through the API calls to the API server, that is the entry point for the cluster. The user can interact with the cluster through the \textit{kubectl} command-line tool, that is the Kubernetes command-line tool, or through the many available third-party software that interact with the Kubernetes API.
 
@@ -118,10 +119,8 @@ We created a new Epic for the scanning tool and we filled it with the stories th
 \section{Platform applications}
 \label{sec:platform-applications}
 
-The cloud management platform has an applications store where the developers can upload their web \textit{apps}.
+The cloud management platform has an application store where the developers can upload their web \textit{apps}.
 
 The scaffolding of the web app is provided by a public NPM package. It is a drafted working application, so the developer can start to develop the app without the need to set up the project from scratch. Furthermore, it contains the necessary base configuration files to deploy the app to the platform. The app has to be deployed in a dedicated Kubernetes namespace in a cluster, and later it has to be pushed to the app store by using the public platform APIs.
 
-A scaffolding app is composed of two layers: the frontend, which is the user interface, and the backend, which is the logic of the application. The frontend is written in VueJS\footnote{\url{https://vuejs.org}} and the backend is written in NestJS\footnote{\url{https://nestjs.com}}, a progressive Node.js framework. The former is a web application that the user can access from the cloud platform and the latter manages REST APIs.
-
-% As a educational project during the internship, we also have to develop the platform app for the scanning tool. We effectively setup the backend to be used as a proxy, and the frontend is a simple page that 
+A scaffolding app is composed of two layers: the frontend, which is the user interface, and the backend, which is the logic of the application. The frontend is written in VueJS\footnote{\url{https://vuejs.org}} and the backend is written in NestJS\footnote{\url{https://nestjs.com}}, a progressive Node.js framework. The former is a web application that the user can access from the cloud platform and the latter provides REST APIs needed for the frontend to interact with the backend.
