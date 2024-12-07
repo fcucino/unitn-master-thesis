@@ -15,7 +15,7 @@ This chapter contains an explanation of many fundamental terms used in the thesi
 
 A software is a set of programs and data which provides functionalities. Security is understanding and identifying software-induced security risks and how to manage them. Software and functionalities come with certain risks and software security is about managing these.
 
-Therefore, software plays a crucial role in providing security, but it is also one of the relevant sources of security issues and problems. Many times the developers have limited training on this concept or the goal is the speed of the development rather than the attention to the hidden details; as result, security is often considered a secondary factor, because it is a complex and expansive task, hard to evaluate when nothing bad happens but usually too late to evaluate when something bad happens.~\cite{marchetto-st-slides}
+Therefore, software plays a crucial role in providing security, but it is also one of the relevant sources of security issues and problems. Many times the developers have limited training on this concept or the goal is the speed of the development rather than the attention to the hidden details; as result, security is often considered a secondary factor, because it is a complex and expansive task, hard to evaluate when nothing bad happens but usually too late to evaluate when something bad happens~\cite{marchetto-st-slides}.
 
 A software system is secure if it satisfies specified security objectives, starting from the CIA triad which stands for:
 \begin{itemize}
@@ -23,7 +23,7 @@ A software system is secure if it satisfies specified security objectives, start
   \item \textbf{Integrity}: unauthorized actors cannot change or alter the information;
   \item \textbf{Availability}: authorized actors can always have access to the information;
 \end{itemize}
-The CIA triad is a common model that stands as the basis for the development of security systems. Ideally, when all three objectives have been met, the security profile of the organization is stronger and better equipped to handle threat incidents.~\cite{cia-triad}
+The CIA triad is a common model that stands as the basis for the development of security systems. Ideally, when all three objectives have been met, the security profile of the organization is stronger and better equipped to handle threat incidents~\cite{cia-triad}.
 
 Secure software is not only composed of the CIA triad; there are also other objectives like~\cite{marchetto-st-slides}
 \begin{itemize}
@@ -39,7 +39,7 @@ Secure software is not only composed of the CIA triad; there are also other obje
   \item \textbf{Intrusion prevention}: preventing unauthorized access;
 \end{itemize}
 
-Total security is unachievable, but the goal is to minimize the risks and the vulnerabilities. Security is a process, not a product, and it is a continuous process.~\cite{marchetto-st-slides}
+Total security is unachievable, but the goal is to minimize the risks and the vulnerabilities. Security is a process, not a product, and it is a continuous process~\cite{marchetto-st-slides}.
 
 \section{Risk vs. vulnerability vs. CVE}
 
@@ -59,8 +59,8 @@ A system is secure as its weakest element. A vulnerability is a weakness in a sy
 CVE, which stands for \textit{Common Vulnerabilities and Exposures}, is a list of publicly known cybersecurity vulnerabilities. The CVE system provides a reference method for publicly known information-security vulnerabilities and exposures. Each CVE entry represents a unique identifier for a specific vulnerability, named \textit{CVE-ID}, making it easier to reference it across different tools.
 
 Each CVE entry is evaluated using the CVSS score, which stands for \textit{Common Vulnerability Scoring System}. This system provides a standardized way to assess the severity of vulnerabilities. It is important to note that CVSS measures severity, not risk. \\
-CVSS v2.0 and CVSS v3.x include three metric groups: Base, Temporal and Environmental. The Base metrics evaluate the intrinsic characteristics of a vulnerability that are constant over time and across user environments. The Temporal metrics adjust the valutation based on factors like patch availability and exploit code and the Environmental metrics allow organizations to customize the score based on their unique environment. The latest version, CVSS v4.0, introduced in 2023, includes Base, Threat, Environmental and Supplemental metric groups. Compared to the previous version, the Threat metrics evaluate the likelihood of an attacker exploiting the vulnerability, the Environmental metrics evaluate the impact of the vulnerability on the organization's unique environment and the Supplemental ones provide additional information about the vulnerability.~\cite{cvss-4-spec}\\
-The metrics produce a numerical score from 0 to 10, and the assessment is also represented as a vector string, which is a concise textual representation of the values used to calculate the score.~\cite{cvss-metrics}
+CVSS v2.0 and CVSS v3.x include three metric groups: Base, Temporal and Environmental. The Base metrics evaluate the intrinsic characteristics of a vulnerability that are constant over time and across user environments. The Temporal metrics adjust the valutation based on factors like patch availability and exploit code and the Environmental metrics allow organizations to customize the score based on their unique environment. The latest version, CVSS v4.0, introduced in 2023, includes Base, Threat, Environmental and Supplemental metric groups. Compared to the previous version, the Threat metrics evaluate the likelihood of an attacker exploiting the vulnerability, the Environmental metrics evaluate the impact of the vulnerability on the organization's unique environment and the Supplemental ones provide additional information about the vulnerability~\cite{cvss-4-spec}.\\
+The metrics produce a numerical score from 0 to 10, and the assessment is also represented as a vector string, which is a concise textual representation of the values used to calculate the score~\cite{cvss-metrics}.
 
 % TODO: Add CVEs for year or some statistics in general
 
@@ -108,7 +108,7 @@ According to the \textit{2023 State of Operational Technology and Cybersecurity 
 \end{figure}
 
 
-As a general rule, OT devices are traditionally kept separate from the public internet and often internal networks, which means they can only be accessed by authorized employees. However, it is increasingly possible for OT systems to be controlled and monitored by IT systems or remotely via the Internet.~\cite{it-ot-cybersecurity}
+As a general rule, OT devices are traditionally kept separate from the public internet and often internal networks, which means they can only be accessed by authorized employees. However, it is increasingly possible for OT systems to be controlled and monitored by IT systems or remotely via the Internet~\cite{it-ot-cybersecurity}.
 
 \section{Industry 4.0}
 
@@ -130,13 +130,13 @@ Some specific technologies are pushing this revolution:~\cite{what-is-industry-4
 Industrial devices are used in many different sectors like manufacturing, energy, transportation and so on. We can trace back these devices to a common tablet placed on a wall or on a production line, with the difference that these devices support a wide range of industrial protocols. They are usually not connected to the internet and they take input from a physical human interaction physically on the place.
 
 These types of devices are an example of HMI, which stands for \textit{Human Machine Interface}, and they are defined as a feature or component of a certain entity that enables humans to engage and interact with machines. In the past HMIs started to be command line interfaces handled by a keyboard, then they evolved to graphical user interfaces with the support for the mouse navigation and now they are touchscreens, where the end-user directly touches the screen.\\
-Traditionally, to integrate a manufacturing line with an HMI, the HMI had to be connected to a \textit{Programming Logic Controller} (PLC) to display the data received from the PLC and give the PLC input from users.~\cite{what-is-hmi}
+Traditionally, to integrate a manufacturing line with an HMI, the HMI had to be connected to a \textit{Programming Logic Controller} (PLC) to display the data received from the PLC and give the PLC input from users~\cite{what-is-hmi}.
 
 In terms of the demands of Industry 4.0, industrial HMIs will also see further incorporation of new and emerging technologies that are impacting HMIs as a whole. First of all, there is the need to start integrating the Internet of Things (IoT) into industrial HMIs. This will allow the collection of data from the factory floor and the ability to analyze those data in real-time. This will also allow the ability to control the factory floor from a remote location. Of course, making these devices connected to the internet makes the risks of cyberattacks higher.
 
 \section{ICS and IACS}
 
-ICS and IACS refer respectively to \textit{Industrial Control System} and \textit{Industrial Automation and Control Systems}. In our context, they can be used interchangeably to define the collection of hardware, software and policies that control and manage an industrial process. Basically, it means that anything interacting with the system influencing its safety, security and operations belongs to IACS.~\cite{ics-or-iacs}
+ICS and IACS refer respectively to \textit{Industrial Control System} and \textit{Industrial Automation and Control Systems}. In our context, they can be used interchangeably to define the collection of hardware, software and policies that control and manage an industrial process. Basically, it means that anything interacting with the system influencing its safety, security and operations belongs to IACS~\cite{ics-or-iacs}.
 
 We use this terminology in the next chapters, especially related to the security regulations of the systems.
 
@@ -211,7 +211,7 @@ The example in~\cref{lst:json-example} show the data represented in JSON, while~
 
 REST stands for \textit{REpresentational State Transfer}, and it is an architectural style for designing networked applications. It relies on a stateless client-server communication protocol, meaning that each request from a client to a server must contain all the information necessary to understand that request. REST is usually used in web services development as a way to communicate between client and server.
 
-A REST API is an application programming interface that uses HTTP requests to perform operations on a server. The endpoints can be called in a RESTful way, meaning that the user transfers a representation of the state of the resource to the destination endpoint with appropriate HTTP methods to perform standard functions like creating, reading, updating and deleting records (also known as \textit{CRUD}) within a resource.~\cite{rest-api}
+A REST API is an application programming interface that uses HTTP requests to perform operations on a server. The endpoints can be called in a RESTful way, meaning that the user transfers a representation of the state of the resource to the destination endpoint with appropriate HTTP methods to perform standard functions like creating, reading, updating and deleting records (also known as \textit{CRUD}) within a resource~\cite{rest-api}.
 
 \section{Microservices deployment}
 
@@ -219,7 +219,7 @@ This section explains how a software can be deployed in a cloud environment, wit
 
 \subsection{Microservice}
 
-Microservice architecture is an architectural style that organizes an application into a set of services that can be deployed independently and are loosely coupled. This means each service is packaged as an executable unit ready for production; in addition, the services do not have direct dependencies on each other, allowing for independent development, deployment and scaling on the needs.~\cite{microservices-what-are}
+Microservice architecture is an architectural style that organizes an application into a set of services that can be deployed independently and are loosely coupled. This means each service is packaged as an executable unit ready for production; in addition, the services do not have direct dependencies on each other, allowing for independent development, deployment and scaling on the needs~\cite{microservices-what-are}.
 
 Doing so, there is no need to scale or deploy the entire application when only a part of it needs to be updated or scaled. This approach allows for faster development and deployment cycles, as well as improved fault tolerance and scalability. The concept is shown in~\cref{fig:monolith-microservices}.
 
@@ -232,7 +232,7 @@ Doing so, there is no need to scale or deploy the entire application when only a
 
 \subsection{Virtualization}
 
-Virtualization is a technology that enables the creation of virtual versions of physical resources such as processors, storage devices, or network components. By simulating the functions of physical hardware, virtualization allows multiple operating systems to run on a single physical machine. This approach enhances IT agility, flexibility and scalability, while also providing significant cost savings by abstracting the underlying physical hardware.~\cite{virtualization-aws}
+Virtualization is a technology that enables the creation of virtual versions of physical resources such as processors, storage devices, or network components. By simulating the functions of physical hardware, virtualization allows multiple operating systems to run on a single physical machine. This approach enhances IT agility, flexibility and scalability, while also providing significant cost savings by abstracting the underlying physical hardware~\cite{virtualization-aws}.
 
 Each virtualized environment runs within its allocated resources. There are two main types of virtualization approaches: container-based virtualization and hypervisor-based virtualization, also known as virtual machines' virtualization.
 
@@ -259,18 +259,18 @@ CI and CD are practices that allow the developers to automate the building, test
 
 \section{Agile method}
 
-The \textit{Agile methodology} is a project management philosophy that involves breaking the project into phases and emphasizing continuous collaboration and improvement. Teams follow a cycle of planning, executing and evaluating. Teams choose agile so they can respond to changes in the market or feedback from customers quickly without derailing a year's worth of plans. The publication of the Agile Manifesto\footnote{\url{https://agilemanifesto.org}} in 2001 marks the birth of the methodology. Since then, many agile frameworks have emerged such as scrum, kanban or lean. Each embodies the core principles of frequent iteration, continuous learning and high quality in its own way.~\cite{agile-methodology}
+The \textit{Agile methodology} is a project management philosophy that involves breaking the project into phases and emphasizing continuous collaboration and improvement. Teams follow a cycle of planning, executing and evaluating. Teams choose agile so they can respond to changes in the market or feedback from customers quickly without derailing a year's worth of plans. The publication of the Agile Manifesto\footnote{\url{https://agilemanifesto.org}} in 2001 marks the birth of the methodology. Since then, many agile frameworks have emerged such as scrum, kanban or lean. Each embodies the core principles of frequent iteration, continuous learning and high quality in its own way~\cite{agile-methodology}.
 
 \subsection{Scrum}
 
 Scrum is an agile project management framework, which is different from Agile, a philosophy.\\
-The definition of scrum is based on empiricism and lean thinking. Empiricism says that knowledge comes from experience and that decisions are made based on what is observed. Lean thinking reduces waste and focuses on essentials. The scrum framework is heuristic; it is based on continuous learning and adjustment to fluctuating factors by acknowledging that the team does not know everything at the start of a project and it will evolve through experience. Scrum is structured to help teams to naturally adapt to changing conditions and user requirements, with re-prioritization built into the process and short release cycles so your team can constantly learn and improve.~\cite{scrum}
+The definition of scrum is based on empiricism and lean thinking. Empiricism says that knowledge comes from experience and that decisions are made based on what is observed. Lean thinking reduces waste and focuses on essentials. The scrum framework is heuristic; it is based on continuous learning and adjustment to fluctuating factors by acknowledging that the team does not know everything at the start of a project and it will evolve through experience. Scrum is structured to help teams to naturally adapt to changing conditions and user requirements, with re-prioritization built into the process and short release cycles so your team can constantly learn and improve~\cite{scrum}.
 
 Scrum artefacts help to define the product, what work has to be done to create it and who has to do it. An \textit{epic} is a large body of work that can be broken down into smaller tasks. Each of these tasks is called \textit{story} and it is a short requirement written from the perspective of an end user. The story is linked to a person in the team that has to carry it out.
 
 The two main artefacts boards are the \textit{product backlog} and the \textit{sprint backlog}. \\
 The former is a list of all the tasks that needs to be done; it is a dynamic list of features, requirements, improvements, fixes and epics, ordered by their priority. Essentially, it is a \textit{"To Do"} list.\\
-The latter is a list of items selected for the current sprint cycle; the sprint cycle is a fixed period of time, usually up to four weeks. Before each sprint, the team selects items from the product backlog to work on. Epics are broken down into stories and stories are moved from the product backlog to the sprint backlog.~\cite{scrum-epic-stories}
+The latter is a list of items selected for the current sprint cycle; the sprint cycle is a fixed period of time, usually up to four weeks. Before each sprint, the team selects items from the product backlog to work on. Epics are broken down into stories and stories are moved from the product backlog to the sprint backlog~\cite{scrum-epic-stories}.
 
 \begin{figure}[ht]
   \centering
