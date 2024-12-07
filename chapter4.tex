@@ -32,7 +32,7 @@ Each category is divided into several subcategories, corresponding to different 
 
 In the context of the internship project we are involved in, since we are directly at the level of product design and component development and deployment, the relevant subcategories we are focusing on are \texttt{3-3} and \texttt{4-2}, respectively named \textit{System security requirements and security levels} and \textit{Technical security requirements for IACS components}.
 
-\texttt{IEC 62443-3-3} and \texttt{4-2} categorize seven \textit{Foundational Requirements} (FR) each, expanded respectively into a series of \textit{System Requirements} (SR) and \textit{Component Requirements} (CR) that the company must meet to obtain the certification.
+\texttt{IEC 62443 3-3} and \texttt{4-2} categorize seven \textit{Foundational Requirements} (FR) each, expanded respectively into a series of \textit{System Requirements} (SR) and \textit{Component Requirements} (CR) that the company must meet to obtain the certification.
 
 For example, a system requirement taken from the subcategory \textit{System security requirements and security levels} (\texttt{3-3}) is the one shown in~\cref{fig:iec62443_3-3_3_9}. We are going to explain it in detail.
 
@@ -58,16 +58,16 @@ We would like to note that not every SR has exactly four REs; instead, it could 
 \begin{figure}[ht]
   \centering
   \fbox{\includegraphics[width=1.0\textwidth]{chapters/04/assets/iec62443_3-3_3_9.png}}
-  \caption[Snapshot of a IEC 62443-3-3 System Requirement]{Snapshot of a IEC 62443-3-3 System Requirement}
+  \caption[Snapshot of a IEC 62443 3-3 System Requirement]{Snapshot of a IEC 62443 3-3 System Requirement}
   \label{fig:iec62443_3-3_3_9}
 \end{figure}
 
 Moreover, sometimes the highest security level is not always the best solution or the most suitable for the company. Therefore, it is essential to evaluate the cost and the benefits of the solution before applying it.
 
-At the system level, \texttt{IEC 62443-3-3} introduces security levels and corresponding requirements, offering a scalable framework to protect industrial systems. This part enables organizations to customize their security measures based on specific risk profiles and operational demands.
+At the system level, \texttt{IEC 62443 3-3} introduces security levels and corresponding requirements, offering a scalable framework to protect industrial systems. This part enables organizations to customize their security measures based on specific risk profiles and operational demands.
 
-At the component level, \texttt{IEC 62443-4-1} lays the foundation for secure product development, emphasizing the critical importance of incorporating security measures right from the design phase. It encourages manufacturers to adopt a security-centric approach to product development, ensuring that components are fortified against cyber threats from the very beginning.\\
-Moving from development to deployment, \texttt{IEC 62443-4-2} specifies the technical requirements for IACS components. It defines essential security capabilities such as robust authentication, encryption and intrusion detection, ensuring that each component reinforces the overall security of the system.~\cite{iec-62443-safeguarding-industrial-automation-linkedin}
+At the component level, \texttt{IEC 62443 4-1} lays the foundation for secure product development, emphasizing the critical importance of incorporating security measures right from the design phase. It encourages manufacturers to adopt a security-centric approach to product development, ensuring that components are fortified against cyber threats from the very beginning.\\
+Moving from development to deployment, \texttt{IEC 62443 4-2} specifies the technical requirements for IACS components. It defines essential security capabilities such as robust authentication, encryption and intrusion detection, ensuring that each component reinforces the overall security of the system.~\cite{iec-62443-safeguarding-industrial-automation-linkedin}
 
 
 \subsection{ISO/IEC 27001}
@@ -166,9 +166,9 @@ The scan with no further options should perform all the checks that the tool can
 
 \noindent\begin{minipage}{\linewidth}
   \vspace{0.5cm}
-  \begin{lstlisting}[caption={Man page}]
+  \begin{lstlisting}[caption={Man page}, numbers=none]
 $ ./scantool
-Industrial Security Scanning
+Corvina Industrial Security Scanning
 
 Usage:
   scantool [command]
@@ -190,7 +190,7 @@ Flags:
 Moreover, we thought that the tool should be able to perform a scan in every network condition, to not exclude a priori a customer with an offline configuration or with a network that does not allow outgoing connections. Therefore, we decided to implement two different modes: the online mode where the tool can reach the cloud to determine the latest available version of the software and the offline mode where the tool cannot reach the cloud and has to rely on the local timestamp supplied by some of the software and libraries. The choice of the mode is automatic. \\
 From the board side, for each of the checks that the tool should perform, we put at least two different stories, respectively one for the online mode and one for the offline mode.
 
-Then, we sketched out the stories about the checks to perform, starting from those extracted from the IEC 62443 standard, as explained in~\cref{sec:iec-62443-driven-design}, but also adding some other checks that we thought needed to be performed. We also added some stories about the cross-compilation of the tool, the logging library to use and the CLI library to use.
+Then, we sketched out the stories about the checks to perform, starting from those extracted from the IEC 62443 standard, as explained in~\cref{sec:iec-62443-driven-design}, but also adding some other checks that we were asked to implement. We also added some stories about the cross-compilation of the tool, the logging library to use and the CLI library to use.
 
 At this point, we have a rich backlog of stories that we can work on and that we can prioritize according to the needs of the company.
 
@@ -243,7 +243,7 @@ The standard library \texttt{log} is the default logging package in Go. It provi
 
 The \textit{rs/zerolog} lib, standing for \textit{Zero Allocation JSON Logger}, is another package for logging messages in Go. The package provides a way to log messages to the console or to a file. It also supports the different severity levels. The authors claim that the package is faster than other libraries because it does not allocate memory for the log messages~\cite{go-zerolog-benchmarks}. Furthermore, it implements pretty logging, a way to format the output in a human-readable way, the hooks to attach custom functions on an event, the \textit{context} integration and much more. It is actively maintained and it has 10k stars on GitHub.
 
-With all being said, we decided to use the \textit{rs/zerolog} library because of the performance and the features that it offers. The package was also already used by the company in the cloud software, so it was a good choice to keep the same library for the scanning tool.
+With all being said, we decided to use the \textit{rs/zerolog} library because of the performance and the features that it offers. Also, the package was already used in Corvina, so it was a good choice to keep the same library for the scanning tool.
 
 \section{Scanning tool web app}
 

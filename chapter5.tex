@@ -168,7 +168,7 @@ The difference between the size of an unoptimized build and an optimized one is 
 
 \subsection{Scan OS version}
 
-The custom board of the industrial devices runs a custom Linux distribution, that is based on the Yocto Project. The updates are managed by the internal department of the company, with an internal version manager. The updates are not automatic, and they have to be requested by the customer.
+The custom board of the industrial devices runs a custom Linux distribution, that is based on the Yocto Project. The updates are managed by Exor internal department, with an internal version manager. The updates are not automatic, and they have to be requested by the customer.
 
 This module monitors whether the operating system is at its latest version or not. Given that the estimated work to implement it as a single block is not trivial, we can split it into two different specializations: the first one is the one that checks the version of the operating system by retrieving the build date, and the second one is the one that checks the version of the operating system by reading the online repository.
 
@@ -207,7 +207,7 @@ The first specialization of the module checks the version of the operating syste
 
 \subsubsection{Online version based}
 
-This specialization should compare the local version of the operating system with the latest version available somewhere online. Since the company does not provide a public repository for the updates, this module cannot be implemented yet. The idea is to have a list of the latest versions for the different device models and to compare the local version with the latest one. If the local version is not updated, then the module returns an issue, otherwise it returns an OK status. This is a future work that can be implemented when the company will start to provide a public repository for the updates. As a matter of fact, this story has been suspended in the context of our project.
+This specialization should compare the local version of the operating system with the latest version available somewhere online. Since Exor does not provide a repository for the updates, this module cannot be implemented yet. The idea is to have a list of the latest versions for the different device models and to compare the local version with the latest one. If the local version is not updated, then the module returns an issue, otherwise it returns an OK status. This is a future work that can be implemented when Exor will start to provide an accessible repository for the updates. As a matter of fact, this story has been suspended in the context of our project.
 
 \subsection{Default BSP credentials}
 
@@ -218,7 +218,7 @@ The devices ship with some default credentials for the two users that are availa
 
 The module checks whether the default credentials are still in use by trying to login with a pre-defined set of passwords for the two users. The module performs $2*|harcodedPasswords|$ HEAD requests to an arbitrary endpoint of the Device Settings API and it checks the status code of the response. If one of the responses' status codes is \textit{200 Success}, meaning that the authorization has been granted and therefore username and password match, then the module returns an issue with a high severity, otherwise it returns an OK status.
 
-This security control is possible without stumbling into the device's built-in authentication rate-limiting because the total number of requests is below the threshold of the requests per minute that the device accepts before temporarily blocking the access. This built-in mechanism is derived from the \texttt{IEC 62443-3-3} standard, precisely from the \texttt{SR 1.11}.
+This security control is possible without stumbling into the device's built-in authentication rate-limiting because the total number of requests is below the threshold of the requests per minute that the device accepts before temporarily blocking the access. This built-in mechanism is derived from the \texttt{IEC 62443 3-3} standard, precisely from the \texttt{SR 1.11}.
 
 \begin{mdframed}
   SR 1.11 - Unsuccessful login attempts: The control system shall provide the capability to enforce a limit of a configurable number of consecutive invalid access attempts by any user (human, software process or device) during a configurable time period.
@@ -339,7 +339,7 @@ The \textit{checkCredentialsVNC} function performs the check by combining the fu
 
 The device uses the HTTPS protocol to expose the Device Settings UI and API and the optional web page of the running project. The HTTPS protocol is a secure version of the HTTP protocol that uses the SSL/TLS protocol to encrypt the data that passes between the client and the server. The SSL/TLS protocol uses a certificate to establish the identity of the server and to encrypt the data that passes between the client and the server. This behaviour is needed to prevent an attacker from intercepting the data that passes between the client and the server.
 
-The certificate is issued by the company authority and it is valid for a certain period of time, usually years. A customer can upload a custom certificate to the device. The certificate is stored in the device.
+The certificate is issued by the Exor authority and it is valid for a certain period of time, usually years. A customer can upload a custom certificate to the device. The certificate is stored in the device.
 
 The module checks whether the certificate is expired or not. Go provides built-in packages called \texttt{encoding/pem} and \texttt{crypto/x509} that allow to parse the certificate and to extract the expiration date. The former implements the PEM data encoding, which originated in \textit{Privacy Enhanced Mail}. The most common use of PEM encoding today is in TLS keys and certificates~\cite{go-package-pem}. The latter allows parsing and generating certificates, certificate signing requests, certificate revocation lists, and encoded public and private keys. It also provides a certificate verifier with a chain builder~\cite{go-package-x509}.
 
@@ -388,7 +388,7 @@ The high modularity of the Go language and of the project allows to easily exten
 
 The first sprint has been completed successfully. All the expected modules but one have been implemented. For each of the tests, we have written comprehensive unit tests that run on demand. The implementation of the modules has been straightforward. The use of the interfaces has allowed to easily test the modules in isolation, by mocking the dependencies of the struct.
 
-The only module that has not been implemented is the one that checks the version of the operating system by reading the online repository. This is because the company does not provide a public repository for the updates, and therefore we cannot implement the module yet. This is a future work that can be implemented when the company will provide a public repository for the updates.
+The only module that has not been implemented is the one that checks the version of the operating system by reading the online repository. This is because there is not a repository for the updates, and therefore we cannot implement the module yet. This has been marked as future work.
 
 Given that the first sprint has been completed successfully, we can move on to the second sprint. We did a meeting to show the results of the sprint to the office and to discuss the next steps. The feedback has been positive, and the team is happy with the results. The next sprint focuses on the implementation of more server side utilities and some more modules.
 
@@ -404,10 +404,10 @@ The second sprint has the goal of implementing the following set of modules:
   \item Support internationalization
 \end{itemize}
 
-These are new features useful for the future adoption of the tool in the company.
+These are new features useful for the future adoption of the tool.
 
-The first two are server side utilities that are needed to prepare the infrastructure for future development of the tool in terms of strictly network policies and user billing. In fact, the company is interested in the possibility to offer the tool as a service to the customers, and therefore it is necessary to have a server side application in order to handle the functioning. Furthermore, as previously said, industrial network policies are very strict and usually they do not allow to connect directly to the internet, and therefore a proxy is needed to perform the network calls. \\
-For example, given the case of a version check, if the remote location on which the version is stored happens to be on a third-party endpoint, like for an external dependency, each network administrator for each customer should manually allow the connection to that location, and beforehand the company should provide the list of the locations to allow and keep it updated. In order to avoid this, the company can provide a proxy server that is the only one that connects to the internet. The tool can then connect to the proxy server. This way, network administrators only have to allow the connection to the proxy server, that is already expected for the standard operation of the device.
+The first two are server side utilities that are needed to prepare the infrastructure for future development of the tool in terms of strictly network policies and user billing. In fact, Corvina is interested in the possibility to offer the tool as a service to the customers, and therefore it is necessary to have a server side application in order to handle the functioning. Furthermore, as previously said, industrial network policies are very strict and usually they do not allow to connect directly to the internet, and therefore a proxy is needed to perform the network calls. \\
+For example, given the case of a version check, if the remote location on which the version is stored happens to be on a third-party endpoint, like for an external dependency, each network administrator for each customer should manually allow the connection to that location, and beforehand the company should provide the list of the locations to allow and keep it updated. In order to avoid this, Corvina provides a dedicated proxy server that is the only one that connects to the internet. The tool can then connect to the proxy server. This way, network administrators only have to allow the connection to the proxy server, that is already expected for the standard operation of the device.
 
 The second and third points are about the automatic build and deployment of the tool. The company is interested in the possibility to automatically build the tool for the different architectures and to deploy it on the devices. This is also useful for testing purposes, as the build is preceded by the execution of the tests and also for the continuous integration and continuous deployment of the tool.
 
@@ -417,7 +417,7 @@ The latest point aims to provide internationalization, that is the support for d
 
 Recalling~\cref{sec:platform-applications}, the cloud app is an entire runtime made by a frontend and a backend that is visible through the platform website. The frontend is a VueJS application and the backend uses NestJS as the framework for handling the controllers, the models and the logic. Both the frontend and the backend are written in TypeScript and both implement the authentication with the platform, as it is really integrated with the platform itself and cannot be used in a standalone mode.
 
-The skeleton of the application is generated by a public utility developed by the company, which is available on the public \textit{npm} registry. This utility generates the boilerplate code for the frontend and the backend, with many features already implemented, like the authentication with the platform, basic routing, controllers and models needed to complete the first installation on the platform.
+The skeleton of the application is generated by a public utility developed by Corvina, which is available on the public \textit{npm} registry. This utility generates the boilerplate code for the frontend and the backend, with many features already implemented, like the authentication with the platform, basic routing, controllers and models needed to complete the first installation on the platform.
 
 The app also provides a running configuration of \textit{PostgreSQL} database that is used to store its data. The database is also deployed on the Kubernetes cluster.
 
@@ -607,5 +607,5 @@ Usually, the names of these functions are very short to reduce the verbosity in 
 
 \section{Second sprint retrospective}
 
-With this last task done, the second sprint has been completed successfully. All the expected modules have been implemented. The implementation of the modules has been straightforward. Compared to the first sprint, we adjusted the estimation of the complexity and the time needed to develop the new features and we have been able to complete the sprint in time. This is the end of the internship period. The company is satisfied by our job and it looks forward to further development.
+With this last task done, the second sprint has been completed successfully. All the expected modules have been implemented. The implementation of the modules has been straightforward. Compared to the first sprint, we adjusted the estimation of the complexity and the time needed to develop the new features and we have been able to complete the sprint in time. This is the end of the internship period. Exor and Corvina are satisfied by our job and they look forward to further development.
 
