@@ -28,47 +28,46 @@ The IEC 62443 is a set of standards drafted by the \textit{Internation Electrote
   \label{fig:iec-62443}
 \end{figure}
 
-Each category is divided into several subcategories, corresponding to different subjects and requirements. The IEC 62443 is a comprehensive standard that covers all the specific aspects starting from the product design up to the development. Since the company is involved with the development of industrial devices, we focus on the \texttt{IEC 62443-3-3}, \texttt{IEC 62443-4-1} and \texttt{IEC 62443-4-2} documents.
+Each category is divided into several subcategories, corresponding to different subjects. IEC 62443 is a comprehensive standard that covers all the specific aspects starting from the product design up to the development.
 
-\texttt{IEC 62443-3-3} and \texttt{4-2} contains a list of System Requirements (SR) that the company must meet to obtain the certification.
+In the context of the internship project we are involved in, since we are directly at the level of product design and component development and deployment, the relevant subcategories we are focusing on are \texttt{3-3} and \texttt{4-2}, respectively named \textit{System security requirements and security levels} and \textit{Technical security requirements for IACS components}.
+
+\texttt{IEC 62443-3-3} and \texttt{4-2} categorize seven \textit{Foundational Requirements} (FR) each, expanded respectively into a series of \textit{System Requirements} (SR) and \textit{Component Requirements} (CR) that the company must meet to obtain the certification.
 
 For example, a system requirement taken from the subcategory \textit{System security requirements and security levels} (\texttt{3-3}) is the one shown in~\cref{fig:iec62443_3-3_3_9}. We are going to explain it in detail.
 
-The SR 3.9 states the following:
+The foundamental requirement is \textit{FR 3 - System integrity} and the the system requirement states the following:
 \begin{mdframed}
   SR 3.9 - Protection of audit information: The control system shall protect audit information and audit tools (if present) from unauthorized access, modification and deletion.
 \end{mdframed}\label{sr:3-3_3-9}
 
-Log audits are essential for the prevention and detection of cyberattacks. When something goes wrong, the log audit can help to understand what happened, when and where it happened and who was involved. This is a fundamental requirement for the IEC 62443 certification.
+Log audits are essential for the prevention and detection of cyberattacks. When something happens, log audit can help to understand what happened, when and where it happened and who was involved. This is a fundamental requirement for the IEC 62443 certification.
 
-For each Security Requirement listed in the documentation, the standard also describes some potential rationale and supplemental guidance to help the company understand the requirement and how to implement it.
+For each requirement listed in the documentation, the standard also describes some potential rationale and supplemental guidance to help the company understand the requirement and how to implement it.
 
-Each Security Requirement is made of four security levels. \\
-A Security Level (SL) is a measure of the security of a system or component, which is eventually transmitted to the final client. It is a score indicating how much sofisticated the solution is to follow the requirement. The minimum applicable security level is 1, while the maximum is 4.~\cite{iec-62443-ixon-practical-guide}
+Each system or component requirement is associated with at most four \textit{Requirement Enhancements} (RE) that can be implemented to increase the \textit{Security Level} (SL) of the system or component.
 
-It is possible to increase the score of the security level by applying more non-trivial solutions, expressed as a \textit{Requirement Enhancement}. An enhancement to increase the security level from 3 to 4 is stated in \texttt{SR 3.9 RE 1}:
+A security level is a measure of the security of a system or component, which is eventually transmitted to the final client: it is a score indicating how much sofisticated the solution is to follow the requirement. The minimum applicable security level is 1, while the maximum is 4.~\cite{iec-62443-ixon-practical-guide}\\
+It is possible to increase the score of the security level by applying more non-trivial solutions, that is a requirement enhancement. An enhancement to increase the security level from 3 to 4 is stated in \texttt{SR 3.9 RE 1}:
 \begin{mdframed}
   SR 3.9 RE 1 - Audit records on write-once media: The control system shall provide the capability to produce audit records on hardware-enforced write-once media.
 \end{mdframed}\label{sr:3-3_3-9_re1}
 
-We would like to note that not every SR has exactly four RE; instead, it could be that there are fewer solutions in order to increase its score. For instance, this is the case for SR 3.9, which has only one RE and the minimum applicable security level is level 2, as shown in~\cref{fig:iec62443_3-3_3_9}.
+We would like to note that not every SR has exactly four REs; instead, it could need fewer solutions in order to increase its score. For instance, this is the case for SR 3.9 which has only one RE and the minimum applicable SL is level 2, as shown in~\cref{fig:iec62443_3-3_3_9}.
 
 \begin{figure}[ht]
   \centering
   \fbox{\includegraphics[width=1.0\textwidth]{chapters/04/assets/iec62443_3-3_3_9.png}}
-  \caption[Snapshot of a System Requirement]{Snapshot of a System Requirement}
+  \caption[Snapshot of a IEC 62443-3-3 System Requirement]{Snapshot of a IEC 62443-3-3 System Requirement}
   \label{fig:iec62443_3-3_3_9}
 \end{figure}
 
 Moreover, sometimes the highest security level is not always the best solution or the most suitable for the company. Therefore, it is essential to evaluate the cost and the benefits of the solution before applying it.
 
-In the context of the company we are working with and the internship project we are involved in, because we are directly at the level of product design and component development and deployment, the relevant subcategories we are focusing on are \texttt{3-3}, \texttt{4-1} and \texttt{4-2}, respectively named \textit{System security requirements and security levels}, \textit{Product security development life cycle requirements} and \textit{Technical security requirements for IACS components}.
-
 At the system level, \texttt{IEC 62443-3-3} introduces security levels and corresponding requirements, offering a scalable framework to protect industrial systems. This part enables organizations to customize their security measures based on specific risk profiles and operational demands.
 
-\texttt{IEC 62443-4-1} lays the foundation for secure product development, emphasizing the critical importance of incorporating security measures right from the design phase. It encourages manufacturers to adopt a security-centric approach to product development, ensuring that components are fortified against cyber threats from the very beginning.
-
-In the context of component level, moving from development to deployment, \texttt{IEC 62443-4-2} specifies the technical security requirements for IACS components. It defines essential security capabilities such as robust authentication, encryption and intrusion detection, ensuring that each component reinforces the overall security of the system.~\cite{iec-62443-safeguarding-industrial-automation-linkedin}
+At the component level, \texttt{IEC 62443-4-1} lays the foundation for secure product development, emphasizing the critical importance of incorporating security measures right from the design phase. It encourages manufacturers to adopt a security-centric approach to product development, ensuring that components are fortified against cyber threats from the very beginning.\\
+Moving from development to deployment, \texttt{IEC 62443-4-2} specifies the technical requirements for IACS components. It defines essential security capabilities such as robust authentication, encryption and intrusion detection, ensuring that each component reinforces the overall security of the system.~\cite{iec-62443-safeguarding-industrial-automation-linkedin}
 
 
 \subsection{ISO/IEC 27001}
@@ -117,13 +116,19 @@ It applies to products connected directly or indirectly to another device or net
 
 Recalling~\cref{sec:iec-62443}, the IEC 62443 standard provides a comprehensive framework for securing industrial control systems and operational technology networks. In order to perform a step towards the certification of the devices with the standard, the scanning tool must cover at least the aspects of the standard.
 
-We did a case study on the standard documentation: for each of the security requirements listed in the \texttt{3-3} and \texttt{4-2} documents, we said:
+First of all, our project is based on Component Requirement 6.2 as foundation:
 \begin{mdframed}
-  \textit{\textless\textless  Can we implement a check for this requirement in such a way as to make the user able to fix the potential issue by itself? \textgreater\textgreater}
+  SR 6.2 - Continuous monitoring: The control system shall provide the capability to continuously monitor all security mechanism performance using commonly accepted security industry practices and recommendations to detect, characterize and report security breaches in a timely manner.
 \end{mdframed}
-We considered the user as a person that has a management account on the device, and that interacts using the settings web interface. The goal was to make the final user able to fix the reported issues in complete autonomy, by tweaking the settings and configuration of the device.
+With that said, our scanning tool will become the way to actively monitor the security of the devices and to report the results to the user for the company devices.
 
-\cref{fig:iec62443-findings-3_3} and~\cref{fig:iec62443-findings-4_2} show the findings of the case-study. The table is divided into four columns: the first one is the security requirement title, the second one is the description, the third is whether we believe that it is a check we should implement on a scanning tool and the fourth one contains some notes about the possible implementation.
+We did a case study on the standard documentation: for each of the requirements listed in the \texttt{3-3} and \texttt{4-2} documents we said:
+\begin{mdframed}
+  \textit{\textless\textless Can we implement a check for this requirement in such a way to make the user able to fix the potential issue by himself?\textgreater\textgreater}
+\end{mdframed}\label{stm:check-}
+We identified in the user that has a management account on the device, whom can interact on the system settings. The goal was to make the final customer able to fix the reported weaknesses in complete autonomy, by tweaking the settings and configuration of the device or eventually by updating the operative system.
+
+\cref{fig:iec62443-findings-3_3} and~\cref{fig:iec62443-findings-4_2} show the findings of the case-study. The table is divided into four columns: the first one is the requirement title, the second one is the description, the third states whether we believe that it satisfies with our statement and the fourth one contains some notes about the possible implementation.
 
 We already filtered the requirements that we believe relevant for the scanning tool, and we are going to evaluate them depending on the previous statement.
 
@@ -141,9 +146,9 @@ We already filtered the requirements that we believe relevant for the scanning t
   \label{fig:iec62443-findings-4_2}
 \end{figure}
 
-To better explain our choices and motivations, we now take into account the \textit{SR 1.9 - Strength of public key authentication} requirement. The requirement states that there must be the capability to enforce the validity of the used certificates by checking the signature, the expiration date and the revocation status. We believe that this is a check that we should implement in the scanning tool because the user can fix the issue by itself by renewing the certificate, or by changing the certificate authority related to it if needed. The implementation of the check could be done by retrieving the certificate from the device and then checking the signature, the expiration date and the revocation status. If the certificate is self-signed, the tool could suggest the user to change it with a certificate signed by a trusted certificate authority.
+To better explain our choices and motivations, we now take into account \textit{SR 1.9 - Strength of public key authentication} requirement. The requirement states that there must be the capability to enforce the validity of the used certificates by checking the signature, the expiration date and the revocation status. We believe that this is a check that we should implement in the scanning tool because the user can fix the issue by itself by renewing the certificate, or by changing the certificate authority if needed. The implementation could be done by retrieving the certificate from the device and then checking the signature, the expiration date and the revocation status. If the certificate is self-signed, the tool could suggest the user to replace it with another certificate signed by a trusted certificate authority.
 
-On the other hand, let's consider the \textit{SR 1.7 - Strength of password-based authentication}. The requirement states that the password must have a minimum length and a variety of different character types, but if the system could let the user to set an invalid password, the tool cannot enforce that requirement because it could only suggest to change the password accordingly, without the possibility to enforce it Therefore, the issue should be solved by the R\&D team, which should implement a password policy on the backend, and the user should be forced to change the password at the next login.
+On the other hand, let's consider \textit{SR 1.7 - Strength of password-based authentication}. The requirement states that the password must have a minimum length and a variety of different character types, but if the system could let the user set an invalid password, the tool cannot enforce that requirement because it could only suggest to change the password accordingly, without the possibility to enforce it. Therefore, the issue should be reported to the development team, which should implement a password policy, release a software update and the user should be then forced to change the password at the next login. In this specific case, we believe that the burden of checking and integrating this functionality, required by the standard, should be carried out separately from the execution of the tool by the end customer.
 
 With this approach, we have identified the checks that the scanning tool should cover and we have included them in the backlog of the project.
 
@@ -153,7 +158,7 @@ We have a backlog of stories for the scanning tool. Therefore, we drafted a new 
 
 We considered each story as an independent task that could be developed and tested in a short time, usually in a week. So, we split the epic into small stories, each one with a title, a description and a priority.
 
-We started from the basis of a software, so the first stories were about the setup of the project and the thinking about the working architecture, the required parameters and the output formatting of the CLI. We want to keep the functioning of the tool as simple as possible and as much universal and reusable as possible. As a reference, we took inspiration by the help pages of some common software like \texttt{npm}, the node package manager, or \texttt{curl}, the tool to perform network requests directly on the terminal. Therefore, we sketched out the manual help page to have an overview of the commands and the options that the user could use.
+We started from the basis of a software, so the first stories were about the setup of the project and the thinking about the working architecture, the required parameters and the output formatting of the CLI. We want to keep the functioning of the tool as simple as possible and as much universal and reusable as possible. As a reference, we took inspiration by the help pages of some common software like \texttt{npm}, the NodeJS package manager, or \texttt{curl}, the tool to perform network requests directly on the terminal. Therefore, we sketched out the manual help page to have an overview of the commands and the options that the user could use.
 
 At first glance, we decided to implement the following flow: the user runs the tool with the \texttt{scan} command, then the tool retrieves the device settings and the network status, then it performs the checks and finally it outputs the results to the console. The user can otherwise choose to save the output as an external file. The flag \texttt{--verbose} can be used to print more information about the checks and the results. The flag \texttt{--help} can be used to print the manual page or to print the documentation for a specific command.
 
