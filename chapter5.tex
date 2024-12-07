@@ -6,7 +6,7 @@ This chapter describes how the system is actually being implemented.
 
 The Go programming language provides a powerful feature called interfaces. An interface is a collection of method signatures that a type, like a struct, can implement. Interfaces allow to define a set of methods that a type must implement to be considered an instance of that interface. This allows to write code that is more flexible, especially for testing purposes.
 
-We setup each one of the checks as a separate interface, so that we can easily test them in isolation and also to make it easier to manage the codebase and add new checks in the future, like if they are modules that can be added or removed from the system.
+We setup each check as a separate interface, so that we can easily test them in isolation and also to make easier to manage the codebase and add new checks in the future, like if they are modules that can be added or removed from the system.
 
 The modularity of a project is a key feature that allows one to easily extend the codebase and add new features. Without modularity, the codebase would be a monolithic block of code that is difficult to handle with the time and the natural growth of a codebase.
 
@@ -15,11 +15,11 @@ Therefore, we created different packages for the different categories of modules
 The scopes for the different packages are the following:
 
 \begin{itemize}
-  \item \textit{check}: it aggregates the different controls on a property of the device, like the \textit{Check correct time} or the \textit{Check VNC credentials};
+  \item \textit{check}: it aggregates the different controls on a property of the device, like for instance the \textit{Check correct time} or the \textit{Check VNC credentials};
   \item \textit{version}: contains the modules to determine whether the software running on the device is up-to-date or not;
   \item \textit{parsing}: it handles the parsing of the input parameters, for example the verbose flag or the list of checks to run;
   \item \textit{output}: it manages the output of the checks, like the output format and the output file;
-  \item \textit{mapping}: contains the effective available mapping for the tool.
+  \item \textit{mapping}: contains the effective available modules list for the tool, and bind them to the underlying implementation.
   \item \textit{variab} and \textit{utils}: are utility packages that contain some common structures and functions that are used across the codebase.
 \end{itemize}
 
@@ -96,11 +96,11 @@ The first sprint has the goal of implementing the first set of modules, as expre
 
 The \textit{CheckTime} module checks if the datetime of the device is correct. This is a fundamental thing to verify because the issues with the devices not connecting to the internet and to the cloud are most of the time due to the incorrect datetime, leading to an error with the SSL certificate. In fact, if the date is not correct, the SSL certificate could result as expired or not yet valid, warning the user that the connection is not secure.
 
-It does so by getting the time from the device and the real-time from a remote server, and then comparing the two times. If the difference between the two times is greater than a certain threshold, expressed in a range of few minutes, then the module returns an \textit{ISSUE} status, otherwise it returns an \textit{OK} status. Of course, this module works with an active internet connection only; if the device is not connected to the internet, then the module returns a valid execution error.
+It does so by getting the time from the device and the real-time from a remote server, and then comparing the two times. If the difference between the two times is greater than a certain threshold, expressed in a range of few minutes, then the module returns an \textit{ISSUE} status, otherwise it returns an \textit{OK} status. Of course, this module works with an active internet connection only; if the device is not connected to the internet, then the module returns a documented execution error.
 
 To perform the execution, it runs the following steps:
 \begin{itemize}
-  \item first, it gets the UNIX timestamp, an integer number representing the elapsed seconds since 1\textsuperscript{st} January 1970, by executing the command \texttt{date +\%s} on the local shell;
+  \item first, it gets the UNIX timestamp, an integer number representing the elapsed seconds since 1\textsuperscript{st} January 1970, by calling the native \texttt{time.Now().Unix()} language function. This is the datetime of the device;
   \item then it calls a remote endpoint that returns the real datetime;
   \item it parses the two datetimes;
   \item finally, it compares their difference and returns the result.
@@ -157,18 +157,18 @@ Furthermore, we also explicitly set the environment variable \texttt{CGO\_ENABLE
 
 Finally, we set the \texttt{-trimpath} flag to remove the absolute path of the source files from the binary, in order to make the binary reproducible. This is a good practice to follow, as it does not leak any information about the source code and the environment where the binary was built.~\cite{go-trimpath-arg}
 
-The resulting binary for each architecture is placed in a tree of directory, where the root directory is the version of the binary, and the subdirectories are the architectures. The filename of the binary is the same as the name of the project, that is \texttt{scantool}.
+The resulting binary for each architecture is placed in a tree of directories, where the root directory is the version of the binary, and the subdirectories are the architectures. The filename of the binary is the same as the name of the project, that is \texttt{scantool}.
 
 The final build command is the following:
 \begin{lstlisting}[caption={Go tool cross-build command}]
   env GOOS=$GOOS GOARCH=$GOARCH CGO_ENABLED=0 go build -trimpath -ldflags="-s -w -X 'main.VERSION=$version'" -o $output_base_dir/$version/$arch/$filename main.go
 \end{lstlisting}
 
-The difference between the size of a build without any optimization and an optimized build is quite relevant. Taking as example the architecture \textit{arm64} on the \textit{Linux} operating system, the former takes 12MB and the latter takes 7.7MB. On industrial devices, such size difference matters a lot in terms of storage and bandwidth to download it on the fly when needed.
+The difference between the size of an unoptimized build and an optimized one is quite relevant. Taking as example the architecture \textit{arm64} on the \textit{Linux} operating system, the former takes 12MB and the latter takes 7.7MB. On industrial devices, such size difference matters a lot in terms of storage and bandwidth to download it, plus the amount of memory that it takes when running. We always have to consider that the devices have limited resources, and we have to optimize the software as much as possible.
 
 \subsection{Scan OS version}
 
-The custom board of the industrial devices powers a custom Linux distribution, that is based on the Yocto Project. The updates are managed by the internal department of the company, with an internal version manager. The updates are not automatic, and they have to be requested by the customer.
+The custom board of the industrial devices runs a custom Linux distribution, that is based on the Yocto Project. The updates are managed by the internal department of the company, with an internal version manager. The updates are not automatic, and they have to be requested by the customer.
 
 This module monitors whether the operating system is at its latest version or not. Given that the estimated work to implement it as a single block is not trivial, we can split it into two different specializations: the first one is the one that checks the version of the operating system by retrieving the build date, and the second one is the one that checks the version of the operating system by reading the online repository.
 
@@ -218,7 +218,11 @@ The devices ship with some default credentials for the two users that are availa
 
 The module checks whether the default credentials are still in use by trying to login with a pre-defined set of passwords for the two users. The module performs $2*|harcodedPasswords|$ HEAD requests to an arbitrary endpoint of the Device Settings API and it checks the status code of the response. If one of the responses' status codes is \textit{200 Success}, meaning that the authorization has been granted and therefore username and password match, then the module returns an issue with a high severity, otherwise it returns an OK status.
 
-This security control is possible without stumbling into the device's built-in authentication rate-limiting because the total number of requests is below the threshold of the requests for minute that the device accepts before temporarily blocking the access from that access.
+This security control is possible without stumbling into the device's built-in authentication rate-limiting because the total number of requests is below the threshold of the requests per minute that the device accepts before temporarily blocking the access. This built-in mechanism is derived from the \texttt{IEC 62443-3-3} standard, precisely from the \texttt{SR 1.11}.
+
+\begin{mdframed}
+  SR 1.11 - Unsuccessful login attempts: The control system shall provide the capability to enforce a limit of a configurable number of consecutive invalid access attempts by any user (human, software process or device) during a configurable time period.
+\end{mdframed}\label{sr:3-3_1-11}
 
 The module is implemented by the \textit{checkCredentialsSystemSettingsInterface} and \textit{checkCredentialsSystemSettingsStruct} structure. The interface is defined as:
 
@@ -275,7 +279,7 @@ By combining the two functions, the module checks if the SSH port status reporte
 
 \subsection{Check VNC credentials}
 
-As part of the services that are running on the device, one of them is the VNC service. VNC, which stands for \textit{Virtual Network Computing}, is a cross-platform graphical desktop sharing system to remotely control another computer. It transmits the screen of the remote device to the client, and it allows to interact with it by sending the mouse and keyboard events. It uses the RFB - \textit{Remote Framebuffer} - protocol that governs the format of the data that passes between the client and server within the VNC system. The protocol itself does not require a mandatory authentication method, but is supports many of them, like a password or a certificate.
+As part of the services that are running on the device, one of them is the VNC service. VNC, which stands for \textit{Virtual Network Computing}, is a cross-platform graphical desktop sharing system to remotely control another computer. It transmits the screen of the remote device to the client, and it allows to interact with it by sending the mouse and keyboard events. It uses the RFB - \textit{Remote Framebuffer} - protocol that governs the format of the data that passes between the client and server within the VNC system. The protocol itself does not require a mandatory authentication method, but it supports many of them, like a password or a certificate.
 
 If the service is not properly configured and does not require a password to connect, then an attacker could potentially gain unauthorized direct access to the graphical interface and perform any operation that a legitimate user could do.
 
@@ -403,7 +407,7 @@ The second sprint has the goal of implementing the following set of modules:
 These are new features useful for the future adoption of the tool in the company.
 
 The first two are server side utilities that are needed to prepare the infrastructure for future development of the tool in terms of strictly network policies and user billing. In fact, the company is interested in the possibility to offer the tool as a service to the customers, and therefore it is necessary to have a server side application in order to handle the functioning. Furthermore, as previously said, industrial network policies are very strict and usually they do not allow to connect directly to the internet, and therefore a proxy is needed to perform the network calls. \\
-For example, given the case of a version check, if the remote location on which the version is stored happens on a third-party endpoint, like for an external dependency, each network administrator for each customer should manually allow the connection to that location, and beforehand the company should provide the list of the locations to allow and keep it updated. In order to avoid this, the company can provide a proxy server that is the only one that connects to the internet. The tool can then connect to the proxy server. This way, network administrators only have to allow the connection to the proxy server, that is already expected for the standard operation of the device.
+For example, given the case of a version check, if the remote location on which the version is stored happens to be on a third-party endpoint, like for an external dependency, each network administrator for each customer should manually allow the connection to that location, and beforehand the company should provide the list of the locations to allow and keep it updated. In order to avoid this, the company can provide a proxy server that is the only one that connects to the internet. The tool can then connect to the proxy server. This way, network administrators only have to allow the connection to the proxy server, that is already expected for the standard operation of the device.
 
 The second and third points are about the automatic build and deployment of the tool. The company is interested in the possibility to automatically build the tool for the different architectures and to deploy it on the devices. This is also useful for testing purposes, as the build is preceded by the execution of the tests and also for the continuous integration and continuous deployment of the tool.
 
@@ -427,7 +431,7 @@ As said, usually the industrial networks attached to the devices are very strict
 
 The solution we thought is to provide a proxy server that is the only one that connects to the final endpoints. The tool can then connect to the proxy server. This way, network administrators only have to allow the connection to the proxy server, that is already expected for the standard operation of the device.
 
-The proxy server is managed by a controller on the cloud app backend. The controller is responsible for handling the incoming requests from the tool and for forwarding them to the respective methods. The controller is also responsible for handling the authentication with the platform. It is written in TypeScript and it uses the NestJS framework.
+The proxy server is managed by a controller on the cloud app backend. The controller is responsible for handling the incoming requests from the tool and forwarding them to the respective methods. The controller is also responsible for handling the authentication with the platform. It is written in TypeScript and it uses the NestJS framework.
 
 The proxy controller is a class that is decorated with the \texttt{@Controller} decorator, that is provided by the NestJS framework, with the parameter that is the base path of the controller. All the requests starting with that path are handled by the controller. A decorator is a special declaration that can be attached to a class, method or property, and it is used to modify their behaviour. The class is also decorated with \texttt{@ApiTags}, needed to generate the OpenAPI documentation, and by a \texttt{@UseInterceptors} directive with the \textit{LoggingInterceptor} custom one that logs the incoming requests. \\
 The class contains the declaration of the services that are used by the controller to perform the actual operations. The services are injected into the constructor of the class, aka they are already instantiated when the class is defined. The class also contains the methods that are the actual endpoints of the controller. The methods are decorated with the \texttt{@Get}, \texttt{@Post}, \texttt{@Put} or \texttt{@Delete} decorators, depending on the HTTP method that they handle. The methods also contain the logic to handle the incoming requests and to return the responses. The responses are returned in the form of specific \textit{DTO}s, which stands for \textit{data transfer object} and it is an object that carries data between processes, automatically serialized by the NestJS framework to the JSON format.
@@ -537,7 +541,7 @@ The environments need the following set of images:
 \end{itemize}
 
 About the tool, different images are needed for the devices running the \textit{arm*} architectures. \\
-Instead, the frontend and the backend images are built for the cluster environment, that is the \textit{amd64} architecture on the Google Cloud Platform Kubernetes cluster, and for the development runtime where the laptops are based both on \textit{amd64} and \textit{arm64} architecture. This way, each developer can run its own instance of the cluster on its laptop and directly test the application as it would be deployed on the real cluster.
+Instead, the frontend and the backend images are built for the cluster environment, that is the \textit{amd64} architecture on the Google Cloud Platform Kubernetes cluster, and the development runtime where the laptops are based both on \textit{amd64} and \textit{arm64} architecture. This way, each developer can run its own instance of the cluster on its laptop and directly test the application as it would be deployed on the real cluster.
 
 The automatic build and deployment is managed by the Google Cloud Build service. It is directly integrated with the project's repositories and it is triggered by the push of the code on a specific tag or on the master branch. The service is programmed by a configuration file, called \textit{Dockerfile}, which contains all the steps that are needed to build the images. The images are then pushed to a remote registry and then they are automatically deployed to the cluster. Instead, the built tool binaries are stored in a public storage bucket. The bucket always contains the reference to the latest master version and all the previous tagged versions. We decided to store the binaries in a public storage bucket because of the simplicity of the service for our internship project.
 
@@ -583,11 +587,11 @@ The cloud app frontend is powered by these endpoints to assist the testers and t
   \label{fig:cloud-app-frontend}
 \end{figure}
 
-The endpoint is a public REST API that is implemented by a controller on the cloud app backend. The controller is responsible for handling the incoming requests from the frontend and for forwarding them to the respective methods. The controller is also responsible for handling the authentication with the platform. The controller asks the related service model to actually list the available architectures and returns the final download link.
+The endpoint is a public REST API that is implemented by a controller on the cloud app backend. The controller is responsible for handling the incoming requests from the frontend and forwarding them to the respective methods. The controller is also responsible for handling the authentication with the platform. The controller asks the related service model to actually list the available architectures and returns the final download link.
 
 The endpoint is available at the \texttt{/v1/cli-release} base path; in particular, the \texttt{/platforms} path returns a dynamic list of the available architectures at that time, and the \texttt{/:version/:platform} path returns the actual download link for the specific version and platform. The download link is a direct link to the storage bucket that contains the binaries.
 
-Notice that, although the app is accessible using a private account but the download link is public, we do not consider this a security issue because of the initial stage of the project and the limited access to the preview version of the app. In fact, only the company testers can access it at this time. Future work will be to implement a proper authentication system to access the download link.
+Notice that, although the app is accessible using a private account the download link is public: we do not consider this a security issue because of the initial stage of the project and the limited access to the preview version of the app. In fact, only the company testers can access it at this time. Future work will implement a proper authentication system to access the download link.
 
 \subsection{Support internationalization}
 
@@ -599,7 +603,7 @@ Also the tool is translated into different languages, primarily in English and I
 
 Both the translation methods support the variable replacement, that is the ability to replace a placeholder in the translation with a value. This is useful for example to translate a sentence that contains a variable part, like a number or a name. Also, they support pluralization, that is the ability to translate a sentence in different ways depending on the number of items. A clear example is the translation of the word \textit{item} in English, which is translated in two different ways depending on the number of items: \textit{item} for one item and \textit{items} for zero or more than one item. The pluralization is done by using the \texttt{one}, \texttt{other} and \texttt{few} keys in the translation file. The \texttt{one} key is used for the singular form, the \texttt{other} key is used for the plural form, and the \texttt{few} key is used for the few form. The package automatically selects the correct form based on the number of items passed as parameter.
 
-Usually, the names of these functions are very short to reduce the verbosity in the code, given that they are used really really often in the code.
+Usually, the names of these functions are very short to reduce the verbosity in the code, given that they are used really often in the code.
 
 \section{Second sprint retrospective}
 

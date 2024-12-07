@@ -1,6 +1,6 @@
 \chapter{Testing}
 
-This chapter describes the testing of the system, a fundamental part of the development process. It is important to perform testing to ensure that it works as expected. The testing process is divided into two parts: unit testing and system testing. Unit testing is the process of testing individual components of the system while system one is the process of testing the system as a whole.
+This chapter describes the testing of the system, a fundamental part of the development process. It is important to perform testing to ensure that it works as expected. The testing process is divided into two parts: unit testing and system testing. Unit testing is the process of testing individual components of the system while system testing is the process of testing the system as a whole.
 
 \section{Automated testing}
 
@@ -14,7 +14,7 @@ There are several reasons why testing is important. We can group them into four 
 \begin{itemize}
   \item
         First of all, testing helps to prevent regressions. A regression is a bug that is introduced when a feature is added or especially modified in the system. It helps to prevent them by testing the system after each change. \\
-        The unit tests can be defined after the definition of the project, but before writing any code implementation. This way, the developer defines the expected behaviour of the system before writing the code. It is an iterative approach combining programming, unit test creation, and refactoring. This method is called Test-Driven Development (aka TDD), and it is also originated from the Agile manifesto principles~\cite{agile-test-driven-development}. The TDD approach is shown in~\cref{fig:tdd};
+        The unit tests can be defined after the definition of the project, but before writing any code implementation. This way, the developer defines the expected behaviour of the system before writing the code. It is an iterative approach combining unit test creation, programming, and refactoring. This method is called Test-Driven Development (aka TDD), and it is also originated from the Agile manifesto principles~\cite{agile-test-driven-development}. The TDD approach is shown in~\cref{fig:tdd};
   \item
         Documentation: testing helps to enrich the documentation of the source functions. The test cases are a good way to understand the expected behaviour of the system. They can be used as examples to understand how the system works. Compared to separate documentation, the test cases are obviously always updated with the source code, avoiding possible inconsistencies due to the missing update of the documentation after a refactor;
   \item
@@ -42,7 +42,7 @@ A test file ends with the suffix "\texttt{\_test.go}". The code in the file can 
 
 To be valid, the testing package must be imported by all the test functions; the main exposed types are:
 \begin{itemize}
-  \item \texttt{func TestMain(m *testing.M)}: sometimes it is needed to do extra setup before starting the testing; this function is executed before as first. The function takes a pointer to an object which provides methods to control the flow;
+  \item \texttt{func TestMain(m *testing.M)}: sometimes it is needed to do extra setup before starting the testing; this function is the entry point and runs before tests. The function takes a pointer to an object which provides methods to control the flow;
   \item \texttt{func TestXxx(t *testing.T)}: the function takes a pointer to an argument providing methods to report the test results;
   \item \texttt{func TestXxx(f *testing.F)}: it is used to perform a fuzz test. If the test fails, we again can use the \texttt{*testing.T} object to report the failure.
   \item \texttt{func BenchmarkXxx(b *testing.B)}: it is used to perform a benchmark test.

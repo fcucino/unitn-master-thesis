@@ -18,7 +18,7 @@ The IEC 62443 is a set of standards drafted by the \textit{Internation Electrote
   \item \textbf{General}: it covers topics that are common to the entire series;
   \item \textbf{Policies and procedures}: focuses on methods and processes associated with IACS security;
   \item \textbf{System}: it covers the requirements for the secure development and integration of systems;
-  \item \textbf{Component}: it covers the requirements for the secure development and integration of components.
+  \item \textbf{Component}: it covers the requirements for the secure development and integration of components, defined as final products.
 \end{enumerate}
 
 \begin{figure}[ht]
@@ -28,9 +28,9 @@ The IEC 62443 is a set of standards drafted by the \textit{Internation Electrote
   \label{fig:iec-62443}
 \end{figure}
 
-Each category is divided into several subcategories, corresponding to different subjects and requirements. The IEC 62443 is a comprehensive standard that covers all the specific aspects starting from the product design up to the development.
+Each category is divided into several subcategories, corresponding to different subjects and requirements. The IEC 62443 is a comprehensive standard that covers all the specific aspects starting from the product design up to the development. Since the company is involved with the development of industrial devices, we focus on the \texttt{IEC 62443-3-3}, \texttt{IEC 62443-4-1} and \texttt{IEC 62443-4-2} documents.
 
-Each subcategory, identified by the category number followed by an increasing index, contains a list of System Requirements (SR) that the company must meet to obtain the certification.
+\texttt{IEC 62443-3-3} and \texttt{4-2} contains a list of System Requirements (SR) that the company must meet to obtain the certification.
 
 For example, a system requirement taken from the subcategory \textit{System security requirements and security levels} (\texttt{3-3}) is the one shown in~\cref{fig:iec62443_3-3_3_9}. We are going to explain it in detail.
 
@@ -44,7 +44,7 @@ Log audits are essential for the prevention and detection of cyberattacks. When 
 For each Security Requirement listed in the documentation, the standard also describes some potential rationale and supplemental guidance to help the company understand the requirement and how to implement it.
 
 Each Security Requirement is made of four security levels. \\
-A Security Level (SL) is a measure of the security of a system or component, which is eventually transmitted to the final client. It is a score from 1 to 4, where 1 indicates the lowest complexity of the solution we can apply to follow the requirement, and 4 indicates the highest complexity.~\cite{iec-62443-ixon-practical-guide}
+A Security Level (SL) is a measure of the security of a system or component, which is eventually transmitted to the final client. It is a score indicating how much sofisticated the solution is to follow the requirement. The minimum applicable security level is 1, while the maximum is 4.~\cite{iec-62443-ixon-practical-guide}
 
 It is possible to increase the score of the security level by applying more non-trivial solutions, expressed as a \textit{Requirement Enhancement}. An enhancement to increase the security level from 3 to 4 is stated in \texttt{SR 3.9 RE 1}:
 \begin{mdframed}
@@ -88,9 +88,10 @@ The Network and Information Security (NIS) Directive is the first piece of EU-wi
 
 The major key features of the updated directive are:~\cite{nis2-directive-faqs}
 \begin{itemize}
-  \item \textbf{Expanded scope}: NIS2 extends its scope to cover more sectors and industries. It applies to essential and important entities: the former include energy (electricity, district heating and cooling, oil and gas), transport (air, rail, water and road), banking, health, pharmaceutical, water, digital infrastructure (internet exchange points, DNS providers, TLD name registries, cloud computing service providers, data centre service providers, content delivery networks), public administration and space. The latter include postal and courier services, waste management, chemicals, food, manufacturing of medical devices, computers and electronics, machinery equipment, motor vehicles and digital providers (online marketplaces, online search engines and social networking service platforms).\\
-        Anyway, Essential and Important entities are deemed to be under the jurisdiction of the Member State where they provide their services
-  \item \textbf{Incident Reporting}: Companies must report significant cybersecurity incidents within 24 hours of detection, improving coordination between national cybersecurity authorities and helping mitigate the impact of attacks.
+  \item \textbf{Expanded scope}: NIS2 extends NIS scope to cover more sectors and industries. It applies to \textit{essential} and \textit{important} entities: NIS include energy (electricity, district heating and cooling, oil and gas), transport (air, rail, water and road), banking, health, pharmaceutical, water, digital infrastructure (internet exchange points, DNS providers, TLD name registries, cloud computing service providers, data centre service providers, content delivery networks), public administration and space. NIS2 include postal and courier services, waste management, chemicals, food, manufacturing of medical devices, computers and electronics, machinery equipment, motor vehicles and digital providers (online marketplaces, online search engines and social networking service platforms);
+        % \\
+        % Anyway, essential and important entities are deemed to be under the jurisdiction of the Member State where they provide their services;
+  \item \textbf{Incident Reporting}: Companies must report significant cybersecurity incidents within 24 hours of detection, improving coordination between national cybersecurity authorities and helping mitigate the impact of attacks;
   \item \textbf{Fines and Penalties}: NIS2 introduces higher penalties for non-compliance, similar to the GDPR, with fines that could reach up to 2\% of an organization's total global turnover.
 \end{itemize}
 
@@ -102,7 +103,7 @@ While the cybersecurity of providers of digital services is regulated at EU leve
 
 Therefore, the European Commission proposed the Cyber Resilience Act in 2022; it has been approved in early 2024~\cite{cra-timelinel} and manufacturers have to place compliant products on the Union market by 2027, aiming to enhance the security of ICT products, services and processes.
 
-It applies to products connected directly or indirectly to another device or network except for specified exclusions such as open-source software or services that are already covered by existing rules, which is the case for medical devices, aviation and cars. A non-exhaustive list of products that are in scope of the CRA includes:~\cite{cra-overview}
+It applies to products connected directly or indirectly to another device or network except for specific exclusions such as open-source software or services that are already covered by existing rules, which is the case for medical devices, aviation and cars. A non-exhaustive list of products that are in the scope of the CRA includes:~\cite{cra-overview}
 \begin{itemize}
   \item \textbf{end devices}: laptops, smartphones, cameras, smart equipment, network equipment, Industrial Automation Control Systems (IACS);
   \item \textbf{software}: firmware, operating systems, applications;
@@ -116,13 +117,15 @@ It applies to products connected directly or indirectly to another device or net
 
 Recalling~\cref{sec:iec-62443}, the IEC 62443 standard provides a comprehensive framework for securing industrial control systems and operational technology networks. In order to perform a step towards the certification of the devices with the standard, the scanning tool must cover at least the aspects of the standard.
 
-We did a case study on the standard documentation: for each of the security requirements listed in the \texttt{3-3}, \texttt{4-1} and \texttt{4-2} documents, we said:
+We did a case study on the standard documentation: for each of the security requirements listed in the \texttt{3-3} and \texttt{4-2} documents, we said:
 \begin{mdframed}
   \textit{\textless\textless  Can we implement a check for this requirement in such a way as to make the user able to fix the potential issue by itself? \textgreater\textgreater}
 \end{mdframed}
-We considered the user as a person that has a management account on the device, and that has to interact using the settings web interface. The goal was to make the final user able to fix the reported issue without the need to update the firmware or ask for a modification on the source code or on the development lifecycle by reporting a bug report.
+We considered the user as a person that has a management account on the device, and that interacts using the settings web interface. The goal was to make the final user able to fix the reported issues in complete autonomy, by tweaking the settings and configuration of the device.
 
-\cref{fig:iec62443-findings-3_3} and~\cref{fig:iec62443-findings-4_2} show the findings of the case-study. The table is divided into four columns: the first one is the security requirement title, the second one is the description text, the third is whether we believe that it is a check we should implement on a scanning tool and the fourth one contains some notes about the possible implementation.
+\cref{fig:iec62443-findings-3_3} and~\cref{fig:iec62443-findings-4_2} show the findings of the case-study. The table is divided into four columns: the first one is the security requirement title, the second one is the description, the third is whether we believe that it is a check we should implement on a scanning tool and the fourth one contains some notes about the possible implementation.
+
+We already filtered the requirements that we believe relevant for the scanning tool, and we are going to evaluate them depending on the previous statement.
 
 \begin{figure}[ht]
   \centering
@@ -138,11 +141,11 @@ We considered the user as a person that has a management account on the device, 
   \label{fig:iec62443-findings-4_2}
 \end{figure}
 
-To better explain our choices and motivations, we now take into account the \textit{SR 1.9 - Strength of public key authentication} requirement. The requirement states that there must be the capability to validate the validity of the used certificates by checking the signature, the expiration date and the revocation status. We believe that this is a check that we should implement in the scanning tool because the user can fix the issue by itself by renewing the certificate, or by changing the certificate authority related to it if needed. The implementation of the check could be done by retrieving the certificate from the device and then checking the signature, the expiration date and the revocation status. If the certificate is self-signed, the tool could suggest the user to change it with a certificate signed by a trusted certificate authority.
+To better explain our choices and motivations, we now take into account the \textit{SR 1.9 - Strength of public key authentication} requirement. The requirement states that there must be the capability to enforce the validity of the used certificates by checking the signature, the expiration date and the revocation status. We believe that this is a check that we should implement in the scanning tool because the user can fix the issue by itself by renewing the certificate, or by changing the certificate authority related to it if needed. The implementation of the check could be done by retrieving the certificate from the device and then checking the signature, the expiration date and the revocation status. If the certificate is self-signed, the tool could suggest the user to change it with a certificate signed by a trusted certificate authority.
 
-Instead, we now consider the \textit{SR 1.7 - Strength of password-based authentication}. The requirement states that the password must have a minimum length and a variety of character types. We put this assertion in a limbo, because if the user can set a password not respecting the requirement, the tool, which is a read-only intermediate between the user and the backend, cannot enforce the requirement. Then, the issue should be solved by the R\&D team, which should implement a password policy on the backend, and the user should be forced to change the password at the next login.
+On the other hand, let's consider the \textit{SR 1.7 - Strength of password-based authentication}. The requirement states that the password must have a minimum length and a variety of different character types, but if the system could let the user to set an invalid password, the tool cannot enforce that requirement because it could only suggest to change the password accordingly, without the possibility to enforce it Therefore, the issue should be solved by the R\&D team, which should implement a password policy on the backend, and the user should be forced to change the password at the next login.
 
-With this approach, we have identified the checks that the scanning tool should cover for sure from the standard and we have included them in the backlog of the project.
+With this approach, we have identified the checks that the scanning tool should cover and we have included them in the backlog of the project.
 
 \section{Backlog stories}
 
@@ -179,7 +182,7 @@ Flags:
 \end{lstlisting}
 \end{minipage}
 
-Moreover, we thought that the tool should be able to perform a scan in every network condition, to not exclude a priori a customer with an offline configuration or with a network that does not allow outcoming connections. Therefore, we decided to implement two different modes: the online mode where the tool can reach the cloud to determine the latest available version of the software and the offline mode where the tool cannot reach the cloud and has to rely on the local timestamp supplied by some of the software and libraries. The choice of the mode is automatic. \\
+Moreover, we thought that the tool should be able to perform a scan in every network condition, to not exclude a priori a customer with an offline configuration or with a network that does not allow outgoing connections. Therefore, we decided to implement two different modes: the online mode where the tool can reach the cloud to determine the latest available version of the software and the offline mode where the tool cannot reach the cloud and has to rely on the local timestamp supplied by some of the software and libraries. The choice of the mode is automatic. \\
 From the board side, for each of the checks that the tool should perform, we put at least two different stories, respectively one for the online mode and one for the offline mode.
 
 Then, we sketched out the stories about the checks to perform, starting from those extracted from the IEC 62443 standard, as explained in~\cref{sec:iec-62443-driven-design}, but also adding some other checks that we thought needed to be performed. We also added some stories about the cross-compilation of the tool, the logging library to use and the CLI library to use.
@@ -214,7 +217,7 @@ Starting from scratch, we have to take care as first point of some utility libra
 
 \subsection{CLI library}
 
-The comparison for the CLI parameters parsing is between a library called \textit{urfave/cli/v2}\footnote{\url{https://github.com/urfave/cli}} (\texttt{v2.27.1}) and another one called \textit{spf13/cobra}\footnote{\url{https://github.com/spf13/cobra}} (\texttt{v1.8.0}). Data and evaluation refers to March 2024.
+For the CLI parameters parsing we compared a library called \textit{urfave/cli/v2}\footnote{\url{https://github.com/urfave/cli}} (\texttt{v2.27.1}) and another one called \textit{spf13/cobra}\footnote{\url{https://github.com/spf13/cobra}} (\texttt{v1.8.0}). Data and evaluation refers to March 2024.
 
 Both libraries have been recommended by the supervisor, and they are both widely used in the Go community. The evaluation between the two libraries is based on the features that they offer, the ease of use and the community support. In particular, we are interested in the ability to define flags and arguments, the ability to define commands and subcommands, the complexity of having a help page or the version of the tool.\\
 Flags and arguments are the parameters that the user can pass to the tool to modify its behaviour, while commands are the different actions that the tool can perform. For example, the \texttt{scan} command is a command, while \texttt{--verbose} is a flag. Flag could be global, meaning that can be issued with every other command, or local, meaning that it has to be recognized only after a specified command or argument. A pattern to follow is \texttt{APPNAME COMMAND ARG --FLAG}. Finally, it's not obvious that a library supports the \textit{context} parameter, that is a way to pass data between the functions across the application.
@@ -239,6 +242,6 @@ With all being said, we decided to use the \textit{rs/zerolog} library because o
 
 \section{Scanning tool web app}
 
-The scanning tool is a command-line interface (CLI) application written in Go. The tool is designed to be run on the terminal of the device, so it can be used by the user to check the configuration of the device. As an initial idea, the tool should be able to perform a scan of the device and output the results to the console. Thinking about the future, the scanning tool should be able to be run periodically and report the results to a central server, so the user can have a dashboard with the status of all the devices.
+The scanning tool is a command-line interface (CLI) application written in Go. The tool is designed to be run directly on the device, so it can be used by the user to check the configuration of the device and possibly receive suggestions on how to improve them. As an initial idea, the tool should be able to perform a scan of the device and output the results to the console. Thinking about the future, the scanning tool should be able to be run periodically and report the results to a central server, so the user can have a dashboard with the status of devices fleet.
 
-The idea to consider is to upload the scanning tool to the applications store, so the user can enable the wider automated concept directly from the platform; doing so, the customer can create a campaign to check the configuration of all the devices from the same place and receive aggregated reports, with the goal to have a complete dashboard for the security status of the devices.
+The idea to consider is to make available the scanning tool through the applications store, so the user can enable the wider automation directly from the platform; the customer can create a campaign to verify the configuration of devices fleet from the same place and receive aggregated reports, with the goal to have a complete dashboard for the security status of the devices.
