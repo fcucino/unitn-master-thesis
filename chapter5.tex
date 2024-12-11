@@ -174,7 +174,7 @@ This module monitors whether the operating system is at its latest version or no
 
 The Device Settings API, a set of endpoints used to retrieve the information about the status of the device and to potentially change them, provides among other things the version number and the build date of the operating system. There is the \texttt{/api/v1/management/mainos} endpoint that returns a JSON object structured as follows:
 
-\begin{lstlisting}
+\begin{lstlisting}[style=json]
 {
   "version": "4.2.323",
   "date": "2024-04-17T06:00:00.000Z"
@@ -271,7 +271,7 @@ type checkServicesStruct struct {
 }
 \end{lstlisting}
 
-The \textit{hmiConfig} function retrieves the information about the services from the Device Settings API, and the \textit{checkServices} function actually performs the check. The API endpoint is located at \texttt{/api/v1/services} and it returns a JSON object structured as a list of objects for each service, where each object contains its id, the name and the status.
+The \textit{hmiConfig} function retrieves the information about services from the Device Settings API, and the \textit{checkServices} function actually performs the check. The API endpoint is located at \texttt{/api/v1/services} and it returns a JSON object structured as a list of objects for each service, where each object contains its id, the name and the status.
 
 The \textit{isPortOpen} function is a utility function that checks if the port is open on the device. It works by trying to open a socket on the port defined by a predefined map that contains a list of default ports for each of the services. Depending on the protocol, the function tries to connect to each of the ports and returns true if the connection is successful, otherwise it returns false.
 
@@ -307,7 +307,7 @@ If the security type is greater or equal to number 2, then the server correctly 
 \begin{figure}[ht]
   \centering
   \includegraphics[width=0.5\textwidth]{chapters/05/assets/rfc6143-security-types}
-  \caption{RFC 6143 security types}
+  \caption{RFC 6143: security types}
   \label{fig:rfc6143-security-types}
 \end{figure}
 
@@ -434,7 +434,7 @@ The solution we thought is to provide a proxy server that is the only one that c
 The proxy server is managed by a controller on the cloud app backend. The controller is responsible for handling the incoming requests from the tool and forwarding them to the respective methods. The controller is also responsible for handling the authentication with the platform. It is written in TypeScript and it uses the NestJS framework.
 
 The proxy controller is a class that is decorated with the \texttt{@Controller} decorator, that is provided by the NestJS framework, with the parameter that is the base path of the controller. All the requests starting with that path are handled by the controller. A decorator is a special declaration that can be attached to a class, method or property, and it is used to modify their behaviour. The class is also decorated with \texttt{@ApiTags}, needed to generate the OpenAPI documentation, and by a \texttt{@UseInterceptors} directive with the \textit{LoggingInterceptor} custom one that logs the incoming requests. \\
-The class contains the declaration of the services that are used by the controller to perform the actual operations. The services are injected into the constructor of the class, aka they are already instantiated when the class is defined. The class also contains the methods that are the actual endpoints of the controller. The methods are decorated with the \texttt{@Get}, \texttt{@Post}, \texttt{@Put} or \texttt{@Delete} decorators, depending on the HTTP method that they handle. The methods also contain the logic to handle the incoming requests and to return the responses. The responses are returned in the form of specific \textit{DTO}s, which stands for \textit{data transfer object} and it is an object that carries data between processes, automatically serialized by the NestJS framework to the JSON format.
+The class contains the declaration of the services that are used by the controller to perform the actual operations. Services are injected into the constructor of the class, aka they are already instantiated when the class is defined. The class also contains the methods that are the actual endpoints of the controller. The methods are decorated with the \texttt{@Get}, \texttt{@Post}, \texttt{@Put} or \texttt{@Delete} decorators, depending on the HTTP method that they handle. The methods also contain the logic to handle the incoming requests and to return the responses. The responses are returned in the form of specific \textit{DTO}s, which stands for \textit{data transfer object} and it is an object that carries data between processes, automatically serialized by the NestJS framework to the JSON format.
 
 The decorators starting with \texttt{@Api} are used to generate the OpenAPI documentation. The \texttt{@ApiTags} decorator is used to specify the category of the endpoint and the \texttt{@ApiHeader} decorator is used to specify the header parameters that are required. The \texttt{@ApiBearerAuth} decorator is used to specify that the endpoint requires a bearer token to be accessed. The \texttt{@UseGuards} decorator is used to specify the guards that are used to protect the endpoint from unauthorized access. In our case, we use the two custom guards \texttt{AuthGuardFromHeaders} and \texttt{InstallationRoleGuard} to respectively obtain the bearer token and the expected parameters from the headers and to confirm that the request comes from a valid app installation.
 
@@ -583,7 +583,7 @@ The cloud app frontend is powered by these endpoints to assist the testers and t
 \begin{figure}[ht]
   \centering
   \includegraphics[width=1.0\textwidth]{chapters/05/assets/cloud-app-frontend}
-  \caption{Cloud app frontend}
+  \caption{Cloud app frontend interface}
   \label{fig:cloud-app-frontend}
 \end{figure}
 

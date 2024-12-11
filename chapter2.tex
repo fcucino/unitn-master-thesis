@@ -52,15 +52,15 @@ A system is secure as its weakest element. A vulnerability is a weakness in a sy
 \begin{figure}[ht]
   \centering
   \includegraphics[scale=0.6]{chapters/02/assets/security-meta-model-def}
-  \caption[Security meta-model definition. Image by prof. A. Marchetto taken from commoncriteriaportal.org.]{Security meta-model definition. Image by prof. A. Marchetto taken from \url{commoncriteriaportal.org}.}
+  \caption[Security meta-model definition]{Security meta-model definition. Image by prof. A. Marchetto taken from \texttt{commoncriteriaportal.org}}
   \label{fig:security-meta-model-def}
 \end{figure}
 
 CVE, which stands for \textit{Common Vulnerabilities and Exposures}, is a list of publicly known cybersecurity vulnerabilities. The CVE system provides a reference method for publicly known information-security vulnerabilities and exposures. Each CVE entry represents a unique identifier for a specific vulnerability, named \textit{CVE-ID}, making it easier to reference it across different tools.
 
-Each CVE entry is evaluated using the CVSS score, which stands for \textit{Common Vulnerability Scoring System}. This system provides a standardized way to assess the severity of vulnerabilities. It is important to note that CVSS measures severity, not risk. \\
+Each CVE entry is evaluated using the CVSS score, which stands for \textit{Common Vulnerability Scoring System}. This system provides a standardized way to assess the severity of vulnerabilities. It is important to note that CVSS measures severity, not risk. The difference is that severity is the intrinsic characteristic of a vulnerability while risk is the likelihood of an attacker exploiting the vulnerability and the impact of that event in a specific environment.\\
 CVSS v2.0 and CVSS v3.x include three metric groups: Base, Temporal and Environmental. The Base metrics evaluate the intrinsic characteristics of a vulnerability that are constant over time and across user environments. The Temporal metrics adjust the valutation based on factors like patch availability and exploit code and the Environmental metrics allow organizations to customize the score based on their unique environment. The latest version, CVSS v4.0, introduced in 2023, includes Base, Threat, Environmental and Supplemental metric groups. Compared to the previous version, the Threat metrics evaluate the likelihood of an attacker exploiting the vulnerability, the Environmental metrics evaluate the impact of the vulnerability on the organization's unique environment and the Supplemental ones provide additional information about the vulnerability~\cite{cvss-4-spec}.\\
-The metrics produce a numerical score from 0 to 10, and the assessment is also represented as a vector string, which is a concise textual representation of the values used to calculate the score~\cite{cvss-metrics}.
+The metrics produce a numerical score from 0 to 10, where highest score means highest severity, and the assessment is also represented as a vector string, which is a concise textual representation of the values used to calculate the score~\cite{cvss-metrics}.
 
 % TODO: Add CVEs for year or some statistics in general
 
@@ -83,7 +83,7 @@ IT is primarily concerned with managing electronic data, supporting business ope
 \begin{figure}[ht]
   \centering
   \includegraphics[width=0.9\textwidth]{chapters/02/assets/it-ot-diff}
-  \caption[IT vs OT: how they differ. Image by onlogic.com]{IT vs OT: how they differ. Image by \url{onlogic.com}}
+  \caption[IT vs OT: how they differ]{IT vs OT: how they differ. Image by \texttt{onlogic.com}}
   \label{fig:it-ot-diff}
 \end{figure}
 
@@ -98,12 +98,12 @@ We can devise some comparison points between the two types:
 
 Despite their distinct differences, IT vs. OT cybersecurity share similarities and are increasingly overlapping and one approach has not to exclude the other.
 
-According to the \textit{2023 State of Operational Technology and Cybersecurity Report} by Fortinet\footnote{\url{https://www.fortinet.com}}, as shown in~\cref{fig:fortinet-intrusions-env-impacted}, nearly one-third of respondents indicated both IT and OT systems were impacted, up from the 21\% in 2022.
+According to~\cref{fig:fortinet-intrusions-env-impacted} taken by the \textit{2023 State of Operational Technology and Cybersecurity Report} by Fortinet\footnote{\url{https://www.fortinet.com}}, a global leader of cybersecurity solutions and services, nearly one-third of respondents indicated both IT and OT systems were impacted, up from the 21\% in 2022.
 
 \begin{figure}[ht]
   \centering
   \includegraphics[scale=0.8]{chapters/02/assets/fortinet-intrusions-env-impacted}
-  \caption[Environments impacted]{Environments impacted}
+  \caption[Attacks to IT and OT systems: impacted environments]{Attacks to IT and OT systems: impacted environments}
   \label{fig:fortinet-intrusions-env-impacted}
 \end{figure}
 
@@ -219,7 +219,7 @@ This section explains how a software can be deployed in a cloud environment, wit
 
 \subsection{Microservice}
 
-Microservice architecture is an architectural style that organizes an application into a set of services that can be deployed independently and are loosely coupled. This means each service is packaged as an executable unit ready for production; in addition, the services do not have direct dependencies on each other, allowing for independent development, deployment and scaling on the needs~\cite{microservices-what-are}.
+Microservice architecture is an architectural style that organizes an application into a set of services that can be deployed independently and are loosely coupled. This means each service is packaged as an executable unit ready for production; in addition, services do not have direct dependencies on each other, allowing for independent development, deployment and scaling on the needs~\cite{microservices-what-are}.
 
 Doing so, there is no need to scale or deploy the entire application when only a part of it needs to be updated or scaled. This approach allows for faster development and deployment cycles, as well as improved fault tolerance and scalability. The concept is shown in~\cref{fig:monolith-microservices}.
 
@@ -275,7 +275,7 @@ The latter is a list of items selected for the current sprint cycle; the sprint 
 \begin{figure}[ht]
   \centering
   \includegraphics[width=0.8\textwidth]{chapters/02/assets/scrum}
-  \caption{Scrum sprint cycle. Taken from \texttt{atlassian.com}}
+  \caption[Scrum sprint cycle]{Scrum sprint cycle. Taken from \texttt{atlassian.com}}
   \label{fig:scrum-sprint-cycle}
 \end{figure}
 

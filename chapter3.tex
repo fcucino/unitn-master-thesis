@@ -42,10 +42,10 @@ Given that, at the beginning stages, our scanning tool could not be installed an
 
 \section{Device settings}
 
-The device provides a web interface that can be used to view and change the system settings of the device. The user can change the network settings, set the datetime, set the management user password, manage the startup of the services like the SSH server and much more. The web interface can be operated directly on the device, interacting with a touchscreen, or remotely by connecting to the local webserver exposed at the device's network address. \\
+The device provides a web interface that can be used to view and change the system settings of the device. The user can change the network settings, set the datetime, set the management user password, manage the startup of services like the SSH server and much more. The web interface can be operated directly on the device, interacting with a touchscreen, or remotely by connecting to the local webserver exposed at the device's network address. \\
 Client and server, respectively the graphical interface and the backend, are independent of each other; the web interface is powered by REST APIs.
 
-For the internship project, we will take advantage of the REST APIs to retrieve the status of the device and to potentially change its settings. Internally to the company, the APIs are documented with the \textit{OpenAPI Specification}, formerly \textit{Swagger Specification}, which is an API description format that depicts the endpoints, the parameters, the responses, the authentication needed to call them and licenses or other information. The Swagger file can be visualized through the Swagger UI, a web interface that renders OpenAPI definitions as interactive documentatione~\cite{openapi-swagger}.
+For the internship project, we will take advantage of the REST APIs to retrieve the status of the device and to potentially change its settings. APIs are documented with the \textit{OpenAPI Specification}, formerly \textit{Swagger Specification}, which is an API description format that depicts the endpoints, the parameters, the responses, the authentication needed to call them and licenses or other information. The Swagger file can be visualized through the Swagger UI, a web interface that renders OpenAPI definitions as interactive documentatione~\cite{openapi-swagger}.
 
 We can devise two different scenarios: API calls made by a remote host over a network and API calls made by the local host. In the first case, the TLS protocol secures the communication using the public-key authentication first, and then the APIs are protected by basic authentication, that is the client must provide the username of a management account and its related password. In the second case, the webserver listens over a port accessible bound to same host only, with no further authentication needed. Given that the scanning tool will be run on the device itself, we will take advantage of the second case. \\
 On the security side, we consider the \textit{localhost} perimeter as secure, because the device is a closed system and the user must have physical access to it.
@@ -76,7 +76,7 @@ It offers a range of security tools, including vulnerability scanning, dependenc
 
 \subsection{Deployment of the microservices}
 
-Specific software are used to manage the entire infrastructure of the cloud platform, from the development and testing to the deployment and monitoring of the services.
+Specific software are used to manage the entire infrastructure of the cloud platform, from the development and testing to the deployment and monitoring of services.
 
 \subsubsection{Docker}
 
