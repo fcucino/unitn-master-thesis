@@ -147,7 +147,7 @@ The former is the operating system, and the latter is the architecture. Possible
 
 By default, the binary includes debug symbols, that are useful for debugging purposes, but they are not necessary for the production environment. They increase the size of the binary to several megabytes, and they are not needed by the end user. In particular, we add two flags to the build command:~\cite{go-ldflags-all,go-ldflags-s-w}
 \begin{itemize}
-  \item \texttt{-s} turns off generation of the Go symbol table;
+  \item \texttt{-s} turns off the generation of the Go symbol table;
   \item \texttt{-w} turns off debugging information, not being able to trace the resulting binary with the \texttt{gdb} debugger.
 \end{itemize}
 
@@ -203,7 +203,7 @@ The \textit{xMonthAgo} field is the threshold expressed in a range of few months
 
 \subsubsection{Offline date based}
 
-The first specialization of the module checks the version of the operating system by reading the build date of the system. This is done by retrieving the build date of the system from the Device Settings API, that is the \textit{date} field of the API response. The date is then compared with the current date, and if the difference is greater than a certain threshold then the module returns an issue, otherwise it returns an OK status throug the \textit{Result} structure.
+The first specialization of the module checks the version of the operating system by reading the build date of the system. This is done by retrieving the build date of the system from the Device Settings API, that is the \textit{date} field of the API response. The date is then compared with the current date, and if the difference is greater than a certain threshold then the module returns an issue, otherwise it returns an OK status through the \textit{Result} structure.
 
 \subsubsection{Online version based}
 
@@ -292,7 +292,7 @@ The RFB protocol is defined in the RFC 6143~\cite{rfc6143}. It works using the T
 The protocol expects the following steps:
 
 \begin{enumerate}
-  \item the client connect to the server and the server sends the protocol version; the \textit{ProtocolVersion} message consists of 12 bytes interpreted as a string of ASCII characters in the format \texttt{RFB xxx.yyy\textbackslash n} where \texttt{xxx} and \texttt{yyy} are the major and minor version numbers, left-padded with zeros: the only published protocol versions at this time are 3.3, 3.7, and 3.8. Other version numbers are reported by some servers and clients, but should be interpreted as 3.3 since they do not implement the different handshake in 3.7 or 3.8.
+  \item the client connect to the server and the server sends the protocol version; the \textit{ProtocolVersion} message consists of 12 bytes interpreted as a string of ASCII characters in the format \texttt{RFB xxx.yyy\textbackslash n} where \texttt{xxx} and \texttt{yyy} are the major and minor version numbers, left-padded with zeros: the only published protocol versions at this time are 3.3, 3.7, and 3.8. Other version numbers are reported by some servers and clients but should be interpreted as 3.3 since they do not implement the different handshake in 3.7 or 3.8.
   \item the client replies to the server agreeing with its supported version, which must be less or equal to the one of the server;
         \begin{itemize}
           \item if the version is 3.3, then the server directly replies with a single integer number representing the security type;
@@ -479,7 +479,7 @@ export class ProxyController {
 \end{lstlisting}
 \end{minipage}
 
-The \textit{proxyTimeService} service is the one that actually retrieve the real-time from a public NTP server. NTP stands for \textit{Network Time Protocol} and it is a protocol used to synchronize the clocks of computer systems over a network. The service is injected in the constructor of the controller, which means that there is no need to explicitly instantiate it. The service is defined by an interface that contains the methods that are needed to perform the operations. The service is then implemented by a class that implements the interface and that contains the actual logic to perform the operations. The service is responsible for handling the business logic of the application, and it is used by the controller to perform the actual operations.
+The \textit{proxyTimeService} service is the one that actually retrieves the real-time from a public NTP server. NTP stands for \textit{Network Time Protocol} and it is a protocol used to synchronize the clocks of computer systems over a network. The service is injected in the constructor of the controller, which means that there is no need to explicitly instantiate it. The service is defined by an interface that contains the methods that are needed to perform the operations. The service is then implemented by a class that implements the interface and that contains the actual logic to perform the operations. The service is responsible for handling the business logic of the application, and it is used by the controller to perform the actual operations.
 
 An example of the proxy service class is shown in~\cref{lst:proxy-service}.
 
@@ -578,7 +578,7 @@ Doing so, the developers can focus on the development of the tool and they do no
 
 Recalling the tool, it is a command line software that is used to scan the device for potential misconfigurations on its settings. The tool is run on the terminal of the device, and therefore it is required to obtain the executable file. To enable the customers to download the latest version of the tool, we provide a public endpoint that returns the latest version for the different architectures.
 
-The cloud app frontend is powered by these endpoints to assist the testers and the customers in downloading the latest version of the tool. The frontend is a VueJS application, part of the cloud app. For the internship purposes, we shipped a simple frontend composed of a dropdown that lists the available architectures, a \textit{download} button that get binary and a \textit{copy command} to copy the \textit{curl}\footnote{\url{https://curl.se/}} command, to simplify the download process by not involving the copy between the local host and the remote device. This way, the customer can easily copy and paste the command and execute it on the terminal of the device. \cref{fig:cloud-app-frontend} shows the frontend.
+The cloud app frontend is powered by these endpoints to assist the testers and the customers in downloading the latest version of the tool. The frontend interface is a VueJS application, part of the cloud app. For the internship purposes, we shipped a simple frontend composed of a dropdown that lists the available architectures, a \textit{download} button that gets binary and a \textit{copy command} to copy the \textit{curl}\footnote{\url{https://curl.se/}} command, to simplify the download process by not involving the copy between the local host and the remote device. This way, the customer can easily copy and paste the command and execute it on the terminal of the device. \cref{fig:cloud-app-frontend} shows the frontend.
 
 \begin{figure}[ht]
   \centering

@@ -54,7 +54,7 @@ For each requirement listed in the documentation, the standard also describes so
 
 Each system or component requirement is associated with at most four \textit{Requirement Enhancements} (RE) that can be implemented to increase the \textit{Security Level} (SL) of the system or component.
 
-A security level is a measure of the security of a system or component, which is eventually transmitted to the final client: it is a score indicating how much sofisticated the solution is to follow the requirement. The minimum applicable security level is 1, while the maximum is 4~\cite{iec-62443-ixon-practical-guide}.\\
+A security level is a measure of the security of a system or component, which is eventually transmitted to the final client: it is a score indicating how much sophisticated the solution is to follow the requirement. The minimum applicable security level is 1, while the maximum is 4~\cite{iec-62443-ixon-practical-guide}.\\
 It is possible to increase the score of the security level by applying more non-trivial solutions, that is a requirement enhancement. An enhancement to increase the security level from 3 to 4 is stated in \texttt{SR 3.9 RE 1}:
 \begin{mdframed}
   SR 3.9 RE 1 - Audit records on write-once media: The control system shall provide the capability to produce audit records on hardware-enforced write-once media.
@@ -98,9 +98,9 @@ NIS 2 aims to enhance the resilience of the European digital market, ensuring th
 
 \subsection{Cyber Resilience Act}
 
-While the cybersecurity of providers of digital services is regulated at EU level by the NIS Directive 2, as analyzed in~\cref{sec:nis-directive-2}, the security of products with digital elements and software products is so far not subject to any comprehensive piece of EU regulation~\cite{cra-eu}.
+While the cybersecurity of providers of digital services is regulated at the EU level by the NIS Directive 2, as analyzed in~\cref{sec:nis-directive-2}, the security of products with digital elements and software products is so far not subject to any comprehensive piece of EU regulation~\cite{cra-eu}.
 
-Therefore, the European Commission proposed the Cyber Resilience Act in 2022; it has been approved in early 2024~\cite{cra-timelinel} and manufacturers have to place compliant products on the Union market by 2027, aiming to enhance the security of ICT products, services and processes.
+Therefore, the European Commission proposed the Cyber Resilience Act in 2022; it was approved in early 2024~\cite{cra-timelinel} and manufacturers have to place compliant products on the Union market by 2027, aiming to enhance the security of ICT products, services and processes.
 
 It applies to products connected directly or indirectly to another device or network except for specific exclusions such as open-source software or services that are already covered by existing rules, which is the case for medical devices, aviation and cars. A non-exhaustive list of products that are in the scope of the CRA includes:~\cite{cra-overview}
 \begin{itemize}
@@ -116,7 +116,7 @@ It applies to products connected directly or indirectly to another device or net
 
 Recalling~\cref{sec:iec-62443}, the IEC 62443 standard provides a comprehensive framework for securing industrial control systems and operational technology networks. In order to perform a step towards the certification of the devices with the standard, the scanning tool must cover at least the aspects of the standard.
 
-First of all, our project is based on Component Requirement 6.2 as foundation:
+First of all, our project is based on Component Requirement 6.2 as the foundation:
 \begin{mdframed}
   SR 6.2 - Continuous monitoring: The control system shall provide the capability to continuously monitor all security mechanism performance using commonly accepted security industry practices and recommendations to detect, characterize and report security breaches in a timely manner.
 \end{mdframed}
@@ -222,7 +222,7 @@ Starting from scratch, we have to take care as first point of some utility libra
 
 \subsection{CLI library}
 
-For the CLI parameters parsing we compared a library called \textit{urfave/cli/v2}\footnote{\url{https://github.com/urfave/cli}} (\texttt{v2.27.1}) and another one called \textit{spf13/cobra}\footnote{\url{https://github.com/spf13/cobra}} (\texttt{v1.8.0}). Data and evaluation refers to March 2024.
+For the CLI parameters parsing we compared a library called \textit{urfave/cli/v2}\footnote{\url{https://github.com/urfave/cli}} (\texttt{v2.27.1}) and another one called \textit{spf13/cobra}\footnote{\url{https://github.com/spf13/cobra}} (\texttt{v1.8.0}). Data and evaluation refer to March 2024.
 
 Both libraries have been recommended by the supervisor, and they are both widely used in the Go community. The evaluation between the two libraries is based on the features that they offer, the ease of use and the community support. In particular, we are interested in the ability to define flags and arguments, the ability to define commands and subcommands, the complexity of having a help page or the version of the tool.\\
 Flags and arguments are the parameters that the user can pass to the tool to modify its behaviour, while commands are the different actions that the tool can perform. For example, the \texttt{scan} command is a command, while \texttt{--verbose} is a flag. Flag could be global, meaning that can be issued with every other command, or local, meaning that it has to be recognized only after a specified command or argument. A pattern to follow is \texttt{APPNAME COMMAND ARG --FLAG}. Finally, it's not obvious that a library supports the \textit{context} parameter, that is a way to pass data between the functions across the application.
