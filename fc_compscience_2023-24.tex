@@ -160,7 +160,10 @@
 \pagenumbering{gobble}
 \input{front}
 
-\clearpage
+\newpage 
+\ % empty page
+\newpage
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -169,10 +172,11 @@
 %% Thanks/Acknowledgements section is optional
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \input{acknowledgements}
-% \clearpage
-\pagestyle{plain} % no heading, footer with centered page number
 
+\input{acknowledgements}
+\clearpage
+
+\pagestyle{plain} % no heading, footer with centered page number
 
 % page number with Arabic format
 \mainmatter
@@ -199,6 +203,11 @@
 
 \listoffigures
 \clearpage
+
+\newpage
+\thispagestyle{empty}
+\ % empty page
+\newpage
 
 % group to define space between chapters
 \begingroup
@@ -255,6 +264,7 @@
 \input{chapter7}
 
 \endgroup
+
 
 
 % bibliography - bibtex format

@@ -160,7 +160,7 @@ Finally, we set the \texttt{-trimpath} flag to remove the absolute path of the s
 The resulting binary for each architecture is placed in a tree of directories, where the root directory is the version of the binary, and the subdirectories are the architectures. The filename of the binary is the same as the name of the project, that is \texttt{scantool}.
 
 The final build command is the following:
-\begin{lstlisting}[caption={Go tool cross-build command}]
+\begin{lstlisting}[caption={Go tool cross-build command}, numbers=none]
   env GOOS=$GOOS GOARCH=$GOARCH CGO_ENABLED=0 go build -trimpath -ldflags="-s -w -X 'main.VERSION=$version'" -o $output_base_dir/$version/$arch/$filename main.go
 \end{lstlisting}
 
@@ -547,7 +547,7 @@ The automatic build and deployment is managed by the Google Cloud Build service.
 
 Therefore, the storage looks like a tree of directories, where the root directory is the version of the binary, and the subdirectories are the architectures. The filename of the final binary is the name of the tool. The tree is structured as follows:
 
-\begin{lstlisting}[caption={Storage bucket tree of directories}]
+\begin{lstlisting}[caption={Storage bucket tree of directories}, numbers=none]
   .
   |-- 0.1.0
   |   |-- linux-amd64
